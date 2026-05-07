@@ -1,0 +1,615 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover"><title>Jude's ISA Portfolio</title><script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script><link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"><style>:root{--bg:#0a0e1a;--surface:#111827;--surface2:#1a2235;--surface3:#1e2d45;--border:#1e3a5f;--accent:#00d4ff;--accent2:#00ff9d;--accent3:#ff6b35;--accent4:#ffd700;--text:#e2e8f0;--text-dim:#64748b;--text-bright:#f8fafc;--green:#00ff9d;--red:#ff4757;--amber:#ffd700;--font-display:'Syne',sans-serif;--font-mono:'DM Mono',monospace}*{margin:0;padding:0;box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:var(--font-mono);font-size:13px;line-height:1.6;min-height:100vh}body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,212,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,0.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}.app{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:24px}.nav-tabs{display:flex;gap:2px;margin-bottom:24px;border-bottom:1px solid var(--border)}.nav-tab{padding:10px 20px;background:transparent;border:none;color:var(--text-dim);font-family:var(--font-mono);font-size:12px;cursor:pointer;letter-spacing:0.05em;text-transform:uppercase;transition:all 0.2s;border-bottom:2px solid transparent;margin-bottom:-1px}.nav-tab:hover{color:var(--text)}.nav-tab.active{color:var(--accent);border-bottom-color:var(--accent)}.tab-panel{display:none}.tab-panel.active{display:block}.header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:28px}.header-left h1{font-family:var(--font-display);font-size:26px;font-weight:800;color:var(--text-bright)}.header-left h1 span{color:var(--accent)}.header-left p{color:var(--text-dim);font-size:11px;margin-top:4px;text-transform:uppercase;letter-spacing:0.05em}.header-right{display:flex;gap:10px;align-items:center}.btn{background:var(--accent);color:var(--bg);border:none;padding:8px 18px;font-family:var(--font-mono);font-size:12px;font-weight:500;cursor:pointer;letter-spacing:0.05em;transition:all 0.2s;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%)}.btn:hover{background:var(--accent2);transform:translateY(-1px)}.btn:disabled{opacity:0.5;cursor:not-allowed}.btn-outline{background:transparent;border:1px solid var(--border);color:var(--text-dim);clip-path:none;padding:7px 16px}.btn-outline:hover{border-color:var(--accent);color:var(--accent);background:rgba(0,212,255,0.05)}.btn-green{background:var(--green);color:var(--bg)}.btn-amber{background:var(--amber);color:var(--bg)}.last-updated{color:var(--text-dim);font-size:11px}.stats-bar{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:24px}.stat-card{background:var(--surface);border:1px solid var(--border);padding:16px;position:relative;overflow:hidden}.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent)}.stat-card.green::before{background:var(--green)}.stat-card.amber::before{background:var(--amber)}.stat-card.red::before{background:var(--red)}.stat-card.purple::before{background:#a78bfa}.stat-label{font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px}.stat-value{font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--text-bright)}.stat-sub{font-size:11px;color:var(--text-dim);margin-top:2px}.stat-sub.pos{color:var(--green)}.stat-sub.neg{color:var(--red)}.section{background:var(--surface);border:1px solid var(--border);margin-bottom:16px;overflow:hidden}.section-header{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:var(--surface2);border-bottom:1px solid var(--border);cursor:pointer;user-select:none}.section-title{font-family:var(--font-display);font-size:12px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;display:flex;align-items:center;gap:8px}.dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}.section-toggle{color:var(--text-dim);font-size:14px;transition:transform 0.2s}.section.collapsed .section-toggle{transform:rotate(-90deg)}.section.collapsed .section-body{display:none}.data-table{width:100%;border-collapse:collapse}.data-table th{padding:9px 14px;text-align:left;font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.1em;background:var(--surface3);border-bottom:1px solid var(--border);font-weight:500}.data-table th:not(:first-child){text-align:right}.data-table th:nth-child(1),.data-table th:nth-child(2){text-align:left}.data-table td{padding:11px 14px;border-bottom:1px solid rgba(30,58,95,0.3);vertical-align:middle}.data-table tr:last-child td{border-bottom:none}.data-table tr:hover td{background:rgba(0,212,255,0.02)}.ticker-badge{font-family:var(--font-display);font-weight:700;font-size:13px;color:var(--text-bright)}.ticker-name{font-size:11px;color:var(--text-dim)}.ticker-flag{font-size:9px;padding:1px 5px;background:rgba(0,212,255,0.1);color:var(--accent);margin-left:4px}.ticker-flag.uk{background:rgba(0,255,157,0.1);color:var(--accent2)}.price-live{font-size:13px;font-weight:500;color:var(--text-bright);text-align:right}.price-change{font-size:11px;margin-top:1px;text-align:right}.pos{color:var(--green)}.neg{color:var(--red)}.neu{color:var(--text-dim)}.td-right{text-align:right}.loading-price{color:var(--text-dim);font-size:11px;animation:blink 1.5s infinite}@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}.status-badge{display:inline-block;padding:3px 9px;font-size:10px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase}.status-buy{background:rgba(0,255,157,0.15);color:var(--green);border:1px solid rgba(0,255,157,0.3)}.status-hold{background:rgba(0,212,255,0.1);color:var(--accent);border:1px solid rgba(0,212,255,0.3)}.status-wait{background:rgba(255,215,0,0.1);color:var(--amber);border:1px solid rgba(255,215,0,0.3)}.status-watch{background:rgba(167,139,250,0.1);color:#a78bfa;border:1px solid rgba(167,139,250,0.3)}.status-close{background:rgba(255,71,87,0.1);color:var(--red);border:1px solid rgba(255,71,87,0.3)}.chart-btn{background:transparent;border:1px solid var(--border);color:var(--text-dim);padding:3px 8px;font-size:10px;cursor:pointer;transition:all 0.2s;font-family:var(--font-mono)}.chart-btn:hover{border-color:var(--accent);color:var(--accent)}.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:1000;justify-content:center;align-items:center;backdrop-filter:blur(4px)}.modal-overlay.open{display:flex}.modal{background:var(--surface);border:1px solid var(--border);width:90%;max-width:820px;padding:24px;position:relative}.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.modal-title{font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--text-bright)}.modal-close{background:transparent;border:1px solid var(--border);color:var(--text-dim);width:32px;height:32px;cursor:pointer;font-size:16px;transition:all 0.2s}.modal-close:hover{border-color:var(--red);color:var(--red)}.chart-container{position:relative;height:280px}.input-field{background:var(--surface3);border:1px solid var(--border);color:var(--text);padding:8px 12px;font-family:var(--font-mono);font-size:13px;outline:none;transition:border-color 0.2s;width:100%}.input-field:focus{border-color:var(--accent)}.input-field.yellow{color:var(--amber);border-color:rgba(255,215,0,0.3)}.input-field.yellow:focus{border-color:var(--amber)}.input-label{font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;display:block}.input-group{margin-bottom:16px}.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.pad{padding:20px}.earnings-item{display:grid;grid-template-columns:140px 70px 1fr auto;gap:16px;align-items:center;padding:10px 0;border-bottom:1px solid rgba(30,58,95,0.3)}.earnings-item:last-child{border-bottom:none}.earnings-date{color:var(--accent);font-size:12px}.earnings-ticker{font-family:var(--font-display);font-weight:700;color:var(--text-bright)}.gcal-item{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid rgba(30,58,95,0.3)}.gcal-item:last-child{border-bottom:none}.gcal-info{flex:1}.gcal-title{font-weight:500;color:var(--text-bright);font-size:13px}.gcal-detail{font-size:11px;color:var(--text-dim);margin-top:2px}.calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;padding:24px}.calc-inputs{}.calc-results{background:var(--surface2);border:1px solid var(--border);padding:20px}.calc-result-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(30,58,95,0.2)}.calc-result-row:last-child{border-bottom:none}.calc-result-label{font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.05em}.calc-result-value{font-family:var(--font-display);font-size:16px;font-weight:700;color:var(--accent)}.calc-result-value.big{font-size:24px;color:var(--accent2)}.scenario-bar{height:6px;background:var(--surface3);margin-top:4px;overflow:hidden}.scenario-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width 1s ease}.chat-container{display:flex;flex-direction:column;height:400px}.chat-messages{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:12px}.msg{max-width:85%;padding:12px 16px;font-size:13px;line-height:1.6;animation:fadeUp 0.3s ease}@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}.msg.user{align-self:flex-end;background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.3)}.msg.assistant{align-self:flex-start;background:var(--surface2);border:1px solid var(--border)}.msg.assistant strong{color:var(--accent2)}.msg-label{font-size:10px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px}.msg.user .msg-label{color:var(--accent);text-align:right}.msg.assistant .msg-label{color:var(--accent2)}.chat-input-area{padding:14px 20px;border-top:1px solid var(--border);display:flex;gap:10px;align-items:flex-end}.chat-input{flex:1;background:var(--surface3);border:1px solid var(--border);color:var(--text);padding:10px 14px;font-family:var(--font-mono);font-size:13px;outline:none;resize:none;min-height:42px;max-height:100px;transition:border-color 0.2s}.chat-input:focus{border-color:var(--accent)}.api-key-bar{padding:10px 20px;background:var(--surface2);border-bottom:1px solid var(--border);display:flex;gap:10px;align-items:center}.api-key-input{flex:1;background:var(--surface3);border:1px solid var(--border);color:var(--text-dim);padding:6px 10px;font-family:var(--font-mono);font-size:11px;outline:none}.api-key-input:focus{border-color:var(--accent)}.drop-zone{border:2px dashed var(--border);padding:32px;text-align:center;cursor:pointer;transition:all 0.2s;margin:20px}.drop-zone:hover,.drop-zone.dragover{border-color:var(--accent);background:rgba(0,212,255,0.03)}.drop-zone-icon{font-size:32px;margin-bottom:12px}.drop-zone-label{font-size:13px;color:var(--text-dim)}.drop-zone-sub{font-size:11px;color:var(--text-dim);margin-top:6px;opacity:0.7}.import-preview{padding:20px;font-size:12px}.import-row{display:flex;gap:12px;padding:6px 0;border-bottom:1px solid rgba(30,58,95,0.2)}.import-row:last-child{border-bottom:none}.review-entry{padding:14px 20px;border-bottom:1px solid rgba(30,58,95,0.3);display:grid;grid-template-columns:130px 1fr;gap:16px}.review-date{color:var(--accent);font-size:11px}.add-review{padding:16px 20px;display:flex;gap:10px}.add-review textarea{flex:1;background:var(--surface3);border:1px solid var(--border);color:var(--text);padding:10px;font-family:var(--font-mono);font-size:12px;resize:vertical;min-height:60px;outline:none}.add-review textarea:focus{border-color:var(--accent2)}::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--border)}::-webkit-scrollbar-thumb:hover{background:var(--accent)}@media(max-width:768px){.app{padding:12px 10px}.header{flex-direction:column;gap:10px;margin-bottom:16px}.header-left h1{font-size:20px}.header-left p{font-size:10px}.header-right{width:100%;justify-content:space-between}.last-updated{font-size:10px}.btn{padding:10px 14px;font-size:12px}.stats-bar{grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}.stat-value{font-size:16px}.stat-label{font-size:9px}.stat-sub{font-size:10px}.nav-tabs{overflow-x:auto;flex-wrap:nowrap;gap:0;-webkit-overflow-scrolling:touch;padding-bottom:2px}.nav-tabs::-webkit-scrollbar{display:none}.nav-tab{padding:10px 12px;font-size:10px;white-space:nowrap;flex-shrink:0}.section-header{padding:14px 14px}.section-title{font-size:11px}.section-body{overflow-x:auto;-webkit-overflow-scrolling:touch}.data-table{min-width:580px;font-size:11px}.data-table th{padding:8px 10px;font-size:9px}.data-table td{padding:10px 10px}.ticker-badge{font-size:12px}.ticker-name{font-size:10px}.status-badge{font-size:9px;padding:3px 6px}.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}.calc-grid{grid-template-columns:1fr;padding:14px}.earnings-item{grid-template-columns:1fr 1fr;gap:8px}.earnings-item>div:nth-child(3){grid-column:1/-1}.earnings-item>div:nth-child(4){grid-column:1/-1}.stats-bar+div [style*="grid-template-columns:1fr 1fr"],.stats-bar+div [style*="grid-template-columns:repeat(4"],.stats-bar+div [style*="grid-template-columns:repeat(3"]{grid-template-columns:1fr !important}.pad{padding:14px}.chat-messages{padding:14px}.chat-input-area{padding:10px 14px}.msg{max-width:95%;font-size:12px}.api-key-bar{flex-wrap:wrap;gap:6px;padding:8px 14px}.api-key-bar span{display:none}.review-entry{grid-template-columns:1fr;gap:4px}.review-date{font-size:11px;color:var(--accent)}.modal{width:95%;padding:16px}.chart-container{height:220px}#chartStats{grid-template-columns:repeat(2,1fr)!important}.drop-zone{padding:20px;margin:12px}.drop-zone-icon{font-size:24px}.section-body [style*="grid-template-columns:repeat(4,1fr)"],.section-body [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr 1fr !important}.gcal-item{flex-direction:column;gap:8px;align-items:flex-start}.gcal-item button{align-self:stretch;text-align:center}.input-field{font-size:14px;padding:10px 12px}.input-label{font-size:11px}.input-group{margin-bottom:12px}#scenarioTable{min-width:700px}.btn-outline{padding:9px 14px}.add-review button{padding:12px 16px}.add-review textarea{font-size:13px}[style*="grid-template-columns:repeat(4,1fr)"]{grid-template-columns:1fr 1fr !important}}@media(max-width:380px){.stats-bar{grid-template-columns:1fr}.stat-value{font-size:18px}.app{padding:10px 8px}}@media(min-width:769px) and (max-width:1100px){.stats-bar{grid-template-columns:repeat(3,1fr)}.grid-3{grid-template-columns:repeat(2,1fr)}}</style></head><body><div class="app"><div class="header"><div class="header-left"><h1>Jude's <span>ISA</span> Portfolio</h1><p>Hargreaves Lansdown · Stocks & Shares ISA · Updated 6 May 2026 — 18:21 | 3 Platforms Active</p></div><div class="header-right"><span class="last-updated" id="lastUpdated">Not yet refreshed</span><button class="btn btn-outline" onclick="refreshAllPrices()" id="refreshBtn">↻ Prices</button><button class="btn" onclick="showTab('gcal')">📅 Reminders</button></div></div><div class="stats-bar"><div class="stat-card"><div class="stat-label">ISA Total Value</div><div class="stat-value" id="totalValue">£41,099</div><div class="stat-sub" id="totalChangeSub">HL data as of 1 May</div></div><div class="stat-card red"><div class="stat-label">ISA Allowance 25/26</div><div class="stat-value" style="font-size:16px">FULLY USED</div><div class="stat-sub">Deploy cash now at HL</div></div><div class="stat-card amber"><div class="stat-label">Invested</div><div class="stat-value" id="investedValue">£17,037</div><div class="stat-sub" id="glSub">-£154 total (-0.73%)</div></div><div class="stat-card"><div class="stat-label">Positions</div><div class="stat-value">6 + 14</div><div class="stat-sub">held + planned</div></div><div class="stat-card purple"><div class="stat-label">Next Key Date</div><div class="stat-value" style="font-size:16px">6 Apr 2027</div><div class="stat-sub">New £20k ISA allowance</div></div></div><div style="background:rgba(255,71,87,0.1);border:1px solid rgba(255,71,87,0.4);padding:16px 20px;margin-bottom:16px;font-size:12px;line-height:1.8;"><div style="font-family:'Syne',sans-serif;font-weight:700;color:#ff4757;font-size:13px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;">⚠️ Situation Update — 5 May 2026</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;"><div><div style="color:#ffd700;font-weight:600;margin-bottom:4px">ISA Allowance Status</div><div style="color:#e2e8f0">2025/26 ISA allowance <strong style="color:#ff4757">fully subscribed</strong> at HL. No new contributions until 6 April 2027. T212 ISA also blocked — one allowance per tax year across all providers.</div></div><div><div style="color:#ffd700;font-weight:600;margin-bottom:4px">TTD — HL Blocked</div><div style="color:#e2e8f0">HL cannot buy TTD due to NASDAQ committee compliance notice (board director resigned March 2026). Cure deadline: <strong>21 Sep 2026</strong>. New director already appointed — likely re-enabled within weeks.</div></div><div><div style="color:#ffd700;font-weight:600;margin-bottom:4px">CLBT — HL Not Found</div><div style="color:#e2e8f0">Cellebrite not available on HL — likely due to Israeli incorporation (ordinary shares structure). This may be a permanent HL restriction, not temporary. Research alternative access for 2026/27.</div></div><div><div style="color:#ffd700;font-weight:600;margin-bottom:4px">eToro — Not ISA</div><div style="color:#e2e8f0">eToro ISA was transferred to HL. Remaining eToro account is a regular trading account only — gains subject to CGT. Not suitable for new ISA-wrapper positions.</div></div></div><div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,71,87,0.2);color:#e2e8f0"><strong style="color:#00ff9d">What this means:</strong> The deployment plan cannot be executed until April 2027 inside an ISA. The £17,839 cash currently in HL ISA can still be deployed into FIX, EME, MU, MANH, IBM, GOOG, CRWD, NET, CDNS, AZN, AXON, MELI — but <strong>not TTD or CLBT via HL</strong> until compliance is restored. Focus on the 12 accessible positions now using £24,062 HL ISA cash. TTD solved via eToro (£800). CLBT moves to T212 ISA in April 2027 (£500 — not worth transfer disruption now). Start deploying immediately.
+</div></div><div class="nav-tabs"><button class="nav-tab active" onclick="showTab('dashboard')">📊 Dashboard</button><button class="nav-tab" onclick="showTab('calculator')">🎯 Target Calculator</button><button class="nav-tab" onclick="showTab('gcal')">📅 Calendar Export</button><button class="nav-tab" onclick="showTab('import')">📥 HL Import</button><button class="nav-tab" onclick="showTab('claude')">🤖 Claude Chat</button><button class="nav-tab" onclick="showTab('log')">📋 Review Log</button><button class="nav-tab" onclick="showTab('cgt')">💰 CGT Optimiser</button></div><div class="tab-panel active" id="tab-dashboard"><div class="section" id="sec-holdings"><div class="section-header" onclick="toggleSection('sec-holdings')"><div class="section-title"><div class="dot"></div>Existing Holdings</div><span class="section-toggle">▼</span></div><div class="section-body"><table class="data-table"><thead><tr><th>Ticker</th><th style="text-align:right">Live Price</th><th style="text-align:right">Day %</th><th style="text-align:right">Value</th><th style="text-align:right">Gain/Loss</th><th style="text-align:right">Action</th><th style="text-align:right">Chart</th></tr></thead><tbody id="holdingsTbody"></tbody></table></div></div><div class="section" id="sec-deploy"><div class="section-header" onclick="toggleSection('sec-deploy')"><div class="section-title"><div class="dot" style="background:var(--accent2)"></div>Deployment Plan — New Positions</div><span class="section-toggle">▼</span></div><div class="section-body"><table class="data-table"><thead><tr><th>#</th><th style="text-align:left">Ticker</th><th style="text-align:right">Live Price</th><th style="text-align:right">Entry Target</th><th style="text-align:right">Analyst Target</th><th style="text-align:right">Upside</th><th style="text-align:right">Planned £</th><th style="text-align:right">Status</th><th style="text-align:right">Chart</th></tr></thead><tbody id="deployTbody"></tbody></table></div></div><div class="section" id="sec-ibkr"><div class="section-header" onclick="toggleSection('sec-ibkr')"><div class="section-title"><div class="dot" style="background:#a78bfa"></div>IBKR — SK Hynix Direct (KRX) | CGT Liable</div><span class="section-toggle">▼</span></div><div class="section-body"><div style="padding:16px 20px;"><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px"><div style="background:var(--surface2);border:1px solid var(--border);padding:14px"><div class="stat-label">Ticker / Exchange</div><div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:#a78bfa;margin-top:4px">000660.KRX</div><div style="font-size:11px;color:var(--text-dim);margin-top:2px">Seoul Stock Exchange</div></div><div style="background:var(--surface2);border:1px solid var(--border);padding:14px"><div class="stat-label">Current Price</div><div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--accent2);margin-top:4px">₩1,601,000</div><div style="font-size:11px;color:var(--accent2);margin-top:2px">3 shares | ~£2,673 total | GTC</div></div><div style="background:var(--surface2);border:1px solid var(--border);padding:14px"><div class="stat-label">Your Limit Order</div><div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--accent2);margin-top:4px">₩1,620,000</div><div style="font-size:11px;color:var(--green);margin-top:2px">✅ GTC order placed — fills at 1am UK</div></div><div style="background:var(--surface2);border:1px solid var(--border);padding:14px"><div class="stat-label">Analyst Target</div><div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--accent2);margin-top:4px">₩1,772,000</div><div style="font-size:11px;color:var(--accent2);margin-top:2px">avg | +22% upside | 36 Buy</div></div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px"><div style="background:rgba(167,139,250,0.05);border:1px solid rgba(167,139,250,0.2);padding:16px"><div style="font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:#a78bfa;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px">Why SK Hynix Direct (Not Just ADR)</div><div style="font-size:12px;color:var(--text);line-height:1.8">
+• <strong>World #1 HBM producer</strong> — over 50% global market share<br>
+• <strong>Q1 2026:</strong> revenue ₩52.6T (+60% QoQ), operating margin 71.5%<br>
+• <strong>EPS beat 48.8%</strong> — ₩56,670 actual vs ₩38,090 estimate<br>
+• <strong>+794% in one year</strong> — momentum intact<br>
+• <strong>P/E ~26x</strong> — still cheap vs US peers at 40-80x<br>
+• ADR H2 2026 will bring US premium re-rating<br>
+• Buying KRX now = capturing upside before ADR premium
+</div></div><div style="background:rgba(255,215,0,0.05);border:1px solid rgba(255,215,0,0.2);padding:16px"><div style="font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px">Action Required — Limit Order</div><div style="font-size:12px;color:var(--text);line-height:1.8">
+✅ <strong style="color:var(--accent2)">GTC order placed 18:19</strong> — Buy 3 × 000660 @ ₩1,620,000<br><br>
+Previous 2-share Day orders cancelled. New 3-share GTC order above last ask of ₩1,595,000 — should fill at open.<br><br><strong>Total cost:</strong> 3 × ₩1,620,000 = ₩4,860,000 = <strong>~£2,673</strong><br><strong>KRX opens tonight:</strong><strong style="color:var(--amber)">1am–7:30am UK time</strong><br><strong>Note:</strong> 100-share order at 12:20 (₩1,595,000) was cancelled — confirmed.
+</div></div></div><div style="background:rgba(255,71,87,0.08);border:1px solid rgba(255,71,87,0.2);padding:14px;font-size:12px;line-height:1.8"><strong style="color:var(--red)">⚠️ Tax & Migration Strategy:</strong>
+IBKR position is CGT-liable (no ISA wrapper). 2 shares @ ~₩1,601,000 = ~£1,760 total investment.
+On ₩1,772,000 analyst target, potential gain ~£176 per share (£352 total on 2 shares) — taxable at 20% above £3k exemption.
+Use remaining eToro crystallised losses (NICE -£296, LULU -£151, PYPL -£123) to offset if needed.
+<strong>Migration path:</strong> When SK Hynix ADR lists on NYSE/Nasdaq H2 2026 → sell IBKR KRX position → buy ADR inside HL ISA (ISA-eligible, no KID needed for direct equity).
+This way you capture the KRX momentum now AND get into the ISA wrapper before the full US premium re-rating.
+</div></div></div></div><div class="section" id="sec-earnings"><div class="section-header" onclick="toggleSection('sec-earnings')"><div class="section-title"><div class="dot" style="background:var(--accent3)"></div>Earnings & Key Dates</div><span class="section-toggle">▼</span></div><div class="section-body"><div class="pad" id="earningsList"></div></div></div></div><div class="tab-panel" id="tab-calculator"><div class="section"><div class="section-header"><div class="section-title"><div class="dot" style="background:var(--accent2)"></div>Portfolio Target Value Calculator</div></div><div class="section-body"><div class="calc-grid"><div class="calc-inputs"><div class="input-group"><label class="input-label">Current ISA Value (£)</label><input class="input-field yellow" id="calc-current" value="40602" oninput="runCalc()"></div><div class="input-group"><label class="input-label">Annual ISA Contribution (£)</label><input class="input-field yellow" id="calc-annual" value="20000" oninput="runCalc()"></div><div class="input-group"><label class="input-label">Investment Horizon (years)</label><input class="input-field yellow" id="calc-years" value="10" oninput="runCalc()"></div><div class="input-group"><label class="input-label">Bear Case Annual Return %</label><input class="input-field yellow" id="calc-bear" value="6" oninput="runCalc()"></div><div class="input-group"><label class="input-label">Base Case Annual Return %</label><input class="input-field yellow" id="calc-base" value="12" oninput="runCalc()"></div><div class="input-group"><label class="input-label">Bull Case Annual Return %</label><input class="input-field yellow" id="calc-bull" value="20" oninput="runCalc()"></div><div class="input-group"><label class="input-label">Your Marginal Tax Rate %</label><input class="input-field yellow" id="calc-tax" value="40" oninput="runCalc()"></div><div style="padding:12px;background:var(--surface2);border:1px solid var(--border);font-size:11px;color:var(--text-dim);">
+💡 ISA shelters ALL gains and dividends. Tax saving = what you'd owe on a taxable account at your marginal rate. Base 12% reflects Motley Fool Epic's historical performance target.
+</div></div><div><div class="calc-results" id="calcResults"><div style="font-family:var(--font-display);font-size:13px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:16px;">Projected Portfolio Value</div><div id="calcOutput"></div></div><div style="margin-top:16px;position:relative;height:220px;"><canvas id="calcChart"></canvas></div></div></div></div></div><div class="section"><div class="section-header"><div class="section-title"><div class="dot" style="background:var(--amber)"></div>ISA Tax Saving — What The Wrapper Is Worth To You</div></div><div class="section-body"><div class="pad" id="taxSavingOutput"></div></div></div></div><div class="tab-panel" id="tab-gcal"><div class="section"><div class="section-header"><div class="section-title"><div class="dot" style="background:var(--accent3)"></div>Portfolio Reminders — Export to Google Calendar</div></div><div class="section-body"><div class="pad"><p style="color:var(--text-dim);font-size:12px;margin-bottom:20px;">
+Click any reminder to download a .ics file — compatible with Google Calendar, Apple Calendar, Outlook, and any calendar app.
+Or click "Export All" to download all reminders at once.
+</p><div style="margin-bottom:16px;"><button class="btn" onclick="exportAllICS()">📅 Export All Reminders (.ics)</button></div><div id="gcalList"></div></div></div></div><div class="section"><div class="section-header"><div class="section-title"><div class="dot"></div>Add Custom Reminder</div></div><div class="section-body"><div class="pad"><div class="grid-3" style="margin-bottom:16px;"><div class="input-group"><label class="input-label">Reminder Title</label><input class="input-field" id="custom-title" placeholder="e.g. Check SK Hynix ADR listing"></div><div class="input-group"><label class="input-label">Date</label><input class="input-field" id="custom-date" type="date"></div><div class="input-group"><label class="input-label">Notes</label><input class="input-field" id="custom-notes" placeholder="e.g. Deploy £1,000 reserve"></div></div><button class="btn btn-outline" onclick="addCustomReminder()">+ Add & Download</button></div></div></div></div><div class="tab-panel" id="tab-import"><div class="section"><div class="section-header"><div class="section-title"><div class="dot" style="background:var(--amber)"></div>Hargreaves Lansdown — Manual Sync</div></div><div class="section-body"><div class="pad"><p style="color:var(--text-dim);font-size:12px;margin-bottom:16px;">HL has no public API. Paste your current values from the HL app below. Saved to your browser.</p><div class="grid-3" style="margin-bottom:12px;"><div><label class="input-label">Total ISA Value (£)</label><input class="input-field yellow" id="hl-total" placeholder="40602"></div><div><label class="input-label">Available Cash (£)</label><input class="input-field yellow" id="hl-cash" placeholder="17839"></div><div><label class="input-label">Amount Invested (£)</label><input class="input-field yellow" id="hl-invested" placeholder="20963"></div><div><label class="input-label">Total Gain/Loss (£)</label><input class="input-field yellow" id="hl-gl" placeholder="-154"></div><div><label class="input-label">USD/GBP Rate</label><input class="input-field yellow" id="hl-fx" placeholder="0.735"></div><div><label class="input-label">Date of Reading</label><input class="input-field" id="hl-date" type="date"></div></div><button class="btn btn-amber" onclick="saveHLData()" style="margin-bottom:16px;">💾 Save & Update Dashboard</button></div></div></div><div class="section"><div class="section-header"><div class="section-title"><div class="dot"></div>HL Transaction CSV Import</div></div><div class="section-body"><div class="drop-zone" id="csvDrop" onclick="document.getElementById('csvFile').click()" ondragover="dragover(event)" ondragleave="dragleave(event)" ondrop="dropCSV(event)"><div class="drop-zone-icon">📂</div><div class="drop-zone-label">Drop your HL transaction CSV here, or click to browse</div><div class="drop-zone-sub">Export from HL: Account → Transactions → Download CSV</div><input type="file" id="csvFile" accept=".csv" style="display:none" onchange="readCSV(this.files[0])"></div><div class="import-preview" id="csvPreview" style="display:none"></div></div></div><div class="section"><div class="section-header"><div class="section-title"><div class="dot" style="background:#a78bfa"></div>Motley Fool PDF Import</div></div><div class="section-body"><div class="drop-zone" id="pdfDrop" onclick="document.getElementById('pdfFile').click()" ondragover="dragover(event)" ondragleave="dragleave(event)" ondrop="dropPDF(event)"><div class="drop-zone-icon">📄</div><div class="drop-zone-label">Drop a Motley Fool Epic PDF here to update reference data</div><div class="drop-zone-sub">Supports Epic Portfolio 50 Stocks, AI 5 Stocks, and similar reports</div><input type="file" id="pdfFile" accept=".pdf" style="display:none" onchange="readPDF(this.files[0])"></div><div class="import-preview" id="pdfPreview" style="display:none"></div></div></div></div><div class="tab-panel" id="tab-claude"><div class="section"><div class="section-header"><div class="section-title"><div class="dot" style="background:#a78bfa"></div>Claude AI — Portfolio Analysis</div></div><div class="section-body"><div class="api-key-bar"><label style="font-size:11px;color:var(--text-dim);white-space:nowrap">Anthropic API Key:</label><input type="password" class="api-key-input" id="apiKeyInput" placeholder="sk-ant-... (stored in browser only)" onchange="saveApiKey(this.value)"><span style="font-size:10px;color:var(--text-dim);white-space:nowrap">🔒 Never shared — goes directly to Anthropic</span></div><div class="chat-container"><div class="chat-messages" id="chatMessages"><div class="msg assistant"><div class="msg-label">Claude</div>
+Hi Jude! I have full context of your ISA portfolio, deployment plan, tax situation, and Motley Fool research. Ask me anything — which positions to buy first, SK Hynix ADR timing, tax implications of specific trades, or analysis of any Epic Portfolio pick.
+</div></div><div class="chat-input-area"><textarea class="chat-input" id="chatInput" placeholder="Ask about your portfolio... e.g. 'Which Tier 1 positions should I buy first Monday?' or 'What's the latest on SK Hynix ADR?'" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMessage();}"></textarea><button class="btn" onclick="sendMessage()" id="sendBtn">Send →</button></div></div></div></div></div><div class="tab-panel" id="tab-log"><div class="section"><div class="section-header"><div class="section-title"><div class="dot" style="background:var(--accent2)"></div>Portfolio Review Log</div></div><div class="section-body"><div id="reviewLogContainer"></div><div class="add-review"><textarea id="reviewText" placeholder="Add a review note... what changed, what you decided, market context"></textarea><button class="btn btn-outline" onclick="addReview()" style="white-space:nowrap;align-self:flex-start">+ Add Entry</button></div></div></div></div><div class="tab-panel" id="tab-cgt"><div style="background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.3);padding:14px 20px;margin-bottom:16px;font-size:12px;color:#e2e8f0;line-height:1.7;"><strong style="color:#ffd700">How this works:</strong> You have ~£3,314 in unrealised losses across eToro. Crystallising losses in the same tax year as gains can reduce or eliminate CGT.
+The 30-day bed & breakfast rule means you cannot rebuy the <em>same</em> asset within 30 days of selling at a loss — but you <em>can</em> sell IONQ at a loss and buy TTD (different asset).
+CGT annual exemption: <strong>£3,000</strong>. Higher-rate CGT: <strong>20%</strong>. Update the yellow cells with your actual figures.
+</div><div class="section" id="sec-cgt-etoro"><div class="section-header" onclick="toggleSection('sec-cgt-etoro')"><div class="section-title"><div class="dot" style="background:#ff4757"></div>eToro Positions — Crystallisable Losses</div><span class="section-toggle">▼</span></div><div class="section-body"><div style="padding:10px 20px 4px;font-size:11px;color:var(--text-dim)">
+Edit the Action column to mark positions as CLOSE, HOLD, or REVIEW. Totals update automatically.
+</div><table class="data-table" id="cgtEtoroTable"><thead><tr><th style="text-align:left">Ticker</th><th>Invested (£)</th><th>Current Value (£)</th><th>Unrealised P/L (£)</th><th>Recovery Thesis</th><th>Action</th><th>Crystallise Loss?</th></tr></thead><tbody id="cgtEtoroTbody"></tbody><tfoot id="cgtEtoroFoot"></tfoot></table></div></div><div class="section" id="sec-cgt-gains"><div class="section-header" onclick="toggleSection('sec-cgt-gains')"><div class="section-title"><div class="dot" style="background:#00ff9d"></div>Planned eToro Gain Positions — TTD & CLBT</div><span class="section-toggle">▼</span></div><div class="section-body"><div style="padding:14px 20px 4px;font-size:11px;color:var(--text-dim)">
+These are positions you plan to open on eToro (outside ISA). Edit the yellow investment amount and target price to model your gain and net CGT.
+</div><table class="data-table" id="cgtGainTable"><thead><tr><th style="text-align:left">Ticker</th><th>Entry Price</th><th>Target Price</th><th>Target Upside</th><th>Planned Investment (£)</th><th>Projected Gain (£)</th><th>Timeline</th></tr></thead><tbody id="cgtGainTbody"></tbody></table></div></div><div class="section" id="sec-action-plan"><div class="section-header" onclick="toggleSection('sec-action-plan')"><div class="section-title"><div class="dot" style="background:var(--accent3)"></div>eToro Action Plan — Step by Step with Amounts</div><span class="section-toggle">▼</span></div><div class="section-body" id="etoroActionPlan"><div style="padding:20px;color:var(--text-dim);font-size:12px">Loading action plan...</div></div></div><div class="section" id="sec-cgt-calc"><div class="section-header" onclick="toggleSection('sec-cgt-calc')"><div class="section-title"><div class="dot" style="background:#ffd700"></div>CGT Net Position Calculator</div><span class="section-toggle">▼</span></div><div class="section-body"><div class="pad"><div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;"><div><div style="font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:16px;">Your Inputs</div><div class="input-group"><label class="input-label">Losses to Crystallise (£) — from table above</label><input class="input-field yellow" id="cgt-losses" value="574" oninput="runCGT()"></div><div class="input-group"><label class="input-label">Projected Gains this Tax Year (£)</label><input class="input-field yellow" id="cgt-gains" value="800" oninput="runCGT()"></div><div class="input-group"><label class="input-label">Other Capital Gains this Year (£)</label><input class="input-field yellow" id="cgt-other" value="0" oninput="runCGT()"></div><div class="input-group"><label class="input-label">CGT Annual Exemption (£)</label><input class="input-field" id="cgt-exempt" value="3000" oninput="runCGT()"></div><div class="input-group"><label class="input-label">CGT Rate (% — higher rate = 20%)</label><input class="input-field" id="cgt-rate" value="20" oninput="runCGT()"></div><div style="padding:12px;background:var(--surface2);border:1px solid var(--border);font-size:11px;color:var(--text-dim);line-height:1.7;margin-top:8px;"><strong style="color:var(--text-bright)">30-day rule reminder:</strong> Cannot rebuy the SAME asset within 30 days of selling at a loss. Selling IONQ and buying TTD = fine. Selling IONQ and rebuying IONQ within 30 days = loss disallowed.
+</div></div><div id="cgtResults" style="background:var(--surface2);border:1px solid var(--border);padding:20px;"><div style="font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:16px;">Your CGT Position</div><div id="cgtOutput"></div></div></div><div style="margin-top:24px;"><div style="font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;">TTD Scenario Analysis — Net Return After CGT</div><table class="data-table" id="scenarioTable"><thead><tr><th style="text-align:left">Scenario</th><th>TTD Entry</th><th>TTD Target</th><th>Investment (£)</th><th>Gross Gain (£)</th><th>Losses Available (£)</th><th>Taxable Gain (£)</th><th>CGT Owed (£)</th><th>Net Return (£)</th><th>Net Return %</th></tr></thead><tbody id="scenarioTbody"></tbody></table></div><div style="margin-top:20px;padding:16px;background:var(--surface2);border:1px solid var(--border);"><div style="font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:var(--accent2);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;">Optimal Strategy</div><div id="strategyNotes" style="font-size:12px;color:var(--text);line-height:1.8;"></div></div></div></div></div><div class="section" id="sec-cgt-2027"><div class="section-header" onclick="toggleSection('sec-cgt-2027')"><div class="section-title"><div class="dot" style="background:#a78bfa"></div>April 2027 — ISA Priority Buy List</div><span class="section-toggle">▼</span></div><div class="section-body"><div style="padding:14px 20px 4px;font-size:11px;color:var(--text-dim)">
+When the new ISA allowance opens 6 April 2027, these are your priority buys — in order. Positions held on eToro should be migrated into ISA over future tax years via bed & ISA.
+</div><table class="data-table" id="priority2027Table"><thead><tr><th>#</th><th style="text-align:left">Ticker</th><th style="text-align:left">Company</th><th>Current Price</th><th>Analyst Target</th><th>Why Priority</th><th>Access Route</th></tr></thead><tbody id="priority2027Tbody"></tbody></table></div></div></div></div><div class="modal-overlay" id="chartModal"><div class="modal"><div class="modal-header"><div class="modal-title" id="modalTitle">Price Chart</div><button class="modal-close" onclick="closeModal()">✕</button></div><div style="display:flex;gap:8px;margin-bottom:12px"><button class="chart-btn" onclick="loadChart(currentTicker,'1mo')">1M</button><button class="chart-btn" onclick="loadChart(currentTicker,'3mo')">3M</button><button class="chart-btn" onclick="loadChart(currentTicker,'6mo')">6M</button><button class="chart-btn" onclick="loadChart(currentTicker,'1y')">1Y</button></div><div class="chart-container"><canvas id="priceChart"></canvas></div><div id="chartStats" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px;"></div></div></div><script>
+const HOLDINGS=[
+{ticker:'VWRL',name:'Vanguard Global All Cap',costGbp:14999,currentGbp:9936,action:'hold',actionLabel:'REDUCED £5k',note:'Partial sale executed. Keeping ~£10k as passive core.',currency:'GBP',hlOnly:true},
+{ticker:'NVDA',name:'Nvidia Corp',costGbp:1899,currentGbp:1760,action:'hold',actionLabel:'HOLD',note:'Moneyball #2.',currency:'USD',yahooTicker:'NVDA'},
+{ticker:'SNDK',name:'Sandisk Corp',costGbp:1444,currentGbp:1611,action:'hold',actionLabel:'HOLD +11.6%',note:'Memory/HBM proxy.',currency:'USD',yahooTicker:'SNDK'},
+{ticker:'LSEG',name:'London Stock Exch Group',costGbp:1999,currentGbp:1911,action:'watch',actionLabel:'MONITOR',note:'UK financial data.',currency:'GBP',yahooTicker:'LSEG.L'},
+{ticker:'CRWD',name:'CrowdStrike',costGbp:677,currentGbp:655,action:'hold',actionLabel:'TOP UP PLANNED',note:'Epic Portfolio. Top up to £1,200.',currency:'USD',yahooTicker:'CRWD'},
+{ticker:'LGEN',name:'Legal & General',costGbp:97,currentGbp:90,action:'close',actionLabel:'CLOSE',note:'Too small. £90.',currency:'GBP',yahooTicker:'LGEN.L'},
+{ticker:'GOOG',name:'Alphabet (pending)',costGbp:0,currentGbp:600,action:'hold',actionLabel:'PENDING £600',note:'Epic #1. Top up to £1k.',currency:'USD',yahooTicker:'GOOG'},
+];
+const DEPLOY=[
+{rank:1,ticker:'TTD',name:'The Trade Desk',yahoo:'TTD',entryUsd:21,targetUsd:41,gbp:2300,currency:'USD',status:'hold',statusLabel:'✅ ETORO £800',note:'£800 total on eToro (X1 stock, not CFD). CGT offset by £574 crystallised losses. HL blocked until Sep 2026 compliance cure. Migrate to HL ISA Apr 2027 via bed & ISA. TTD earnings result pending tonight.'},
+{rank:2,ticker:'CLBT',name:'Cellebrite',yahoo:'CLBT',entryUsd:13,targetUsd:23,gbp:1800,currency:'USD',status:'close',statusLabel:'APR 2027 — T212',note:'Not available on HL (Israeli incorporation). T212 transfer not worth it for £500 position — would lock £24,062 cash for 30 days. Decision: open T212 ISA with fresh money April 2027. Strong Buy, 77% upside. Meanwhile hold eToro TTD as proxy conviction play.'},
+{rank:3,ticker:'MU',name:'Micron Technology',yahoo:'MU',entryUsd:455,targetUsd:575,gbp:1800,currency:'USD',status:'buy',statusLabel:'BUY — ISA CASH',note:'SK Hynix bridge. Deploy from existing £17,839 HL ISA cash. No new contributions needed — using existing ISA cash balance.'},
+{rank:4,ticker:'FIX',name:'Comfort Systems',yahoo:'FIX',entryUsd:1840,targetUsd:2000,gbp:1600,currency:'USD',status:'buy',statusLabel:'BUY — ISA CASH',note:'Triple conviction: Epic 50 + Moneyball #5 + AI Rankings #9. Deploy from HL ISA cash balance.'},
+{rank:5,ticker:'EME',name:'EMCOR Group',yahoo:'EME',entryUsd:892,targetUsd:1100,gbp:1600,currency:'USD',status:'buy',statusLabel:'BUY — ISA CASH',note:'AI Rankings #2 + Epic 50. Just beat Q1 2026. Deploy from HL ISA cash balance.'},
+{rank:6,ticker:'MELI',name:'MercadoLibre',yahoo:'MELI',entryUsd:1792,targetUsd:2700,gbp:1600,currency:'USD',status:'wait',statusLabel:'CALL 7 MAY',note:'Revenue BEAT $8.76B vs $8.31B est (+$286M). EPS mixed. Formal call 7 May 5pm ET. Current price ~$1,850. Original wait advice holds — listen to call first.'},
+{rank:7,ticker:'MANH',name:'Manhattan Associates',yahoo:'MANH',entryUsd:138,targetUsd:220,gbp:1100,currency:'USD',status:'buy',statusLabel:'BUY',note:'Beat Q1 2026. Zero debt.'},
+{rank:8,ticker:'GOOG',name:'Alphabet (top up)',yahoo:'GOOG',entryUsd:385,targetUsd:500,gbp:400,currency:'USD',status:'buy',statusLabel:'TOP UP',note:'Top up to ~£1k total.'},
+{rank:9,ticker:'CRWD',name:'CrowdStrike (top up)',yahoo:'CRWD',entryUsd:450,targetUsd:510,gbp:550,currency:'USD',status:'buy',statusLabel:'TOP UP',note:'Top up to ~£1,200 total.'},
+{rank:10,ticker:'IBM',name:'IBM',yahoo:'IBM',entryUsd:231,targetUsd:340,gbp:900,currency:'USD',status:'buy',statusLabel:'BUY — DIV TAX',note:'3.2% dividend. Urgent tax shelter.'},
+{rank:11,ticker:'AXON',name:'Axon Enterprise',yahoo:'AXON',entryUsd:397,targetUsd:759,gbp:700,currency:'USD',status:'wait',statusLabel:'WAIT 6 MAY',note:'Earnings 6 May after close — 5pm ET Zoom call. 2026 guidance: 27-30% revenue growth. 2028 target: $6B revenue, 28% EBITDA margin. 54% below 52-wk high. Wait for results before buying.'},
+{rank:12,ticker:'NET',name:'Cloudflare',yahoo:'NET',entryUsd:125,targetUsd:155,gbp:700,currency:'USD',status:'buy',statusLabel:'BUY',note:'Epic Portfolio. AI agent tollbooth.'},
+{rank:13,ticker:'CDNS',name:'Cadence Design',yahoo:'CDNS',entryUsd:330,targetUsd:365,gbp:700,currency:'USD',status:'watch',statusLabel:'DIPS <$310',note:'Record backlog.'},
+{rank:14,ticker:'AZN',name:'AstraZeneca',yahoo:'AZN.L',entryGbp:139,targetGbp:165,gbp:700,currency:'GBP',status:'watch',statusLabel:'DIPS <£135',note:'UK-listed. No PRIIPs/FX.'},
+{rank:'—',ticker:'SK-ADR',name:'SK Hynix ADR (TBC)',yahoo:null,entryUsd:0,targetUsd:0,gbp:1000,currency:'USD',status:'watch',statusLabel:'HOLD CASH',note:'ADR confirmed H2 2026 (CEO at AGM). Could raise up to $14B via 2-3% share issuance. Funds earmarked for Yongin fab and Indiana facility. New disclosure within 6 months of March 2026 filing.'},
+];
+const EARNINGS=[
+{date:'Tue 6 May 2026',ticker:'AXON',company:'Axon Enterprise',eps:'$1.66 est',action:'WAIT before buying',urgent:true,isoDate:'2026-05-06'},
+{date:'Wed 7 May 2026',ticker:'TTD',company:'The Trade Desk',eps:'$0.28 est',action:'Hold — already owned',urgent:true,isoDate:'2026-05-07'},
+{date:'Wed 7 May 2026',ticker:'MELI',company:'MercadoLibre',eps:'Revenue BEAT $8.76B — call 5pm ET',action:'Listen to call. Revenue beat $286M. Enter if guidance strong.',urgent:true,isoDate:'2026-05-07'},
+{date:'Jun 2026',ticker:'MU',company:'Micron Technology',eps:'TBC',action:'Monitor for HBM data',urgent:false,isoDate:'2026-06-01'},
+{date:'Jun 9 2026',ticker:'CRWD',company:'CrowdStrike',eps:'$1.07 est',action:'Hold through earnings',urgent:false,isoDate:'2026-06-09'},
+{date:'H2 2026 (TBC)',ticker:'SK-ADR',company:'SK Hynix ADR Listing',eps:'LISTING EVENT',action:'Sell IBKR KRX position → buy ADR in HL ISA. £1,000 cash also reserved. Best of both worlds.',urgent:false,isoDate:'2026-09-01'},{date:'Jul 29 2026',ticker:'000660',company:'SK Hynix Q2 2026 Earnings (KRX)',eps:'~₩64,140 est',action:'Monitor — hold IBKR position through earnings. Next major catalyst.',urgent:false,isoDate:'2026-07-29'},{date:'14 May 2026',ticker:'CLBT',company:'Cellebrite Q1 2026',eps:'$0.14 est',action:'Hold eToro position through earnings. Strong Buy consensus.',urgent:false,isoDate:'2026-05-14'},
+];
+const GCAL_EVENTS=[
+{title:'ISA: Buy TTD, CLBT, MU, FIX, EME',date:'2026-05-04',notes:'Deploy Tier 1 positions Monday open. TTD ~$21, CLBT ~$13, MU ~$455, FIX ~$1840, EME ~$892.',alarm:-30},
+{title:'ISA: AXON Earnings — Wait Before Buying',date:'2026-05-06',notes:'Axon Enterprise Q1 2026 results after close, 5pm ET Zoom call. 2026 guidance 27-30% growth. 2028 target $6B revenue. 54% below 52wk high. Do not buy before results.',alarm:-60},
+{title:'ISA: TTD Earnings + MELI Call',date:'2026-05-07',notes:'TTD Q1 after close (rev guidance $678M+, ±14% move priced in — CEO bought $150M personally). MELI already beat revenue $8.76B — formal call 5pm ET today. Watch for MELI entry if stock dips post-call.',alarm:-60},
+{title:'CANCEL: SK Hynix KRX Orders on eToro',date:'2026-05-07',notes:'Cancel all pending 000660 KRX limit orders on eToro. Execution unreliable. Wait for SK Hynix ADR on NYSE/Nasdaq H2 2026. £1,000 cash reserved at HL for ADR.',alarm:-30},{title:'CLBT Earnings — Hold eToro Position',date:'2026-05-14',notes:'Cellebrite Q1 2026 earnings. Hold £474 eToro position. Est EPS $0.14. Strong Buy consensus, 77% analyst upside. Upgrade cycle 20% done.',alarm:-60},{title:'IBKR: Check SK Hynix KRX Order Status',date:'2026-05-07',notes:'KRX opens 1am-7am UK time. Check if limit order at 1,594,000 KRW has filled. Consider raising to 1,610,000 KRW or switching to market order if still unfilled. 2 shares = ~£1,760.',alarm:-30},{title:'SK Hynix Q2 2026 Earnings (KRX)',date:'2026-07-29',notes:'SK Hynix reports Q2 2026. Hold IBKR position through earnings. Q1 was extraordinary: revenue +60% QoQ, operating margin 71.5%, EPS beat 48.8%. Monitor for any HBM demand signals.',alarm:-120},{title:'ISA: Monthly Portfolio Review',date:'2026-06-01',notes:'Update HL values in app, refresh analyst targets, check SK Hynix ADR filing progress and IBKR KRX position.',alarm:-60},
+{title:'ISA: CRWD Earnings — Hold',date:'2026-06-09',notes:'CrowdStrike Q1 2026. EPS est $1.07. Already topped up — no action needed.',alarm:-30},
+{title:'ISA: Watch for SK Hynix ADR Listing',date:'2026-07-01',notes:'SK Hynix ADR targeting H2 2026 (confirmed by CEO at March 2026 AGM). Could raise up to $14B. 2-3% new share issuance. £1,000 reserved. Set Google alerts: SK Hynix ADR NYSE and SK Hynix F-1 SEC filing. Deploy immediately on listing day.',alarm:-120},
+{title:'ISA: 2026/27 Allowance Opens — Priority Buys',date:'2027-04-06',notes:'New £20,000 ISA allowance opens. Priority 1: TTD (if HL re-enabled or use T212). Priority 2: CLBT (use T212 ISA). Priority 3: top up existing positions. Consider Cash ISA allocation before S&S if rates still attractive.',alarm:-1440},{title:'ISA: Year-End — Use Full Allowance',date:'2027-04-04',notes:'Final week of 2026/27 ISA year. Ensure full £20,000 allowance deployed. Review all positions.',alarm:-1440},
+];
+function showTab(id){
+document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+document.getElementById('tab-'+id).classList.add('active');
+const tabs={'dashboard':0,'calculator':1,'gcal':2,'import':3,'claude':4,'log':5,'cgt':6};
+document.querySelectorAll('.nav-tab')[tabs[id]]?.classList.add('active');
+if(id==='calculator') runCalc();
+}
+function toggleSection(id){document.getElementById(id).classList.toggle('collapsed');}
+const priceCache={};
+async function fetchPrice(t){
+if(!t) return null;
+if(priceCache[t]&&Date.now()-priceCache[t].ts<300000) return priceCache[t];
+try{
+const url=`https://query1.finance.yahoo.com/v8/finance/chart/${t}?interval=1d&range=1d`;
+const r=await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`);
+const o=await r.json();
+const d=JSON.parse(o.contents);
+const q=d.chart.result[0].meta;
+const res={price:q.regularMarketPrice,prevClose:q.chartPreviousClose||q.previousClose,currency:q.currency,ts:Date.now()};
+res.change=res.price-res.prevClose;
+res.changePct=res.change/res.prevClose*100;
+priceCache[t]=res;
+return res;
+}catch(e){return null;}
+}
+async function fetchHistory(t,range='3mo'){
+try{
+const url=`https://query1.finance.yahoo.com/v8/finance/chart/${t}?interval=1d&range=${range}`;
+const r=await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`);
+const o=await r.json();
+const d=JSON.parse(o.contents);
+const res=d.chart.result[0];
+return res.timestamp.map((ts,i)=>({
+date:new Date(ts*1000).toLocaleDateString('en-GB',{day:'2-digit',month:'short'}),
+price:res.indicators.quote[0].close[i]
+})).filter(d=>d.price!==null);
+}catch(e){return null;}
+}
+async function refreshAllPrices(){
+const btn=document.getElementById('refreshBtn');
+btn.disabled=true; btn.textContent='↻ ...';
+const tickers=[
+...HOLDINGS.filter(h=>h.yahooTicker).map(h=>({id:h.ticker,yahoo:h.yahooTicker,type:'h'})),
+...DEPLOY.filter(p=>p.yahoo).map(p=>({id:p.ticker,yahoo:p.yahoo,type:'d'})),
+];
+for(const t of tickers){
+const data=await fetchPrice(t.yahoo);
+if(!data) continue;
+const isGbx=data.currency==='GBp'||data.currency==='GBX';
+const p=isGbx?data.price/100:data.price;
+const sym=t.yahoo.endsWith('.L')?'£':'$';
+const cls=data.changePct>=0?'pos':'neg';
+const sign=data.changePct>=0?'+':'';
+const pfx=t.type==='h'?'price-':'dprice-';
+const cfx=t.type==='h'?'change-':'dchange-';
+const el=document.getElementById(pfx+t.id);
+const cel=document.getElementById(cfx+t.id);
+if(el) el.innerHTML=`<span class="${cls}">${sym}${p.toFixed(2)}</span>`;
+if(cel) cel.innerHTML=`<span class="${cls}">${sign}${data.changePct.toFixed(2)}%</span>`;
+}
+document.getElementById('lastUpdated').textContent='Updated '+new Date().toLocaleTimeString('en-GB');
+btn.disabled=false; btn.textContent='↻ Prices';
+}
+function badge(s,l){return`<span class="status-badge status-${s}">${l}</span>`;}
+function renderHoldings(){
+document.getElementById('holdingsTbody').innerHTML=HOLDINGS.map(h=>{
+const gl=h.currentGbp-h.costGbp;
+const glP=h.costGbp>0?gl/h.costGbp*100:0;
+const aMap={hold:'hold',watch:'watch',close:'close'};
+return`<tr><td><div class="ticker-badge">${h.ticker}<span class="ticker-flag ${h.currency==='GBP'?'uk':''}">${h.currency}</span></div><div class="ticker-name">${h.name}</div></td><td class="td-right"><div class="price-live" id="price-${h.ticker}">${h.yahooTicker?'<span class="loading-price">...</span>':'<span class="neu">N/A</span>'}</div></td><td class="td-right" id="change-${h.ticker}"><span class="neu">—</span></td><td class="td-right">£${h.currentGbp.toLocaleString()}</td><td class="td-right"><span class="${gl>=0?'pos':'neg'}">${gl>=0?'+':''} £${Math.abs(gl).toLocaleString()} (${glP.toFixed(1)}%)</span></td><td class="td-right">${badge(aMap[h.action]||'hold',h.actionLabel)}</td><td class="td-right">${h.yahooTicker?`<button class="chart-btn" onclick="openChart('${h.yahooTicker}','${h.ticker}')">📈</button>`:'—'}</td></tr>`;
+}).join('');
+}
+function renderDeploy(){
+document.getElementById('deployTbody').innerHTML=DEPLOY.map(p=>{
+const up=p.currency==='GBP'?p.targetGbp&&p.entryGbp?Math.round((p.targetGbp-p.entryGbp)/p.entryGbp*100):null
+:p.targetUsd&&p.entryUsd?Math.round((p.targetUsd-p.entryUsd)/p.entryUsd*100):null;
+const entStr=p.currency==='GBP'?`£${p.entryGbp||'TBC'}`:(p.entryUsd?`$${p.entryUsd.toLocaleString()}`:'TBC');
+const tgtStr=p.currency==='GBP'?`£${p.targetGbp||'TBC'}`:(p.targetUsd?`$${p.targetUsd.toLocaleString()}`:'TBC');
+return`<tr title="${p.note}"><td class="td-right" style="color:var(--text-dim)">${p.rank}</td><td><div class="ticker-badge">${p.ticker}<span class="ticker-flag ${p.currency==='GBP'?'uk':''}">${p.currency}</span></div><div class="ticker-name">${p.name}</div></td><td class="td-right"><div class="price-live" id="dprice-${p.ticker}">${p.yahoo?'<span class="loading-price">...</span>':'<span class="neu">—</span>'}</div><div id="dchange-${p.ticker}"></div></td><td class="td-right"><span style="color:var(--amber)">${entStr}</span></td><td class="td-right"><span style="color:var(--accent2)">${tgtStr}</span></td><td class="td-right">${up?`<span class="pos">+${up}%</span>`:'—'}</td><td class="td-right"><strong style="color:var(--text-bright)">£${p.gbp.toLocaleString()}</strong></td><td class="td-right">${badge(p.status,p.statusLabel)}</td><td class="td-right">${p.yahoo?`<button class="chart-btn" onclick="openChart('${p.yahoo}','${p.ticker}')">📈</button>`:'—'}</td></tr>`;
+}).join('');
+}
+function renderEarnings(){
+document.getElementById('earningsList').innerHTML=EARNINGS.map(e=>`
+<div class="earnings-item"><div class="earnings-date">${e.date}</div><div class="earnings-ticker">${e.ticker}</div><div style="font-size:12px;color:var(--text-dim)">${e.company} — ${e.eps}</div><div>${badge(e.urgent?'wait':'watch',e.action)}</div></div>`).join('');
+}
+let calcChart=null;
+function runCalc(){
+const current=parseFloat(document.getElementById('calc-current').value)||40602;
+const annual=parseFloat(document.getElementById('calc-annual').value)||20000;
+const years=parseInt(document.getElementById('calc-years').value)||10;
+const bear=parseFloat(document.getElementById('calc-bear').value)/100||0.06;
+const base=parseFloat(document.getElementById('calc-base').value)/100||0.12;
+const bull=parseFloat(document.getElementById('calc-bull').value)/100||0.20;
+const tax=parseFloat(document.getElementById('calc-tax').value)/100||0.40;
+function project(r){
+let v=current;
+const vals=[v];
+for(let y=0;y<years;y++){v=v*(1+r)+annual;vals.push(Math.round(v));}
+return vals;
+}
+function projectTaxable(r){
+let v=current;
+const vals=[v];
+for(let y=0;y<years;y++){
+const gain=v*r;
+const afterTax=v+gain*(1-tax)+annual;
+v=afterTax;
+vals.push(Math.round(v));
+}
+return vals;
+}
+const bearVals=project(bear);
+const baseVals=project(base);
+const bullVals=project(bull);
+const taxableVals=projectTaxable(base);
+const labels=Array.from({length:years+1},(_,i)=>i===0?'Now':`Y${i}`);
+const fmt=(v)=>'£'+Math.round(v).toLocaleString();
+const bearFinal=bearVals[years];
+const baseFinal=baseVals[years];
+const bullFinal=bullVals[years];
+const taxFinal=taxableVals[years];
+const taxSaving=baseFinal-taxFinal;
+document.getElementById('calcOutput').innerHTML=`
+<div class="calc-result-row"><span class="calc-result-label">Bear Case (${Math.round(bear*100)}% pa)</span><span class="calc-result-value">${fmt(bearFinal)}</span></div><div class="scenario-bar"><div class="scenario-fill" style="width:${Math.min(bearFinal/bullFinal*100,100)}%;background:var(--red)"></div></div><div class="calc-result-row" style="margin-top:8px"><span class="calc-result-label">Base Case (${Math.round(base*100)}% pa)</span><span class="calc-result-value">${fmt(baseFinal)}</span></div><div class="scenario-bar"><div class="scenario-fill" style="width:${Math.min(baseFinal/bullFinal*100,100)}%"></div></div><div class="calc-result-row" style="margin-top:8px"><span class="calc-result-label">Bull Case (${Math.round(bull*100)}% pa)</span><span class="calc-result-value big">${fmt(bullFinal)}</span></div><div class="scenario-bar"><div class="scenario-fill" style="width:100%;background:var(--green)"></div></div><div class="calc-result-row" style="margin-top:16px;padding-top:12px;border-top:1px solid var(--border)"><span class="calc-result-label">Total Contributions over ${years}yr</span><span class="calc-result-value">${fmt(current+annual*years)}</span></div><div class="calc-result-row"><span class="calc-result-label">ISA Tax Saving vs Taxable Account</span><span class="calc-result-value" style="color:var(--amber)">${fmt(taxSaving)}</span></div>
+`;
+document.getElementById('taxSavingOutput').innerHTML=`
+<div class="grid-4" style="margin-bottom:20px"><div style="background:var(--surface2);border:1px solid var(--border);padding:16px"><div class="stat-label">ISA Value (Base, ${years}yr)</div><div style="font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--accent2);margin-top:4px">${fmt(baseFinal)}</div></div><div style="background:var(--surface2);border:1px solid var(--border);padding:16px"><div class="stat-label">Taxable Account Value</div><div style="font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--red);margin-top:4px">${fmt(taxFinal)}</div></div><div style="background:var(--surface2);border:1px solid var(--border);padding:16px"><div class="stat-label">ISA Tax Saving</div><div style="font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--amber);margin-top:4px">${fmt(taxSaving)}</div></div><div style="background:var(--surface2);border:1px solid var(--border);padding:16px"><div class="stat-label">Tax Saving as % of ISA</div><div style="font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--amber);margin-top:4px">${(taxSaving/baseFinal*100).toFixed(1)}%</div></div></div><div style="font-size:12px;color:var(--text-dim);line-height:1.8;padding:16px;background:var(--surface2);border:1px solid var(--border)"><strong style="color:var(--text-bright)">How to read this:</strong> At ${Math.round(base*100)}% annual returns, your ISA could reach <strong style="color:var(--accent2)">${fmt(baseFinal)}</strong> after ${years} years.
+A taxable account with identical returns but ${Math.round(tax*100)}% tax on gains would only reach <strong style="color:var(--red)">${fmt(taxFinal)}</strong>.
+The ISA wrapper is worth approximately <strong style="color:var(--amber)">${fmt(taxSaving)}</strong> to you over this period — real money that stays in your pocket rather than going to HMRC.
+As a higher-rate taxpayer (dividend tax 39.35%, CGT 20% above £3k), the ISA is one of your most powerful financial tools.
+</div>`;
+const ctx=document.getElementById('calcChart').getContext('2d');
+if(calcChart){calcChart.destroy();}
+calcChart=new Chart(ctx,{
+type:'line',
+data:{
+labels,
+datasets:[
+{label:'Bull',data:bullVals,borderColor:'#00ff9d',backgroundColor:'rgba(0,255,157,0.05)',borderWidth:2,pointRadius:0,tension:0.3,fill:false},
+{label:'Base',data:baseVals,borderColor:'#00d4ff',backgroundColor:'rgba(0,212,255,0.05)',borderWidth:2,pointRadius:0,tension:0.3,fill:false},
+{label:'Bear',data:bearVals,borderColor:'#ff4757',backgroundColor:'rgba(255,71,87,0.05)',borderWidth:1,borderDash:[4,4],pointRadius:0,tension:0.3,fill:false},
+{label:'Taxable',data:taxableVals,borderColor:'#64748b',backgroundColor:'transparent',borderWidth:1,borderDash:[2,4],pointRadius:0,tension:0.3,fill:false},
+]
+},
+options:{
+responsive:true,maintainAspectRatio:false,
+plugins:{legend:{labels:{color:'#64748b',font:{family:'DM Mono',size:10}}},tooltip:{backgroundColor:'#111827',borderColor:'#1e3a5f',borderWidth:1,titleColor:'#00d4ff',bodyColor:'#e2e8f0',callbacks:{label:ctx=>`${ctx.dataset.label}: £${Math.round(ctx.raw).toLocaleString()}`}}},
+scales:{
+x:{grid:{color:'rgba(30,58,95,0.4)'},ticks:{color:'#64748b',font:{family:'DM Mono',size:9},maxTicksLimit:6}},
+y:{grid:{color:'rgba(30,58,95,0.4)'},ticks:{color:'#64748b',font:{family:'DM Mono',size:9},callback:v=>'£'+Math.round(v/1000)+'k'},position:'right'}
+}
+}
+});
+}
+function renderGCal(){
+const customEvents=JSON.parse(localStorage.getItem('customReminders')||'[]');
+const allEvents=[...GCAL_EVENTS,...customEvents];
+document.getElementById('gcalList').innerHTML=allEvents.map((e,i)=>`
+<div class="gcal-item"><div class="gcal-info"><div class="gcal-title">${e.title}</div><div class="gcal-detail">${e.date} — ${e.notes}</div></div><button class="btn btn-outline" onclick="downloadICS([${JSON.stringify(e)}],'reminder_${i}')" style="margin-left:16px;white-space:nowrap">📅 Add to Calendar</button></div>`).join('');
+}
+function makeICS(events){
+const now=new Date().toISOString().replace(/[-:]/g,'').split('.')[0]+'Z';
+const lines=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Jude ISA Portfolio//EN','CALSCALE:GREGORIAN'];
+events.forEach(e=>{
+const d=e.date.replace(/-/g,'');
+lines.push('BEGIN:VEVENT',
+`DTSTART;VALUE=DATE:${d}`,
+`DTEND;VALUE=DATE:${d}`,
+`SUMMARY:${e.title}`,
+`DESCRIPTION:${(e.notes||'').replace(/,/g,'\\,')}`,
+`DTSTAMP:${now}`,
+`UID:jude-isa-${d}-${Math.random().toString(36).substr(2,9)}@portfolio`,
+e.alarm?`BEGIN:VALARM\nTRIGGER:${e.alarm<0?'-':''}PT${Math.abs(e.alarm)}M\nACTION:DISPLAY\nDESCRIPTION:${e.title}\nEND:VALARM`:'',
+'END:VEVENT');
+});
+lines.push('END:VCALENDAR');
+return lines.filter(Boolean).join('\r\n');
+}
+function downloadICS(events,filename='portfolio_reminders'){
+const blob=new Blob([makeICS(events)],{type:'text/calendar'});
+const a=document.createElement('a');
+a.href=URL.createObjectURL(blob);
+a.download=`${filename}.ics`;
+a.click();
+}
+function exportAllICS(){
+const custom=JSON.parse(localStorage.getItem('customReminders')||'[]');
+downloadICS([...GCAL_EVENTS,...custom],'jude_isa_all_reminders');
+}
+function addCustomReminder(){
+const title=document.getElementById('custom-title').value.trim();
+const date=document.getElementById('custom-date').value;
+const notes=document.getElementById('custom-notes').value.trim();
+if(!title||!date){alert('Please enter a title and date.');return;}
+const e={title,date,notes,alarm:-60};
+const saved=JSON.parse(localStorage.getItem('customReminders')||'[]');
+saved.push(e);
+localStorage.setItem('customReminders',JSON.stringify(saved));
+downloadICS([e],`reminder_${title.replace(/\s+/g,'_').toLowerCase()}`);
+document.getElementById('custom-title').value='';
+document.getElementById('custom-date').value='';
+document.getElementById('custom-notes').value='';
+renderGCal();
+}
+function dragover(e){e.preventDefault();e.currentTarget.classList.add('dragover');}
+function dragleave(e){e.currentTarget.classList.remove('dragover');}
+function dropCSV(e){
+e.preventDefault();
+e.currentTarget.classList.remove('dragover');
+const file=e.dataTransfer.files[0];
+if(file) readCSV(file);
+}
+function readCSV(file){
+const reader=new FileReader();
+reader.onload=function(e){
+const lines=e.target.result.split('\n').filter(l=>l.trim());
+const preview=document.getElementById('csvPreview');
+preview.style.display='block';
+preview.innerHTML=`<div style="color:var(--accent2);margin-bottom:12px;font-size:12px">✅ CSV loaded: ${file.name} — ${lines.length} rows detected</div>`
++lines.slice(0,8).map(l=>`<div class="import-row">${l.split(',').map(c=>`<span style="color:var(--text-dim);flex:1">${c.trim()}</span>`).join('')}</div>`).join('')
++`<div style="color:var(--text-dim);font-size:11px;margin-top:8px">Showing first 8 rows. Paste your current HL values in the Manual Sync section above to update your dashboard.</div>`;
+};
+reader.readAsText(file);
+}
+function dropPDF(e){
+e.preventDefault();
+e.currentTarget.classList.remove('dragover');
+const file=e.dataTransfer.files[0];
+if(file) readPDF(file);
+}
+function readPDF(file){
+const preview=document.getElementById('pdfPreview');
+preview.style.display='block';
+preview.innerHTML=`<div style="color:var(--amber);font-size:12px;padding:8px">
+📄 <strong>${file.name}</strong> received (${(file.size/1024).toFixed(0)}KB).<br><br><span style="color:var(--text-dim)">Full PDF text extraction requires a PDF.js integration. For now, the Motley Fool Epic Portfolio 50 stocks are already loaded in this app from the PDF you shared in the chat session.
+When a new Epic PDF is available, paste it into the Claude Chat tab and ask Claude to update the reference data — it will provide updated position data you can copy here.</span></div>`;
+}
+function saveHLData(){
+const data={
+total:document.getElementById('hl-total').value,
+cash:document.getElementById('hl-cash').value,
+invested:document.getElementById('hl-invested').value,
+gl:document.getElementById('hl-gl').value,
+fx:document.getElementById('hl-fx').value,
+date:document.getElementById('hl-date').value,
+};
+localStorage.setItem('hlData',JSON.stringify(data));
+if(data.total) document.getElementById('totalValue').textContent='£'+Number(data.total).toLocaleString();
+if(data.cash)  document.getElementById('cashValue').textContent='£'+Number(data.cash).toLocaleString();
+if(data.invested) document.getElementById('investedValue').textContent='£'+Number(data.invested).toLocaleString();
+if(data.gl){
+const gl=Number(data.gl);
+const sub=document.getElementById('glSub');
+sub.textContent=(gl>=0?'+':'')+`£${Math.abs(gl).toLocaleString()} total`;
+sub.className='stat-sub '+(gl>=0?'pos':'neg');
+}
+const btn=document.querySelector('.btn-amber');
+btn.textContent='✅ Saved!';
+setTimeout(()=>btn.textContent='💾 Save & Update Dashboard',2000);
+const reviews=loadReviews();
+reviews.unshift({
+date:data.date||new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}),
+content:`<strong>HL Sync:</strong> Total £${Number(data.total).toLocaleString()}, Cash £${Number(data.cash).toLocaleString()}, Invested £${Number(data.invested).toLocaleString()}, G/L £${data.gl}. FX rate: ${data.fx||'N/A'}.`
+});
+localStorage.setItem('reviewLog',JSON.stringify(reviews));
+renderReviews();
+}
+function loadHLData(){
+const d=JSON.parse(localStorage.getItem('hlData')||'{}');
+if(d.total) document.getElementById('hl-total').value=d.total;
+if(d.cash)  document.getElementById('hl-cash').value=d.cash;
+if(d.invested) document.getElementById('hl-invested').value=d.invested;
+if(d.gl)    document.getElementById('hl-gl').value=d.gl;
+if(d.fx)    document.getElementById('hl-fx').value=d.fx;
+if(d.date)  document.getElementById('hl-date').value=d.date;
+if(d.total) document.getElementById('totalValue').textContent='£'+Number(d.total).toLocaleString();
+if(d.cash)  document.getElementById('cashValue').textContent='£'+Number(d.cash).toLocaleString();
+}
+let chartInst=null,currentTicker=null;
+async function openChart(yahoo,display){
+currentTicker=yahoo;
+document.getElementById('modalTitle').textContent=`${display} — Price History`;
+document.getElementById('chartModal').classList.add('open');
+await loadChart(yahoo,'3mo');
+}
+async function loadChart(yahoo,range){
+const history=await fetchHistory(yahoo,range);
+const ctx=document.getElementById('priceChart').getContext('2d');
+if(chartInst){chartInst.destroy();chartInst=null;}
+if(!history){document.getElementById('chartStats').innerHTML='<span style="color:var(--red)">Could not load price data</span>';return;}
+const first=history[0].price,last=history[history.length-1].price;
+const chg=((last-first)/first*100).toFixed(2);
+const col=chg>=0?'#00ff9d':'#ff4757';
+chartInst=new Chart(ctx,{
+type:'line',
+data:{labels:history.map(d=>d.date),datasets:[{label:'Price',data:history.map(d=>d.price),borderColor:col,backgroundColor:col.replace(')',',0.05)').replace('rgb','rgba'),borderWidth:2,pointRadius:0,tension:0.3,fill:true}]},
+options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false,backgroundColor:'#111827',borderColor:'#1e3a5f',borderWidth:1,titleColor:'#00d4ff',bodyColor:'#e2e8f0'}},scales:{x:{grid:{color:'rgba(30,58,95,0.4)'},ticks:{color:'#64748b',font:{family:'DM Mono',size:10},maxTicksLimit:8}},y:{grid:{color:'rgba(30,58,95,0.4)'},ticks:{color:'#64748b',font:{family:'DM Mono',size:10}},position:'right'}}}
+});
+document.getElementById('chartStats').innerHTML=`
+<div style="background:var(--surface2);padding:10px;border:1px solid var(--border)"><div class="stat-label">Period Open</div><div style="font-family:var(--font-display);font-size:16px;font-weight:700;margin-top:4px">${first.toFixed(2)}</div></div><div style="background:var(--surface2);padding:10px;border:1px solid var(--border)"><div class="stat-label">Current</div><div style="font-family:var(--font-display);font-size:16px;font-weight:700;color:var(--accent);margin-top:4px">${last.toFixed(2)}</div></div><div style="background:var(--surface2);padding:10px;border:1px solid var(--border)"><div class="stat-label">Period Return</div><div style="font-family:var(--font-display);font-size:16px;font-weight:700;color:${col};margin-top:4px">${chg>=0?'+':''}${chg}%</div></div><div style="background:var(--surface2);padding:10px;border:1px solid var(--border)"><div class="stat-label">Data Points</div><div style="font-family:var(--font-display);font-size:16px;font-weight:700;margin-top:4px">${history.length}d</div></div>`;
+}
+function closeModal(){
+document.getElementById('chartModal').classList.remove('open');
+if(chartInst){chartInst.destroy();chartInst=null;}
+}
+function saveApiKey(k){localStorage.setItem('anthropicKey',k);}
+function loadApiKey(){const k=localStorage.getItem('anthropicKey');if(k)document.getElementById('apiKeyInput').value=k;return k;}
+function portfolioContext(){
+const hlData=JSON.parse(localStorage.getItem('hlData')||'{}');
+return`You are Jude's personal portfolio analyst for their UK Hargreaves Lansdown Stocks & Shares ISA. Today is 1 May 2026.
+CURRENT HL ISA: Total ~£${hlData.total||'40,602'} | Cash ~£${hlData.cash||'17,839'} | Invested ~£${hlData.invested||'20,963'}
+EXISTING HOLDINGS: VWRL £9,936 (partial sale done), NVDA £1,760 (hold), SNDK £1,611 (hold), LSEG £1,911 (monitor), CRWD £655 (top up to £1,200), LGEN £90 (close), GOOG £600 pending (let execute).
+DEPLOYMENT PLAN (£24,039 total, £1k reserved for SK Hynix ADR):
+BUY MONDAY: TTD £2,300 | CLBT £1,800 | MU £1,800 | FIX £1,600 | EME £1,600
+WAIT 7 MAY: MELI £1,600
+THEN BUY: MANH £1,100 | GOOG top-up £400 | CRWD top-up £550 | IBM £900 | NET £700
+WAIT 6 MAY: AXON £700
+ON DIPS: CDNS £700 (below $310) | AZN £700 (below £135, UK-listed)
+CASH RESERVE: £1,000 for SK Hynix ADR (targeting Jun/Jul 2026 NYSE/Nasdaq listing)
+KEY FACTS: Higher-rate UK taxpayer. All gains sheltered in ISA (39.35% dividend tax and 20% CGT saved). DRAM/EWY ETFs blocked by PRIIPs — Micron (MU) is the HBM bridge. Source: Motley Fool Epic Portfolio 50 Stocks + Moneyball + AI Rankings.
+Be specific to Jude's actual positions. Keep responses concise. Always flag ISA/tax implications.`;
+}
+const chatHist=[];
+async function sendMessage(){
+const inp=document.getElementById('chatInput');
+const msg=inp.value.trim();
+if(!msg) return;
+const key=loadApiKey();
+if(!key){addMsg('assistant','Please enter your Anthropic API key above to enable chat.');return;}
+inp.value='';
+addMsg('user',msg);
+chatHist.push({role:'user',content:msg});
+const btn=document.getElementById('sendBtn');
+btn.disabled=true; btn.textContent='...';
+const thinking=addMsg('assistant','<span class="loading-price">Analysing your portfolio...</span>');
+try{
+const r=await fetch('https://api.anthropic.com/v1/messages',{
+method:'POST',
+headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01'},
+body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:portfolioContext(),messages:chatHist})
+});
+const d=await r.json();
+const reply=d.content?.[0]?.text||'Could not get response.';
+thinking.innerHTML=`<div class="msg-label">Claude</div>${reply.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')}`;
+chatHist.push({role:'assistant',content:reply});
+}catch(e){
+thinking.innerHTML='<div class="msg-label">Claude</div>API error. Check your key.';
+}
+btn.disabled=false; btn.textContent='Send →';
+}
+function addMsg(role,content){
+const d=document.createElement('div');
+d.className=`msg ${role}`;
+d.innerHTML=`<div class="msg-label">${role==='user'?'You':'Claude'}</div>${content}`;
+const c=document.getElementById('chatMessages');
+c.appendChild(d); c.scrollTop=c.scrollHeight;
+return d;
+}
+const DEFAULT_REVIEWS=[
+{date:'01 May 2026',content:'<strong>Initial setup.</strong> Cancelled QCOM + ALAB. Alphabet £600 pending. Vanguard partial sale £5k placed. AZN added at £700. Total deployable from ISA cash: ~£23,039. <strong style="color:#ff4757">BLOCKER: 2025/26 ISA allowance fully used — no new contributions. TTD blocked on HL (NASDAQ compliance). CLBT not available on HL (Israeli incorporation). Remaining 12 positions can deploy from existing ISA cash.</strong>'},
+];
+const DEFAULT_REVIEWS_V2=[
+{date:'06 May 2026 — 18:21',content:'<strong>End of day update.</strong> IBKR: cancelled all 2-share Day orders (incl. erroneous 100-share at 12:20). Placed 3-share GTC limit at ₩1,620,000 — fills at KRX open 1am UK tonight. eToro: NICE closed — £296 CGT loss crystallised. Total crystallised losses now £870. eToro total £7,905 across 13 positions (+£328 today). Quantum sector strong day: OKLO +13%, QBTS +9%, IONQ +9%, RGTI +8%. TTD earnings after close tonight — watching. NICE down 21.68% today: Q1 earnings revealed margin compression — operating margin guidance cut to 25-26% from 31%, heavy investment in Cognigy AI acquisition ($955M). NICE now a hold/review. MU at $646 — significantly above $455 entry target, reduce planned position to £1,500. All quantum positions (IONQ, QBTS, RGTI) up 4%+ today — sector recovery. eToro total £7,800 across 14 positions. AXON earnings after close tonight. MELI call 10pm UK.'},{date:'05 May 2026 (Update 3)',content:'<strong>Afternoon update 17:59.</strong> ISA total now £41,099 (+£497 since morning). Cash confirmed £24,062. T212 transfer decision: NOT proceeding — would lock £24k for 30 days to solve £500 CLBT problem. CLBT deferred to T212 ISA April 2027. Plan: deploy £24,062 at HL across 12 accessible positions starting immediately. TTD earnings tonight after US close.'},{date:'05 May 2026 (Update 2)',content:'<strong>Actions completed tonight.</strong> ✅ Closed 7 eToro positions (PRQR, AI, SEDG, 3800.HK, 2331.HK, CZR, RIVN) — crystallised ~£574 in CGT losses. ✅ TTD topped up by £633 at ~$24.22 (X1 stock, not CFD) — total TTD position now £800. ✅ £1,133 funded from HSBC Bonus Saver. CLBT still to buy. TTD earnings tonight 7 May after US close — watching.'},{date:'05 May 2026',content:'<strong>Major blocker discovered.</strong> 2025/26 ISA allowance fully subscribed at HL — no new contributions possible until 6 Apr 2027. T212 ISA also blocked same reason. TTD blocked on HL due to NASDAQ committee compliance notice (cure by Sep 2026). CLBT not available on HL (Israeli incorporation — likely permanent). eToro ISA already transferred to HL — remaining eToro is CGT-liable trading account only. Plan revised: deploy existing £17,839 HL ISA cash into 12 accessible positions (MU, FIX, EME, MANH, GOOG, CRWD, IBM, NET, CDNS, AZN, AXON, MELI). TTD + CLBT move to April 2027 priority list.'},
+{date:'01 May 2026',content:'<strong>Initial setup.</strong> Cancelled QCOM + ALAB. Alphabet £600 pending. Vanguard partial sale £5k placed. AZN added at £700. Total deployable from ISA cash: ~£23,039. Tier 1 positions queued.'},
+];
+function loadReviews(){return JSON.parse(localStorage.getItem('reviewLog')||'null')||DEFAULT_REVIEWS_V2;}
+function renderReviews(){
+document.getElementById('reviewLogContainer').innerHTML=loadReviews().map(r=>`
+<div class="review-entry"><div class="review-date">${r.date}</div><div style="font-size:12px;color:var(--text)">${r.content}</div></div>`).join('');
+}
+function addReview(){
+const text=document.getElementById('reviewText').value.trim();
+if(!text) return;
+const reviews=loadReviews();
+reviews.unshift({date:new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}),content:text});
+localStorage.setItem('reviewLog',JSON.stringify(reviews));
+document.getElementById('reviewText').value='';
+renderReviews();
+}
+const ETORO_POSITIONS=[
+{ticker:'TTD',name:'Trade Desk',invested:1075,value:791,pl:-282,thesis:'Strong. ✅ £800 bought.',action:'hold',note:'Hold.'},
+{ticker:'IONQ',name:'IonQ',invested:1182,value:828,pl:-346,thesis:'Quantum — hold.',action:'review',note:'Review.'},
+{ticker:'QBTS',name:'D-Wave',invested:1107,value:779,pl:-322,thesis:'Quantum — hold.',action:'review',note:'Review.'},
+{ticker:'RGTI',name:'Rigetti',invested:1248,value:609,pl:-630,thesis:'Weakest quantum.',action:'review',note:'Review.'},
+{ticker:'OKLO',name:'Oklo',invested:804,value:368,pl:-431,thesis:'Nuclear — hold.',action:'hold',note:'Hold.'},
+{ticker:'ORCL',name:'Oracle',invested:1107,value:726,pl:-375,thesis:'Cloud/AI — hold.',action:'hold',note:'Hold.'},
+{ticker:'LULU',name:'Lululemon',invested:443,value:289,pl:-151,thesis:'Consumer — review.',action:'review',note:'Review.'},
+{ticker:'PYPL',name:'PayPal',invested:208,value:75,pl:-122,thesis:'Fintech — review.',action:'review',note:'Review.'},
+{ticker:'NFLX',name:'Netflix',invested:147,value:97,pl:-50,thesis:'Streaming — hold.',action:'hold',note:'Hold.'},
+{ticker:'SMCI',name:'Super Micro',invested:137,value:73,pl:-73,thesis:'AI server — review.',action:'review',note:'Review.'},
+{ticker:'PRQR',name:'ProQR',invested:132,value:0,pl:-104,thesis:'Closed.',action:'close',note:'✅ CLOSED 5 May.'},
+{ticker:'CZR',name:'Caesars',invested:162,value:0,pl:-113,thesis:'Closed.',action:'close',note:'✅ CLOSED 5 May.'},
+{ticker:'AI',name:'C3.ai',invested:95,value:0,pl:-73,thesis:'Closed.',action:'close',note:'✅ CLOSED 5 May.'},
+{ticker:'SEDG',name:'SolarEdge',invested:110,value:0,pl:-92,thesis:'Closed.',action:'close',note:'✅ CLOSED 5 May.'},
+{ticker:'RIVN',name:'Rivian',invested:132,value:0,pl:-55,thesis:'Closed.',action:'close',note:'✅ CLOSED 5 May.'},
+{ticker:'3800HK',name:'GCL Tech',invested:110,value:0,pl:-77,thesis:'Closed.',action:'close',note:'✅ CLOSED 5 May.'},
+{ticker:'2331HK',name:'Li-Ning',invested:154,value:0,pl:-115,thesis:'Closed.',action:'close',note:'✅ CLOSED 5 May.'},
+{ticker:'NICE',name:'NICE Systems',invested:664,value:0,pl:-296,thesis:'Closed — margin cut.',action:'close',note:'✅ CLOSED 6 May.'},
+{ticker:'WKP',name:'Warpaint',invested:210,value:121,pl:-91,thesis:'UK small cap.',action:'review',note:'Review.'},
+{ticker:'GWWG',name:'GoldWorldWide',invested:2217,value:2020,pl:-186,thesis:'Gold miners — hold.',action:'hold',note:'Hold.'},
+];
+const IBKR_POSITIONS = [
+{
+ticker:'000660',
+name:'SK Hynix Inc',
+exchange:'KRX (Seoul)',
+shares:3,
+entryKrw:1620000,
+currentKrw:1601000,
+targetKrw:1772000,
+gbpPerKrw:0.00055,
+status:'✅ GTC order placed 18:19 — awaiting KRX open 1am UK',
+note:'3 shares @ GTC limit ₩1,620,000. Previous 2-share orders cancelled. KRX opens 1am UK tonight. Analyst target ₩1,772,000 (+22%). ADR H2 2026 = migrate to HL ISA.'
+}
+];
+const GAIN_POSITIONS = [
+{ticker:'TTD',  name:'The Trade Desk', entryUsd:22, targetUsd:41,  gbp:800,  timeline:'3-12 months', note:'✅ BOUGHT 5 May 2026. £633 added at $24.22. Total position now £800. Earnings 7 May after close — result pending.'},
+{ticker:'CLBT', name:'Cellebrite',     entryUsd:13, targetUsd:23,  gbp:500,  timeline:'6-18 months', note:'77% analyst upside. Upgrade cycle 20% done. Strong Buy consensus. Earnings 14 May.'},
+];
+const PRIORITY_2027 = [
+{rank:1, ticker:'TTD',  co:'The Trade Desk',    price:'~$22', target:'$41', why:'Highest conviction. HL re-enable expected by Sep 2026. CEO $150M insider buy. 95% upside.',           route:'HL ISA (once re-enabled) or T212 ISA'},
+{rank:2, ticker:'CLBT', co:'Cellebrite',         price:'~$13', target:'$23', why:'77% upside. Israeli incorporation blocks HL. Strong Buy. Upgrade cycle early innings.',               route:'T212 ISA (HL permanent block)'},
+{rank:3, ticker:'MU',   co:'Micron Technology',  price:'~$455',target:'$575',why:'HBM bridge. Replace with SK Hynix ADR when listed H2 2026.',                                          route:'HL ISA'},
+{rank:4, ticker:'FIX',  co:'Comfort Systems',    price:'~$240',target:'$280',why:'Triple conviction pick. Deploy remaining allowance here.',                                             route:'HL ISA'},
+{rank:5, ticker:'EME',  co:'EMCOR Group',         price:'~$450',target:'$550',why:'AI data centre electrical leader. Record backlog.',                                                   route:'HL ISA'},
+{rank:6, ticker:'MELI', co:'MercadoLibre',        price:'~$1850',target:'$2700','why':'AI Rankings #1. LatAm fintech dominance. 46% upside.',                                           route:'HL ISA'},
+{rank:7, ticker:'MANH', co:'Manhattan Associates',price:'~$138',target:'$220',why:'Zero debt. Maven AI rollout. 60% upside.',                                                           route:'HL ISA'},
+{rank:8, ticker:'SKADР',co:'SK Hynix ADR',        price:'TBC', target:'TBC', why:'HBM #1 globally. ADR listing H2 2026. £1,000 reserved in HL ISA cash.',                             route:'HL ISA (once ADR listed)'},
+];
+function renderCGTEtoro() {
+const tbody = document.getElementById('cgtEtoroTbody');
+const tfoot = document.getElementById('cgtEtoroFoot');
+let totalInvested=0, totalValue=0, totalLoss=0, crystallisable=0;
+tbody.innerHTML = ETORO_POSITIONS.map((p,i) => {
+totalInvested += p.invested;
+totalValue += p.value;
+totalLoss += p.pl;
+const actionBg = p.action==='close' ? 'status-close' : p.action==='hold' ? 'status-hold' : 'status-wait';
+const actionLabel = p.action==='close' ? 'CLOSE — CRYSTALLISE' : p.action==='hold' ? 'HOLD' : 'REVIEW';
+if(p.action==='close') crystallisable += Math.abs(p.pl);
+return `<tr><td><div class="ticker-badge">${p.ticker}</div><div class="ticker-name">${p.name}</div></td><td class="td-right">£${p.invested.toLocaleString()}</td><td class="td-right">£${p.value.toLocaleString()}</td><td class="td-right"><span class="neg">-£${Math.abs(p.pl).toLocaleString()}</span></td><td style="font-size:11px;color:var(--text-dim)">${p.thesis}</td><td class="td-right"><span class="status-badge ${actionBg}">${actionLabel}</span></td><td class="td-right" style="font-size:11px;color:var(--text-dim)">${p.action==='close'?'<span class="pos">✓ £'+Math.abs(p.pl).toLocaleString()+'</span>':'—'}</td></tr>`;
+}).join('');
+tfoot.innerHTML = `<tr style="background:var(--surface3)"><td style="font-weight:700;padding:10px 14px">TOTAL</td><td class="td-right" style="font-weight:700;padding:10px 14px">£${totalInvested.toLocaleString()}</td><td class="td-right" style="font-weight:700;padding:10px 14px">£${totalValue.toLocaleString()}</td><td class="td-right" style="font-weight:700;padding:10px 14px"><span class="neg">-£${Math.abs(totalLoss).toLocaleString()}</span></td><td colspan="2" style="padding:10px 14px;font-size:11px;color:var(--text-dim)">Total unrealised losses across eToro</td><td class="td-right" style="font-weight:700;padding:10px 14px"><span class="pos">£${crystallisable.toLocaleString()}</span></td></tr>`;
+crystallisable += 296;
+document.getElementById('cgt-losses').value = crystallisable;
+runCGT();
+}
+function renderCGTGains(){
+const FX=0.735;
+document.getElementById('cgtGainTbody').innerHTML=GAIN_POSITIONS.map(p=>{
+const upside=Math.round((p.targetUsd-p.entryUsd)/p.entryUsd*100);
+const projectedGain=Math.round(p.gbp*upside/100);
+return`<tr><td><div class="ticker-badge">${p.ticker}</div><div class="ticker-name">${p.name}</div></td><td class="td-right">$${p.entryUsd}</td><td class="td-right" style="color:var(--accent2)">$${p.targetUsd}</td><td class="td-right"><span class="pos">+${upside}%</span></td><td class="td-right" style="color:var(--amber)">£${p.gbp.toLocaleString()}</td><td class="td-right"><span class="pos">~£${projectedGain.toLocaleString()}</span></td><td style="font-size:11px;color:var(--text-dim)">${p.timeline}</td></tr>`;
+}).join('');
+const totalGain=GAIN_POSITIONS.reduce((s,p)=>s+Math.round(p.gbp*(p.targetUsd-p.entryUsd)/p.entryUsd*100)/100,0);
+document.getElementById('cgt-gains').value=Math.round(totalGain);
+renderActionPlan();runCGT();
+}
+function runCGT() {
+const losses    = parseFloat(document.getElementById('cgt-losses')?.value) || 0;
+const gains     = parseFloat(document.getElementById('cgt-gains')?.value)  || 0;
+const other     = parseFloat(document.getElementById('cgt-other')?.value)  || 0;
+const exempt    = parseFloat(document.getElementById('cgt-exempt')?.value) || 3000;
+const rate      = parseFloat(document.getElementById('cgt-rate')?.value)   || 20;
+const totalGains    = gains + other;
+const netGain       = Math.max(0, totalGains - losses);
+const taxableGain   = Math.max(0, netGain - exempt);
+const cgtOwed       = Math.round(taxableGain * rate / 100);
+const netReturn     = Math.round(gains - cgtOwed);
+const effectiveRate = gains > 0 ? (cgtOwed / gains * 100).toFixed(1) : 0;
+const fmt = v => '£' + Math.abs(v).toLocaleString();
+const clr = v => v <= 0 ? 'color:var(--green)' : 'color:var(--red)';
+document.getElementById('cgtOutput').innerHTML = `
+<div class="calc-result-row"><span class="calc-result-label">Total Capital Gains</span><span class="calc-result-value">${fmt(totalGains)}</span></div><div class="calc-result-row"><span class="calc-result-label">Crystallised Losses to Offset</span><span class="calc-result-value" style="color:var(--green)">-${fmt(losses)}</span></div><div class="calc-result-row"><span class="calc-result-label">Net Gain After Losses</span><span class="calc-result-value">${fmt(netGain)}</span></div><div class="calc-result-row"><span class="calc-result-label">CGT Annual Exemption</span><span class="calc-result-value" style="color:var(--green)">-${fmt(Math.min(netGain,exempt))}</span></div><div class="calc-result-row" style="border-top:2px solid var(--border);margin-top:8px;padding-top:12px"><span class="calc-result-label">Taxable Gain</span><span class="calc-result-value" style="${clr(taxableGain)}">${fmt(taxableGain)}</span></div><div class="calc-result-row"><span class="calc-result-label">CGT Owed (${rate}%)</span><span class="calc-result-value big" style="${clr(cgtOwed)}">${fmt(cgtOwed)}</span></div><div class="calc-result-row" style="border-top:2px solid var(--border);margin-top:8px;padding-top:12px"><span class="calc-result-label">Net Return After CGT</span><span class="calc-result-value" style="color:var(--accent2)">${fmt(netReturn)}</span></div><div class="calc-result-row"><span class="calc-result-label">Effective Tax Rate on Gains</span><span class="calc-result-value" style="color:var(--amber)">${effectiveRate}%</span></div>
+`;
+const scenarios = [
+{label:'Bear (-14% on earnings)',    ttdEntry:22, ttdTarget:18.9,  invest:800},
+{label:'Flat / Hold (0%)',           ttdEntry:22, ttdTarget:22,    invest:800},
+{label:'Earnings beat (+14%)',       ttdEntry:22, ttdTarget:25.1,  invest:800},
+{label:'3-month recovery (+50%)',    ttdEntry:22, ttdTarget:33,    invest:800},
+{label:'Analyst target (+95%)',      ttdEntry:22, ttdTarget:41,    invest:800},
+{label:'Bull case (+150%)',          ttdEntry:22, ttdTarget:55,    invest:800},
+];
+document.getElementById('scenarioTbody').innerHTML = scenarios.map(s => {
+const grossGain = Math.round(s.invest * (s.ttdTarget - s.ttdEntry) / s.ttdEntry);
+const netGainS  = Math.max(0, grossGain - losses);
+const taxable   = Math.max(0, netGainS - exempt);
+const tax       = Math.round(taxable * rate / 100);
+const net       = grossGain - tax;
+const netPct    = (net / s.invest * 100).toFixed(1);
+const isBear    = grossGain < 0;
+const rowBg     = isBear ? 'background:rgba(255,71,87,0.05)' : (tax === 0 ? 'background:rgba(0,255,157,0.05)' : '');
+return `<tr style="${rowBg}"><td style="font-size:12px">${s.label}</td><td class="td-right">$${s.ttdEntry}</td><td class="td-right" style="color:var(--accent2)">$${s.ttdTarget}</td><td class="td-right">£${s.invest.toLocaleString()}</td><td class="td-right"><span class="${grossGain>=0?'pos':'neg'}">${grossGain>=0?'+':''}£${grossGain.toLocaleString()}</span></td><td class="td-right" style="color:var(--green)">£${losses.toLocaleString()}</td><td class="td-right">${taxable>0?'£'+taxable.toLocaleString():'<span class="pos">£0</span>'}</td><td class="td-right" style="${clr(tax)}">${tax>0?'£'+tax.toLocaleString():'<span class="pos">£0</span>'}</td><td class="td-right"><span class="${net>=0?'pos':'neg'}">${net>=0?'+':''}£${net.toLocaleString()}</span></td><td class="td-right"><span class="${parseFloat(netPct)>=0?'pos':'neg'}">${netPct}%</span></td></tr>`;
+}).join('');
+const lossCoverageUpside = losses > 0 ? (losses / 800 * 100).toFixed(0) : 0;
+document.getElementById('strategyNotes').innerHTML = `
+<strong style="color:var(--accent2)">Your situation in plain English:</strong><br><br>
+You have approximately <strong style="color:var(--green)">£${losses.toLocaleString()} of crystallisable CGT losses</strong> from closing weak eToro positions.
+This means TTD on eToro needs to deliver a <strong>${lossCoverageUpside}%+ gain</strong> on an £800 position before you pay <em>any</em> CGT at all
+(after netting losses against gains and applying the £3,000 annual exemption).<br><br><strong style="color:var(--amber)">Optimal sequence:</strong><br>
+1. Close PRQR, CZR, AI, SEDG, RIVN, 3800.HK, 2331.HK — crystallise ~£${losses.toLocaleString()} in losses and free up ~£${Math.round(losses*0.33).toLocaleString()} cash<br>
+2. Deploy that cash + HSBC Bonus Saver top-up into TTD and CLBT on eToro (stock positions, not CFDs)<br>
+3. Hold TTD and CLBT on eToro until either: (a) targets are reached, or (b) April 2027 ISA opens — then use bed & ISA to migrate into ISA wrapper<br>
+4. In April 2027: open T212 ISA for CLBT, use HL ISA for TTD (if re-enabled) and other positions<br><br><strong style="color:#a78bfa">IBKR SK Hynix:</strong> 3 shares @ ₩1,620,000 = ~£2,673 CGT-liable. On analyst target ₩1,772,000 = ~£284 gain. On bull case ₩2,500,000 = ~£1,452 gain. Offset from remaining eToro losses (LULU £151, PYPL £122, RGTI £630) if needed. Migrate to HL ISA when ADR lists H2 2026.<br><br><strong style="color:var(--red)">30-day rule:</strong> After closing those positions, do NOT rebuy the same tickers for 30 days or the losses are disallowed. Opening TTD and CLBT (different assets) is fine immediately.<br><br><strong style="color:var(--text-dim)">This is general information only — not regulated tax advice. Consult an accountant for your specific CGT position.</strong>
+`;
+}
+function renderPriority2027() {
+document.getElementById('priority2027Tbody').innerHTML = PRIORITY_2027.map(p => `
+<tr><td class="td-right" style="font-weight:700;color:var(--text-dim)">${p.rank}</td><td><div class="ticker-badge">${p.ticker}</div></td><td style="font-size:12px">${p.co}</td><td class="td-right" style="color:var(--amber)">${p.price}</td><td class="td-right" style="color:var(--accent2)">${p.target}</td><td style="font-size:11px;color:var(--text-dim)">${p.why}</td><td style="font-size:11px">${p.route.includes('T212')?'<span class="status-badge status-wait">'+p.route+'</span>':'<span class="status-badge status-hold">'+p.route+'</span>'}</td></tr>`).join('');
+}
+function init(){
+renderHoldings();
+renderDeploy();
+renderEarnings();
+renderGCal();
+renderReviews();
+loadHLData();
+loadApiKey();
+renderCGTEtoro();
+renderCGTGains();
+renderActionPlan();
+renderPriority2027();
+setTimeout(refreshAllPrices,600);
+}
+document.addEventListener('DOMContentLoaded', function() {
+init();
+if(window.innerWidth <= 768) {
+['sec-ibkr','sec-etoro','sec-earnings'].forEach(id => {
+const el = document.getElementById(id);
+if(el) el.classList.add('collapsed');
+});
+}
+});
+document.getElementById('chartModal').addEventListener('click',function(e){if(e.target===this)closeModal();});
+</script></body></html>
