@@ -741,6 +741,12 @@ a.download='Jude_ISA_Positions_'+new Date().toISOString().slice(0,10)+'.csv';
 a.click();
 }
 
+
+function renderActionPlan(){
+  var el=document.getElementById('etoroActionPlan');
+  if(el) el.innerHTML='<div style="padding:16px;color:var(--text-dim);font-size:12px">Strategy: Close weak eToro positions → crystallise CGT losses → buy TTD+CLBT on eToro → migrate to ISA April 2027. Total crystallised losses: £870.</div>';
+}
+
 function init(){
 renderHoldings();
 renderDeploy();
