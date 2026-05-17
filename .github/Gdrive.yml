@@ -1,0 +1,35 @@
+name: Sync Portfolio from Google Drive
+
+on:
+  workflow_dispatch:        # manual trigger button in GitHub
+  schedule:
+    - cron: '0 7 * * *'    # auto-run daily at 7am UTC
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Download portfolio.html from Google Drive
+        env:
+          GDRIVE_FILE_ID: ${{ secrets.GDRIVE_FILE_ID }}
+          GDRIVE_API_KEY: ${{ secrets.GDRIVE_API_KEY }}
+        run: |
+          curl -L \
+            "https://www.googleapis.com/drive/v3/files/${GDRIVE_FILE_ID}?alt=media&key=${GDRIVE_API_KEY}" \
+            -o portfolio.html
+          echo "Downloaded $(wc -c < portfolio.html) bytes"
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add portfolio.html
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Auto-sync portfolio.html from Drive $(date -u '+%Y-%m-%d %H:%M UTC')"
+            git push
+          fi
