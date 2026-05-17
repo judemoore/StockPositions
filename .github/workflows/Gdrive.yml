@@ -19,6 +19,10 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
+          ref: main
+
+      - name: Pull latest changes
+        run: git pull origin main
 
       - name: Download portfolio.html from Google Drive
         env:
@@ -34,7 +38,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git pull --rebase origin main
           git add portfolio.html
           if git diff --staged --quiet; then
             echo "No changes to commit"
