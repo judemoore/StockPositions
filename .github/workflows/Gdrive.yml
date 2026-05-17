@@ -1,16 +1,23 @@
 name: Sync Portfolio from Google Drive
 
 on:
-  workflow_dispatch:        # manual trigger button in GitHub
+  workflow_dispatch:
   schedule:
-    - cron: '0 7 * * *'    # auto-run daily at 7am UTC
+    - cron: '0 7 * * *'
+
+permissions:
+  contents: write
 
 jobs:
   sync:
     runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Download portfolio.html from Google Drive
         env:
