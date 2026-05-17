@@ -21,9 +21,6 @@ jobs:
           fetch-depth: 0
           ref: main
 
-      - name: Pull latest changes
-        run: git pull origin main
-
       - name: Download portfolio.html from Google Drive
         env:
           GDRIVE_FILE_ID: ${{ secrets.GDRIVE_FILE_ID }}
@@ -34,7 +31,7 @@ jobs:
             -o portfolio.html
           echo "Downloaded $(wc -c < portfolio.html) bytes"
 
-      - name: Commit and push if changed
+      - name: Commit and force push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -43,5 +40,5 @@ jobs:
             echo "No changes to commit"
           else
             git commit -m "Auto-sync portfolio.html from Drive $(date -u '+%Y-%m-%d %H:%M UTC')"
-            git push origin main
+            git push origin main --force
           fi
