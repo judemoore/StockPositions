@@ -318,7 +318,7 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 
 <!-- STATS BAR -->
 <div class="stats-bar">
-  <div class="stat-card"><div class="stat-label">ISA Total Value</div><div class="stat-value" id="totalValue">£36,370</div><div class="stat-sub" id="totalChangeSub">HL data as of 15 May 2026</div></div>
+  <div class="stat-card"><div class="stat-label">ISA Total Value</div><div class="stat-value" id="totalValue">£41,582</div><div class="stat-sub" id="totalChangeSub">HL data as of 15 May 22:50</div></div>
   <div class="stat-card red"><div class="stat-label">ISA Allowance 25/26</div><div class="stat-value" style="font-size:16px">FULLY USED</div><div class="stat-sub">Deploy cash now at HL</div></div>
   <div class="stat-card amber"><div class="stat-label">Invested</div><div class="stat-value" id="investedValue">£36,136</div><div class="stat-sub" id="glSub">+£1,569 total (+4.3%)</div></div>
   <div class="stat-card"><div class="stat-label">Positions</div><div class="stat-value">6 + 14</div><div class="stat-sub">held + planned</div></div>
@@ -878,58 +878,73 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 // DATA
 // ══════════════════════════════════════════════════
 const HOLDINGS=[
-  {ticker:'AMD', name:'Advanced Micro Devices',  costGbp:950,  currentGbp:1007, action:'hold',actionLabel:'HOLD +6.0%',   currency:'USD',yahooTicker:'AMD'},
-  {ticker:'GOOG',name:'Alphabet Inc',            costGbp:875,  currentGbp:898,  action:'hold',actionLabel:'HOLD +2.6%',   currency:'USD',yahooTicker:'GOOG'},
-  {ticker:'ASML',name:'ASML Holding NV',         costGbp:1175, currentGbp:1185, action:'hold',actionLabel:'HOLD +0.9%',   currency:'USD',yahooTicker:'ASML'},
-  {ticker:'ALAB',name:'Astera Labs',             costGbp:800,  currentGbp:853,  action:'hold',actionLabel:'HOLD +6.6%',   currency:'USD',yahooTicker:'ALAB'},
-  {ticker:'AZN', name:'AstraZeneca',             costGbp:680,  currentGbp:686,  action:'hold',actionLabel:'HOLD +0.9%',   currency:'GBP',yahooTicker:'AZN.L'},
-  {ticker:'AXON',name:'Axon Enterprise',         costGbp:1305, currentGbp:1158, action:'hold',actionLabel:'HOLD -11.3%',  currency:'USD',yahooTicker:'AXON'},
-  {ticker:'BOX', name:'Box Inc',                 costGbp:685,  currentGbp:682,  action:'hold',actionLabel:'HOLD',          currency:'USD',yahooTicker:'BOX'},
-  {ticker:'AVGO',name:'Broadcom Inc',            costGbp:968,  currentGbp:984,  action:'hold',actionLabel:'HOLD +1.7%',   currency:'USD',yahooTicker:'AVGO'},
-  {ticker:'CDNS',name:'Cadence Design Systems',  costGbp:527,  currentGbp:527,  action:'hold',actionLabel:'HOLD',          currency:'USD',yahooTicker:'CDNS'},
-  {ticker:'NET', name:'Cloudflare',              costGbp:544,  currentGbp:447,  action:'hold',actionLabel:'HOLD -17.7% overreaction',currency:'USD',yahooTicker:'NET'},
-  {ticker:'FIX', name:'Comfort Systems USA',     costGbp:1487, currentGbp:1525, action:'hold',actionLabel:'HOLD +2.5%',   currency:'USD',yahooTicker:'FIX'},
-  {ticker:'CRWD',name:'CrowdStrike',             costGbp:1027, currentGbp:1298, action:'hold',actionLabel:'HOLD +26.4%',  currency:'USD',yahooTicker:'CRWD'},
-  {ticker:'EME', name:'EMCOR Group',             costGbp:1390, currentGbp:1388, action:'hold',actionLabel:'HOLD',          currency:'USD',yahooTicker:'EME'},
-  {ticker:'INTC',name:'Intel Corporation',       costGbp:660,  currentGbp:692,  action:'hold',actionLabel:'HOLD +4.4%',   currency:'USD',yahooTicker:'INTC'},
-  {ticker:'IBM', name:'IBM',                     costGbp:850,  currentGbp:815,  action:'hold',actionLabel:'HOLD',          currency:'USD',yahooTicker:'IBM'},
-  {ticker:'MANH',name:'Manhattan Associates',    costGbp:1032, currentGbp:962,  action:'hold',actionLabel:'HOLD -6.8%',   currency:'USD',yahooTicker:'MANH'},
-  {ticker:'MELI',name:'MercadoLibre',            costGbp:1380, currentGbp:1199, action:'hold',actionLabel:'HOLD -13.1% thesis intact',currency:'USD',yahooTicker:'MELI'},
-  {ticker:'MU',  name:'Micron Technology',       costGbp:1956, currentGbp:2317, action:'hold',actionLabel:'HOLD +18.4% + 1 share pending',currency:'USD',yahooTicker:'MU'},
-  {ticker:'MSCI',name:'MSCI Inc',                costGbp:1750, currentGbp:1701, action:'hold',actionLabel:'HOLD',          currency:'USD',yahooTicker:'MSCI'},
-  {ticker:'NVDA',name:'Nvidia Corp',             costGbp:1899, currentGbp:2111, action:'hold',actionLabel:'HOLD +11.2%',  currency:'USD',yahooTicker:'NVDA'},
-  {ticker:'RR',  name:'Rolls-Royce Holdings',    costGbp:793,  currentGbp:733,  action:'hold',actionLabel:'HOLD -7.5% Iran noise',currency:'GBP',yahooTicker:'RR.L'},
-  {ticker:'SNDK',name:'Sandisk Corporation',     costGbp:1444, currentGbp:2065, action:'hold',actionLabel:'HOLD +43.0%',  currency:'USD',yahooTicker:'SNDK'},
-  {ticker:'SMCI',name:'Super Micro Computer',    costGbp:781,  currentGbp:814,  action:'hold',actionLabel:'HOLD +4.2%',   currency:'USD',yahooTicker:'SMCI'},
-  {ticker:'VWRL',name:'Vanguard FTSE Global All Cap',costGbp:9713,currentGbp:10323,action:'hold',actionLabel:'HOLD +6.3%',currency:'GBP',hlOnly:true},
+  {ticker:'AMD', name:'Advanced Micro Devices',  costGbp:950,  currentGbp:955, action:'hold',actionLabel:'HOLD +0.5%',   currency:'USD',yahooTicker:'AMD'},
+  {ticker:'GOOG',name:'Alphabet Inc',            costGbp:875,  currentGbp:894, action:'hold',actionLabel:'HOLD +2.1%',   currency:'USD',yahooTicker:'GOOG'},
+  {ticker:'ASML',name:'ASML Holding NV',         costGbp:1175, currentGbp:1139,action:'hold',actionLabel:'HOLD -3.1%',   currency:'USD',yahooTicker:'ASML'},
+  {ticker:'ALAB',name:'Astera Labs',             costGbp:800,  currentGbp:873, action:'hold',actionLabel:'HOLD +9.1%',   currency:'USD',yahooTicker:'ALAB'},
+  {ticker:'AZN', name:'AstraZeneca',             costGbp:680,  currentGbp:678, action:'hold',actionLabel:'HOLD',          currency:'GBP',yahooTicker:'AZN.L'},
+  {ticker:'AXON',name:'Axon Enterprise',         costGbp:1305, currentGbp:1177,action:'hold',actionLabel:'HOLD -9.9% thesis intact',currency:'USD',yahooTicker:'AXON'},
+  {ticker:'BOX', name:'Box Inc',                 costGbp:685,  currentGbp:704, action:'hold',actionLabel:'HOLD +0.9%',   currency:'USD',yahooTicker:'BOX'},
+  {ticker:'AVGO',name:'Broadcom Inc',            costGbp:968,  currentGbp:957, action:'hold',actionLabel:'HOLD -1.1%',   currency:'USD',yahooTicker:'AVGO'},
+  {ticker:'CDNS',name:'Cadence Design Systems',  costGbp:527,  currentGbp:521, action:'hold',actionLabel:'HOLD -1.1%',   currency:'USD',yahooTicker:'CDNS'},
+  {ticker:'NET', name:'Cloudflare',              costGbp:544,  currentGbp:445, action:'hold',actionLabel:'HOLD -18.2% overreaction',currency:'USD',yahooTicker:'NET'},
+  {ticker:'FIX', name:'Comfort Systems USA',     costGbp:1487, currentGbp:1495,action:'hold',actionLabel:'HOLD +0.5%',   currency:'USD',yahooTicker:'FIX'},
+  {ticker:'CRWD',name:'CrowdStrike',             costGbp:1027, currentGbp:1338,action:'hold',actionLabel:'HOLD +30.3%',  currency:'USD',yahooTicker:'CRWD'},
+  {ticker:'EME', name:'EMCOR Group',             costGbp:1390, currentGbp:1370,action:'hold',actionLabel:'HOLD -1.4%',   currency:'USD',yahooTicker:'EME'},
+  {ticker:'INTC',name:'Intel Corporation',       costGbp:660,  currentGbp:653, action:'hold',actionLabel:'HOLD -1.5%',   currency:'USD',yahooTicker:'INTC'},
+  {ticker:'IBM', name:'IBM',                     costGbp:850,  currentGbp:823, action:'hold',actionLabel:'HOLD -2.6%',   currency:'USD',yahooTicker:'IBM'},
+  {ticker:'MANH',name:'Manhattan Associates',    costGbp:1032, currentGbp:986, action:'hold',actionLabel:'HOLD -4.5%',   currency:'USD',yahooTicker:'MANH'},
+  {ticker:'MELI',name:'MercadoLibre',            costGbp:1380, currentGbp:1162,action:'hold',actionLabel:'HOLD -15.8% 7.1x FCF',currency:'USD',yahooTicker:'MELI'},
+  {ticker:'MU',  name:'Micron Technology',       costGbp:2400, currentGbp:2718,action:'hold',actionLabel:'HOLD +7.5% top-up filled',currency:'USD',yahooTicker:'MU'},
+  {ticker:'MSCI',name:'MSCI Inc',                costGbp:1750, currentGbp:1687,action:'hold',actionLabel:'HOLD -3.6%',   currency:'USD',yahooTicker:'MSCI'},
+  {ticker:'NVDA',name:'Nvidia Corp',             costGbp:1899, currentGbp:2030,action:'hold',actionLabel:'HOLD +6.9%',   currency:'USD',yahooTicker:'NVDA'},
+  {ticker:'RR',  name:'Rolls-Royce Holdings',    costGbp:793,  currentGbp:699, action:'hold',actionLabel:'HOLD -11.8% Iran noise',currency:'GBP',yahooTicker:'RR.L'},
+  {ticker:'SNDK',name:'Sandisk Corporation',     costGbp:1444, currentGbp:2112,action:'hold',actionLabel:'HOLD +46.3%',  currency:'USD',yahooTicker:'SNDK'},
+  {ticker:'SMCI',name:'Super Micro Computer',    costGbp:781,  currentGbp:769, action:'hold',actionLabel:'HOLD -1.6%',   currency:'USD',yahooTicker:'SMCI'},
+  {ticker:'VWRL',name:'Vanguard FTSE Global All Cap',costGbp:9994,currentGbp:10405,action:'hold',actionLabel:'HOLD +4.1%',currency:'GBP',hlOnly:true},
 ];
 
 const DEPLOY=[
-  {rank:'👁',ticker:'STRL',name:'Sterling Infrastructure',yahoo:'STRL',entryUsd:700,targetUsd:900,gbp:1500,currency:'USD',status:'watch',statusLabel:'WATCHLIST - WAIT PULLBACK',note:'SA +207% since rec. Q1 blowout. Wait for pullback to $650-700.'},
-  {rank:'👁',ticker:'AMZN',name:'Amazon',             yahoo:'AMZN',entryUsd:209,targetUsd:280,gbp:1500,currency:'USD',status:'watch',statusLabel:'WATCHLIST - CONSIDER',note:'AWS + AI cloud. Fills hyperscaler gap. SA rec Mar 2026.'},
-  {rank:'👁',ticker:'PRYMY',name:'Prysmian ADR',      yahoo:'PRYMY',entryUsd:81, targetUsd:95, gbp:700, currency:'USD',status:'watch',statusLabel:'CHECK HL AVAILABILITY',note:'Cable infrastructure. OTC ADR - verify HL first.'},
-  {rank:'⏳',ticker:'TTD',  name:'The Trade Desk (ISA)',yahoo:'TTD',entryUsd:20, targetUsd:41, gbp:2300,currency:'USD',status:'close',statusLabel:'APR 2027 - HL ISA',note:'HL blocked (NASDAQ compliance Sep 2026). On eToro GBP672. Migrate to HL ISA when re-enabled.'},
-  {rank:'⏳',ticker:'CLBT', name:'Cellebrite (ISA)',  yahoo:'CLBT',entryUsd:13, targetUsd:23, gbp:500, currency:'USD',status:'close',statusLabel:'APR 2027 - T212 ISA',note:'HL unavailable. On eToro GBP469. T212 ISA April 2027. Q1 beat 33%.'},
-  {rank:'⏳',ticker:'SK-ADR',name:'SK Hynix ADR',     yahoo:null,  entryUsd:0,  targetUsd:0,  gbp:1000,currency:'USD',status:'watch',statusLabel:'H2 2026 - HOLD CASH',note:'ADR targeting H2 2026. GBP1k HL cash reserved. IBKR KRX 3 shares meanwhile.'},
+  // ── DIVERSIFICATION CANDIDATES (April 2027 priority) ──
+  {rank:'🆕',ticker:'DASH',name:'DoorDash',          yahoo:'DASH', entryUsd:167,targetUsd:258,gbp:1500,currency:'USD',status:'watch', statusLabel:'NEW MF + AI #8 - DIVERSIFICATION',note:'Hidden Gems Apr 2026 + Epic 50 + AI Rankings #8. Consumer cycle, not AI. Target $258 (+64%). 45 analysts Buy. Q1 rev +27%.'},
+  {rank:'🆕',ticker:'RKLB',name:'Rocket Lab',         yahoo:'RKLB', entryUsd:120,targetUsd:120,gbp:1000,currency:'USD',status:'watch', statusLabel:'NEW MF EPIC 50 - WAIT PULLBACK',note:'Epic 50 2.70%. Q1 rev +63.5% to $200M. Stock surged to $123 - blew past all analyst targets. Wait for pullback. Space defence diversification.'},
+  {rank:'🆕',ticker:'KRYS',name:'Krystal Biotech',    yahoo:'KRYS', entryUsd:130,targetUsd:180,gbp:1200,currency:'USD',status:'watch', statusLabel:'NEW MF EPIC 50 - BIOTECH',note:'Epic 50 2.04%. Vyjuvek +32% YoY to $116M. 95% gross margin. $1B cash. Strong Buy. Healthcare diversification - non-AI cycle.'},
+  {rank:'🆕',ticker:'MRVL',name:'Marvell Technology', yahoo:'MRVL', entryUsd:75, targetUsd:110,gbp:1200,currency:'USD',status:'watch', statusLabel:'NEW MF EPIC 50 - AI INFRA',note:'Epic 50 2.22%. Custom AI silicon. Complements AVGO/AMD exposure but adds custom chip angle. Optical interconnect leader.'},
+  {rank:'🆕',ticker:'ATZAF',name:'Aritzia',            yahoo:'ATZAF',entryUsd:48, targetUsd:65, gbp:1000,currency:'USD',status:'watch', statusLabel:'NEW MF HG - CONSUMER',note:'Hidden Gems Apr 2026. Canadian fashion. Consumer discretionary. OTC ADR - check HL availability.'},
+  // ── EXISTING WATCHLIST ──
+  {rank:'👁',ticker:'STRL',name:'Sterling Infrastructure',yahoo:'STRL',entryUsd:700,targetUsd:900,gbp:1500,currency:'USD',status:'watch',statusLabel:'WAIT PULLBACK',note:'SA +207%. Wait for $650-700.'},
+  {rank:'👁',ticker:'AMZN',name:'Amazon',             yahoo:'AMZN', entryUsd:209,targetUsd:280,gbp:1500,currency:'USD',status:'watch',statusLabel:'CONSIDER - HYPERSCALER',note:'AWS + AI cloud. SA Mar 2026.'},
+  {rank:'👁',ticker:'PRYMY',name:'Prysmian ADR',      yahoo:'PRYMY',entryUsd:81, targetUsd:95, gbp:700, currency:'USD',status:'watch',statusLabel:'CHECK HL',note:'Cable infrastructure. OTC ADR.'},
+  // ── ISA MIGRATIONS APR 2027 ──
+  {rank:'⏳',ticker:'TTD', name:'The Trade Desk (ISA)',yahoo:'TTD',  entryUsd:20, targetUsd:41, gbp:2300,currency:'USD',status:'close',statusLabel:'APR 2027 HL ISA',note:'HL blocked Sep 2026 cure. On eToro GBP707.'},
+  {rank:'⏳',ticker:'CLBT',name:'Cellebrite (ISA)',   yahoo:'CLBT', entryUsd:13, targetUsd:23, gbp:500, currency:'USD',status:'close',statusLabel:'APR 2027 T212 ISA',note:'HL permanent block. On eToro GBP470. Q1 beat 33%.'},
+  {rank:'⏳',ticker:'SK-ADR',name:'SK Hynix ADR',    yahoo:null,   entryUsd:0,  targetUsd:0,  gbp:1000,currency:'USD',status:'watch',statusLabel:'H2 2026',note:'ADR listing target H2 2026. GBP1k HL cash reserved.'},
 ];
 
 const EARNINGS=[
-  {date:'Tue 6 May 2026',ticker:'AXON',company:'Axon Enterprise',eps:'$1.66 est',action:'WAIT before buying',urgent:true,isoDate:'2026-05-06'},
-  {date:'Wed 7 May 2026',ticker:'TTD',company:'The Trade Desk',eps:'$0.28 est',action:'Hold — already owned',urgent:true,isoDate:'2026-05-07'},
-  {date:'Wed 7 May 2026',ticker:'MELI',company:'MercadoLibre',eps:'Revenue BEAT $8.76B — call 5pm ET',action:'Listen to call. Revenue beat $286M. Enter if guidance strong.',urgent:true,isoDate:'2026-05-07'},
-  {date:'Jun 2026',ticker:'MU',company:'Micron Technology',eps:'TBC',action:'Monitor for HBM data',urgent:false,isoDate:'2026-06-01'},
-  {date:'Jun 9 2026',ticker:'CRWD',company:'CrowdStrike',eps:'$1.07 est',action:'Hold through earnings',urgent:false,isoDate:'2026-06-09'},
-  {date:'H2 2026 (TBC)',ticker:'SK-ADR',company:'SK Hynix ADR Listing',eps:'LISTING EVENT',action:'Sell IBKR KRX position -> buy ADR in HL ISA. £1,000 cash also reserved. Best of both worlds.',urgent:false,isoDate:'2026-09-01'},{date:'Jul 29 2026',ticker:'000660',company:'SK Hynix Q2 2026 Earnings (KRX)',eps:'~KRW64,140 est',action:'Monitor — hold IBKR position through earnings. Next major catalyst.',urgent:false,isoDate:'2026-07-29'},{date:'14 May 2026',ticker:'CLBT',company:'Cellebrite Q1 2026',eps:'$0.14 est',action:'Hold eToro position through earnings. Strong Buy consensus.',urgent:false,isoDate:'2026-05-14'},
+  {date:'14 May - DONE',   ticker:'CLBT', company:'Cellebrite Q1 2026',     eps:'$0.12 BEAT $0.09 (+33%)', action:'Hold eToro GBP469. Guidance raised. 70% analyst upside.',urgent:false,isoDate:'2026-05-14'},
+  {date:'28 May 2026',     ticker:'000660',company:'SK Hynix Ex-Dividend',  eps:'KRW750/share',            action:'Hold IBKR through ex-div. Korean WHT 22% applies.',    urgent:false,isoDate:'2026-05-28'},
+  {date:'3 Jun 2026',      ticker:'AVGO', company:'Broadcom Q2 FY2026',     eps:'$2.32 est',               action:'Hold HL. AI custom chip thesis.',                      urgent:false,isoDate:'2026-06-03'},
+  {date:'9 Jun 2026',      ticker:'CRWD', company:'CrowdStrike Q1 FY2027',  eps:'$1.07 est',               action:'Hold HL. Already +26.4%.',                            urgent:false,isoDate:'2026-06-09'},
+  {date:'Jun 2026',        ticker:'MU',   company:'Micron Q3 FY2026',       eps:'TBC',                     action:'Hold HL + 1 share top-up pending. HBM demand key.',   urgent:false,isoDate:'2026-06-15'},
+  {date:'21 Jul 2026',     ticker:'MSCI', company:'MSCI Q2 2026',           eps:'$4.55+ est',              action:'Hold HL. Index licencing monopoly.',                   urgent:false,isoDate:'2026-07-21'},
+  {date:'29 Jul 2026',     ticker:'000660',company:'SK Hynix Q2 2026 (KRX)',eps:'KRW64,500 est',           action:'Hold IBKR. Revenue forecast KRW77.8T - major catalyst.',urgent:false,isoDate:'2026-07-29'},
+  {date:'4 Aug 2026',      ticker:'AMD',  company:'AMD Q2 2026',            eps:'$1.39 est',               action:'Hold HL. Data centre +57% Q1.',                       urgent:false,isoDate:'2026-08-04'},
+  {date:'H2 2026',         ticker:'SK-ADR',company:'SK Hynix ADR Listing',  eps:'LISTING EVENT',           action:'Sell IBKR KRX - buy ADR inside HL ISA. GBP1k reserved.',urgent:false,isoDate:'2026-09-01'},
+  {date:'6 Apr 2027',      ticker:'ISA',  company:'New ISA Allowance Opens', eps:'GBP20,000',              action:'TTD to HL ISA + CLBT to T212 ISA. Review eToro positions.',urgent:false,isoDate:'2027-04-06'},
 ];
 
 const GCAL_EVENTS=[
-  {title:'ISA: Buy TTD, CLBT, MU, FIX, EME',date:'2026-05-04',notes:'Deploy Tier 1 positions Monday open. TTD ~$21, CLBT ~$13, MU ~$455, FIX ~$1840, EME ~$892.',alarm:-30},
-  {title:'ISA: AXON Earnings — Wait Before Buying',date:'2026-05-06',notes:'Axon Enterprise Q1 2026 results after close, 5pm ET Zoom call. 2026 guidance 27-30% growth. 2028 target $6B revenue. 54% below 52wk high. Do not buy before results.',alarm:-60},
-  {title:'ISA: TTD Earnings + MELI Call',date:'2026-05-07',notes:'TTD Q1 after close (rev guidance $678M+, +/-14% move priced in — CEO bought $150M personally). MELI already beat revenue $8.76B — formal call 5pm ET today. Watch for MELI entry if stock dips post-call.',alarm:-60},
-  {title:'CANCEL: SK Hynix KRX Orders on eToro',date:'2026-05-07',notes:'Cancel all pending 000660 KRX limit orders on eToro. Execution unreliable. Wait for SK Hynix ADR on NYSE/Nasdaq H2 2026. £1,000 cash reserved at HL for ADR.',alarm:-30},{title:'CLBT Earnings — Hold eToro Position',date:'2026-05-14',notes:'Cellebrite Q1 2026 earnings. Hold £474 eToro position. Est EPS $0.14. Strong Buy consensus, 77% analyst upside. Upgrade cycle 20% done.',alarm:-60},{title:'IBKR: Check SK Hynix KRX Order Status',date:'2026-05-07',notes:'KRX opens 1am-7am UK time. Check if limit order at 1,594,000 KRW has filled. Consider raising to 1,610,000 KRW or switching to market order if still unfilled. 2 shares = ~£1,760.',alarm:-30},{title:'SK Hynix Q2 2026 Earnings (KRX)',date:'2026-07-29',notes:'SK Hynix reports Q2 2026. Hold IBKR position through earnings. Q1 was extraordinary: revenue +60% QoQ, operating margin 71.5%, EPS beat 48.8%. Monitor for any HBM demand signals.',alarm:-120},{title:'ISA: Monthly Portfolio Review',date:'2026-06-01',notes:'Update HL values in app, refresh analyst targets, check SK Hynix ADR filing progress and IBKR KRX position.',alarm:-60},
-  {title:'ISA: CRWD Earnings — Hold',date:'2026-06-09',notes:'CrowdStrike Q1 2026. EPS est $1.07. Already topped up — no action needed.',alarm:-30},
-  {title:'ISA: Watch for SK Hynix ADR Listing',date:'2026-07-01',notes:'SK Hynix ADR targeting H2 2026 (confirmed by CEO at March 2026 AGM). Could raise up to $14B. 2-3% new share issuance. £1,000 reserved. Set Google alerts: SK Hynix ADR NYSE and SK Hynix F-1 SEC filing. Deploy immediately on listing day.',alarm:-120},
-  {title:'ISA: 2026/27 Allowance Opens — Priority Buys',date:'2027-04-06',notes:'New £20,000 ISA allowance opens. Priority 1: TTD (if HL re-enabled or use T212). Priority 2: CLBT (use T212 ISA). Priority 3: top up existing positions. Consider Cash ISA allocation before S&S if rates still attractive.',alarm:-1440},{title:'ISA: Year-End — Use Full Allowance',date:'2027-04-04',notes:'Final week of 2026/27 ISA year. Ensure full £20,000 allowance deployed. Review all positions.',alarm:-1440},
+  {title:'SK Hynix Ex-Dividend Date',date:'2026-05-28',notes:'Hold IBKR 3 shares through ex-div. KRW750/share. Korean withholding tax 22% via IBKR.',alarm:-1440},
+  {title:'Broadcom (AVGO) Earnings',date:'2026-06-03',notes:'Broadcom Q2 FY2026. Est EPS $2.32. AI custom chip revenue. Hold HL.',alarm:-60},
+  {title:'CrowdStrike (CRWD) Earnings',date:'2026-06-09',notes:'CrowdStrike Q1 FY2027. Est EPS $1.07. Up 26.4%. Hold HL.',alarm:-30},
+  {title:'Micron (MU) Earnings',date:'2026-06-15',notes:'Micron Q3 FY2026. 1 share top-up pending. HBM demand key for SK Hynix thesis.',alarm:-60},
+  {title:'MSCI Inc Earnings',date:'2026-07-21',notes:'MSCI Q2 2026. Hold HL.',alarm:-60},
+  {title:'SK Hynix Q2 Earnings (KRX)',date:'2026-07-29',notes:'Revenue forecast KRW77.8T vs KRW52.6T in Q1. Major catalyst. Hold IBKR.',alarm:-120},
+  {title:'AMD Q2 2026 Earnings',date:'2026-08-04',notes:'AMD Q2 2026. Est EPS $1.39. Hold HL.',alarm:-60},
+  {title:'SK Hynix ADR - Watch H2 2026',date:'2026-09-01',notes:'Sell IBKR KRX - buy ADR inside HL ISA on listing day. GBP1k cash reserved at HL.',alarm:-1440},
+  {title:'TTD HL Block - Check Status',date:'2026-09-21',notes:'NASDAQ compliance cure deadline Sep 2026. If resolved TTD available on HL. Migrate from eToro.',alarm:-1440},
+  {title:'New ISA Allowance Opens',date:'2027-04-06',notes:'GBP20k new allowance. TTD to HL ISA + CLBT to T212 ISA. Review all eToro positions.',alarm:-1440},
 ];
 
 // ══════════════════════════════════════════════════
@@ -1445,7 +1460,8 @@ function addMsg(role,content){
 // REVIEW LOG
 // ══════════════════════════════════════════════════
 const DEFAULT_REVIEWS=[
-  {date:'15 May 2026',content:'<strong>Portfolio review 00:33.</strong> HL ISA fully deployed across 24 positions. MU top-up of 1 share placed (pending). Key moves since last review: CRWD +26.4%, SNDK +43%, NVDA +11.2%, ALAB +6.6%. Underperformers held: NET -17.7% (guidance miss overreaction), AXON -11.3%, MELI -13.1% (thesis intact), MANH -6.8%. IBKR SK Hynix KRW1,970,000 - unrealised +GBP523. CLBT Q1 beat 33% EPS - hold eToro. TTD eToro GBP672. All stale deployment plans removed - history logged.'},
+  {date:'15 May 2026 PM',content:'<strong>Market down day. Diversity review.</strong> HL ISA GBP41,582 (-GBP123 day). MU 1 share top-up FILLED at higher price. eToro GBP6,942 (-GBP364 day) - quantum trio took heavy hits (IONQ -9.6%, QBTS -8%, RGTI -7.4%). IBKR SK Hynix back to KRW1,837,000 (-GBP200 today, still +GBP323 unrealised). NEW Motley Fool intel: Epic 50 portfolio + Hidden Gems Apr 2026 + AI Rankings reviewed. Diversification candidates for Apr 2027: DASH (consumer #8 AI rank), RKLB (space - just surged 34% post-Q1), KRYS (biotech, $1B cash, 95% margin), MRVL (custom AI silicon), ATZAF (Canadian fashion). Portfolio 85% AI/tech - rotation candidates identified.'},
+  {date:'15 May 2026',content:'<strong>Portfolio review 00:33.</strong> HL ISA fully deployed across 24 positions. MU top-up of 1 share placed (pending). Key moves since last review: CRWD +26.4%, SNDK +43%, NVDA +11.2%, ALAB +6.6%. Underperformers held: NET -17.7% (guidance miss overreaction), AXON -11.3%, MELI -13.1% (thesis intact), MANH -6.8%. IBKR SK Hynix KRW1,837,000 - unrealised +GBP523. CLBT Q1 beat 33% EPS - hold eToro. TTD eToro GBP672. All stale deployment plans removed - history logged.'},
   {date:'12 May 2026',content:'<strong>Portfolio review 09:13.</strong> HL ISA GBP41,705 (+GBP443 since 7 May). Cash GBP5,569. Standouts: MU +20.1% (GBP2,350), SNDK +58.4% (GBP2,287), CRWD +18.9% (GBP1,201), INTC +15.4% (GBP765). Underperformers: NET -21.1% (GBP429), MELI -16.7% (GBP1,149), AXON -10.8% (GBP1,164). LSEG sold - proceeds redeployed. ASML added as new position. IBKR SK Hynix KRW1,863,000 - unrealised +KRW725K (+GBP399). eToro GBP8,042 across 13 positions.'},
   {date:'01 May 2026',content:'<strong>Initial setup.</strong> Cancelled QCOM + ALAB. Alphabet £600 pending. Vanguard partial sale £5k placed. AZN added at £700. Total deployable from ISA cash: ~£23,039. <strong style="color:#ff4757">BLOCKER: 2025/26 ISA allowance fully used — no new contributions. TTD blocked on HL (NASDAQ compliance). CLBT not available on HL (Israeli incorporation). Remaining 12 positions can deploy from existing ISA cash.</strong>'},
 ];
