@@ -318,7 +318,7 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 
 <!-- STATS BAR -->
 <div class="stats-bar">
-  <div class="stat-card"><div class="stat-label">ISA Total Value</div><div class="stat-value" id="totalValue">£41,053</div><div class="stat-sub" id="totalChangeSub">HL data as of 15 May 22:50</div></div>
+  <div class="stat-card"><div class="stat-label">ISA Total Value</div><div class="stat-value" id="totalValue">£42,357</div><div class="stat-sub" id="totalChangeSub">HL data as of 21 May 21:40</div></div>
   <div class="stat-card red"><div class="stat-label">ISA Allowance 25/26</div><div class="stat-value" style="font-size:16px">FULLY USED</div><div class="stat-sub">Deploy cash now at HL</div></div>
   <div class="stat-card amber"><div class="stat-label">Invested</div><div class="stat-value" id="investedValue">£36,136</div><div class="stat-sub" id="glSub">+£1,569 total (+4.3%)</div></div>
   <div class="stat-card"><div class="stat-label">Positions</div><div class="stat-value">6 + 14</div><div class="stat-sub">held + planned</div></div>
@@ -455,6 +455,32 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
           This way you capture the KRX momentum now AND get into the ISA wrapper before the full US premium re-rating.
         </div>
       </div>
+    </div>
+  </div>
+
+
+  <!-- ETORO POSITIONS -->
+  <div class="section" id="sec-etoro">
+    <div class="section-header" onclick="toggleSection('sec-etoro')">
+      <div class="section-title"><div class="dot" style="background:#ff6b35"></div>eToro — CGT Liable Positions</div>
+      <span class="section-toggle">&#9660;</span>
+    </div>
+    <div class="section-body">
+      <div style="background:rgba(255,71,87,0.08);border-left:3px solid #ff4757;padding:10px 16px;font-size:11px;color:var(--text-dim);margin:12px 14px 0">
+        ⚠️ These positions are outside an ISA wrapper. Gains are subject to CGT (20% above £3,000 exemption). Crystallised losses to date: <strong style="color:var(--green)">£870</strong>. Quantum trio may be riding $2B US govt grant catalyst — monitor for exit.
+      </div>
+      <table class="data-table" style="margin-top:8px">
+        <thead><tr>
+          <th style="text-align:left">Ticker</th>
+          <th style="text-align:right">Live Price</th>
+          <th style="text-align:right">Value £</th>
+          <th style="text-align:right">P&amp;L £</th>
+          <th style="text-align:right">P&amp;L %</th>
+          <th style="text-align:right">Status</th>
+          <th style="text-align:right">Chart</th>
+        </tr></thead>
+        <tbody id="etoroTbody"></tbody>
+      </table>
     </div>
   </div>
 
@@ -878,30 +904,32 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 // DATA
 // ══════════════════════════════════════════════════
 const HOLDINGS=[
-  {ticker:'AMD', name:'Advanced Micro Devices',  costGbp:950,  currentGbp:941,  action:'hold',actionLabel:'HOLD -0.9%',          currency:'USD',yahooTicker:'AMD'},
-  {ticker:'GOOG',name:'Alphabet Inc',            costGbp:875,  currentGbp:888,  action:'hold',actionLabel:'HOLD +1.5%',           currency:'USD',yahooTicker:'GOOG'},
-  {ticker:'ASML',name:'ASML Holding NV',         costGbp:1175, currentGbp:1093, action:'hold',actionLabel:'HOLD -9.0% macro sell', currency:'USD',yahooTicker:'ASML'},
-  {ticker:'ALAB',name:'Astera Labs',             costGbp:800,  currentGbp:804,  action:'hold',actionLabel:'HOLD +0.5%',           currency:'USD',yahooTicker:'ALAB'},
-  {ticker:'AZN', name:'AstraZeneca',             costGbp:680,  currentGbp:681,  action:'hold',actionLabel:'HOLD flat',            currency:'GBP',yahooTicker:'AZN.L'},
-  {ticker:'AXON',name:'Axon Enterprise',         costGbp:1305, currentGbp:1191, action:'hold',actionLabel:'HOLD -8.8% thesis intact',currency:'USD',yahooTicker:'AXON'},
-  {ticker:'BOX', name:'Box Inc',                 costGbp:685,  currentGbp:730,  action:'hold',actionLabel:'HOLD +4.7%',           currency:'USD',yahooTicker:'BOX'},
-  {ticker:'AVGO',name:'Broadcom Inc',            costGbp:968,  currentGbp:940,  action:'hold',actionLabel:'HOLD -2.8%',           currency:'USD',yahooTicker:'AVGO'},
-  {ticker:'CDNS',name:'Cadence Design Systems',  costGbp:527,  currentGbp:516,  action:'hold',actionLabel:'HOLD -2.1%',           currency:'USD',yahooTicker:'CDNS'},
-  {ticker:'NET', name:'Cloudflare',              costGbp:544,  currentGbp:451,  action:'hold',actionLabel:'HOLD -17% overreaction',currency:'USD',yahooTicker:'NET'},
-  {ticker:'FIX', name:'Comfort Systems USA',     costGbp:1487, currentGbp:1381, action:'hold',actionLabel:'HOLD -7.1% rates pressure',currency:'USD',yahooTicker:'FIX'},
-  {ticker:'CRWD',name:'CrowdStrike',             costGbp:1027, currentGbp:1384, action:'hold',actionLabel:'HOLD +34.8%',          currency:'USD',yahooTicker:'CRWD'},
-  {ticker:'EME', name:'EMCOR Group',             costGbp:1390, currentGbp:1308, action:'hold',actionLabel:'HOLD -5.9%',           currency:'USD',yahooTicker:'EME'},
-  {ticker:'INTC',name:'Intel Corporation',       costGbp:660,  currentGbp:645,  action:'hold',actionLabel:'HOLD -2.7%',           currency:'USD',yahooTicker:'INTC'},
-  {ticker:'IBM', name:'IBM',                     costGbp:850,  currentGbp:830,  action:'hold',actionLabel:'HOLD -1.8%',           currency:'USD',yahooTicker:'IBM'},
-  {ticker:'MANH',name:'Manhattan Associates',    costGbp:1032, currentGbp:1018, action:'hold',actionLabel:'HOLD -1.3%',           currency:'USD',yahooTicker:'MANH'},
-  {ticker:'MELI',name:'MercadoLibre',            costGbp:1380, currentGbp:1182, action:'hold',actionLabel:'HOLD -14.4% 7.1x FCF', currency:'USD',yahooTicker:'MELI'},
-  {ticker:'MU',  name:'Micron Technology',       costGbp:2400, currentGbp:2540, action:'hold',actionLabel:'HOLD +5.8%',           currency:'USD',yahooTicker:'MU'},
-  {ticker:'MSCI',name:'MSCI Inc',                costGbp:1750, currentGbp:1741, action:'hold',actionLabel:'HOLD -0.5%',           currency:'USD',yahooTicker:'MSCI'},
-  {ticker:'NVDA',name:'Nvidia Corp',             costGbp:1899, currentGbp:1989, action:'hold',actionLabel:'HOLD +4.7%',           currency:'USD',yahooTicker:'NVDA'},
-  {ticker:'RR',  name:'Rolls-Royce Holdings',    costGbp:793,  currentGbp:704,  action:'hold',actionLabel:'HOLD -11.2% oil/rates', currency:'GBP',yahooTicker:'RR.L'},
-  {ticker:'SNDK',name:'Sandisk Corporation',     costGbp:1444, currentGbp:1986, action:'hold',actionLabel:'HOLD +37.5%',          currency:'USD',yahooTicker:'SNDK'},
-  {ticker:'SMCI',name:'Super Micro Computer',    costGbp:781,  currentGbp:759,  action:'hold',actionLabel:'HOLD -2.8%',           currency:'USD',yahooTicker:'SMCI'},
-  {ticker:'VWRL',name:'Vanguard FTSE Global All Cap',costGbp:9994,currentGbp:10353,action:'hold',actionLabel:'HOLD +3.6%',        currency:'GBP',hlOnly:true},
+  {ticker:'AMD', name:'Advanced Micro Devices',  costGbp:950,  currentGbp:1003, action:'hold',actionLabel:'HOLD +5.6%',           currency:'USD',yahooTicker:'AMD'},
+  {ticker:'GOOG',name:'Alphabet Inc',            costGbp:875,  currentGbp:865,  action:'hold',actionLabel:'HOLD -1.1%',            currency:'USD',yahooTicker:'GOOG'},
+  {ticker:'AMZN',name:'Amazon',                  costGbp:1000, currentGbp:999,  action:'hold',actionLabel:'HOLD +1.0% NEW',        currency:'USD',yahooTicker:'AMZN'},
+  {ticker:'ASML',name:'ASML Holding NV',         costGbp:1175, currentGbp:1162, action:'hold',actionLabel:'HOLD -1.1%',            currency:'USD',yahooTicker:'ASML'},
+  {ticker:'ALAB',name:'Astera Labs',             costGbp:800,  currentGbp:1106, action:'hold',actionLabel:'HOLD +38.3%',           currency:'USD',yahooTicker:'ALAB'},
+  {ticker:'AZN', name:'AstraZeneca',             costGbp:680,  currentGbp:702,  action:'hold',actionLabel:'HOLD +3.3%',            currency:'GBP',yahooTicker:'AZN.L'},
+  {ticker:'AXON',name:'Axon Enterprise',         costGbp:1305, currentGbp:1159, action:'hold',actionLabel:'HOLD -11.2% macro sell', currency:'USD',yahooTicker:'AXON'},
+  {ticker:'BOX', name:'Box Inc',                 costGbp:685,  currentGbp:718,  action:'hold',actionLabel:'HOLD +4.8%',            currency:'USD',yahooTicker:'BOX'},
+  {ticker:'AVGO',name:'Broadcom Inc',            costGbp:968,  currentGbp:925,  action:'hold',actionLabel:'HOLD -4.4%',            currency:'USD',yahooTicker:'AVGO'},
+  {ticker:'CDNS',name:'Cadence Design Systems',  costGbp:527,  currentGbp:533,  action:'hold',actionLabel:'HOLD +1.2%',            currency:'USD',yahooTicker:'CDNS'},
+  {ticker:'NET', name:'Cloudflare',              costGbp:544,  currentGbp:474,  action:'hold',actionLabel:'HOLD -12.7% overreaction',currency:'USD',yahooTicker:'NET'},
+  {ticker:'FIX', name:'Comfort Systems USA',     costGbp:1487, currentGbp:1364, action:'hold',actionLabel:'HOLD -8.3% rates',      currency:'USD',yahooTicker:'FIX'},
+  {ticker:'CRWD',name:'CrowdStrike',             costGbp:1027, currentGbp:1446, action:'hold',actionLabel:'HOLD +40.8%',           currency:'USD',yahooTicker:'CRWD'},
+  {ticker:'EME', name:'EMCOR Group',             costGbp:1390, currentGbp:1263, action:'hold',actionLabel:'HOLD -9.1%',            currency:'USD',yahooTicker:'EME'},
+  {ticker:'INTC',name:'Intel Corporation',       costGbp:660,  currentGbp:705,  action:'hold',actionLabel:'HOLD +6.8%',            currency:'USD',yahooTicker:'INTC'},
+  {ticker:'IBM', name:'IBM',                     costGbp:850,  currentGbp:941,  action:'hold',actionLabel:'HOLD +10.7%',           currency:'USD',yahooTicker:'IBM'},
+  {ticker:'MANH',name:'Manhattan Associates',    costGbp:1032, currentGbp:1001, action:'hold',actionLabel:'HOLD -3.0%',            currency:'USD',yahooTicker:'MANH'},
+  {ticker:'MELI',name:'MercadoLibre',            costGbp:1380, currentGbp:1247, action:'hold',actionLabel:'HOLD -9.6% 7.1x FCF',  currency:'USD',yahooTicker:'MELI'},
+  {ticker:'MU',  name:'Micron Technology',       costGbp:2400, currentGbp:2833, action:'hold',actionLabel:'HOLD +18.0%',           currency:'USD',yahooTicker:'MU'},
+  {ticker:'MSCI',name:'MSCI Inc',                costGbp:1750, currentGbp:1732, action:'hold',actionLabel:'HOLD -1.1%',            currency:'USD',yahooTicker:'MSCI'},
+  {ticker:'NVDA',name:'Nvidia Corp',             costGbp:1899, currentGbp:1959, action:'hold',actionLabel:'HOLD +3.2%',            currency:'USD',yahooTicker:'NVDA'},
+  {ticker:'RR',  name:'Rolls-Royce Holdings',    costGbp:793,  currentGbp:741,  action:'hold',actionLabel:'HOLD -6.4% Iran noise', currency:'GBP',yahooTicker:'RR.L'},
+  {ticker:'SNDK',name:'Sandisk Corporation',     costGbp:1444, currentGbp:3442, action:'hold',actionLabel:'HOLD +138%',            currency:'USD',yahooTicker:'SNDK'},
+  {ticker:'SMCI',name:'Super Micro Computer',    costGbp:781,  currentGbp:821,  action:'hold',actionLabel:'HOLD +5.1%',            currency:'USD',yahooTicker:'SMCI'},
+  {ticker:'TSLA',name:'Tesla',                   costGbp:622,  currentGbp:621,  action:'hold',actionLabel:'HOLD NEW',              currency:'USD',yahooTicker:'TSLA'},
+  {ticker:'VWRL',name:'Vanguard FTSE Global All Cap',costGbp:9994,currentGbp:10306,action:'hold',actionLabel:'HOLD +3.1%',         currency:'GBP',hlOnly:true},
 ];
 
 const DEPLOY=[
@@ -913,12 +941,30 @@ const DEPLOY=[
   {rank:'🆕',ticker:'ATZAF',name:'Aritzia',            yahoo:'ATZAF',entryUsd:48, targetUsd:65, gbp:1000,currency:'USD',status:'watch', statusLabel:'NEW MF HG - CONSUMER',note:'Hidden Gems Apr 2026. Canadian fashion. Consumer discretionary. OTC ADR - check HL availability.'},
   // ── EXISTING WATCHLIST ──
   {rank:'👁',ticker:'STRL',name:'Sterling Infrastructure',yahoo:'STRL',entryUsd:700,targetUsd:900,gbp:1500,currency:'USD',status:'watch',statusLabel:'WAIT PULLBACK',note:'SA +207%. Wait for $650-700.'},
-  {rank:'👁',ticker:'AMZN',name:'Amazon',             yahoo:'AMZN', entryUsd:209,targetUsd:280,gbp:1500,currency:'USD',status:'watch',statusLabel:'CONSIDER - HYPERSCALER',note:'AWS + AI cloud. SA Mar 2026.'},
+  {rank:'✅',ticker:'AMZN',name:'Amazon',             yahoo:'AMZN', entryUsd:209,targetUsd:280,gbp:1000,currency:'USD',status:'hold', statusLabel:'IN HL ISA - NEW GBP1000',note:'AWS + AI cloud. SA Mar 2026. Bought May 2026. Consider adding on dips.'},
   {rank:'👁',ticker:'PRYMY',name:'Prysmian ADR',      yahoo:'PRYMY',entryUsd:81, targetUsd:95, gbp:700, currency:'USD',status:'watch',statusLabel:'CHECK HL',note:'Cable infrastructure. OTC ADR.'},
   // ── ISA MIGRATIONS APR 2027 ──
+  {rank:'✅',ticker:'TSLA',name:'Tesla',yahoo:'TSLA',entryUsd:350,targetUsd:500,gbp:622,currency:'USD',status:'hold',statusLabel:'IN HL ISA - NEW GBP622',note:'New position May 2026. Hidden Gems rec. AI + energy + autonomy thesis.'},
   {rank:'⏳',ticker:'TTD', name:'The Trade Desk (ISA)',yahoo:'TTD',  entryUsd:20, targetUsd:41, gbp:2300,currency:'USD',status:'close',statusLabel:'APR 2027 HL ISA',note:'HL blocked Sep 2026 cure. On eToro GBP707.'},
   {rank:'⏳',ticker:'CLBT',name:'Cellebrite (ISA)',   yahoo:'CLBT', entryUsd:13, targetUsd:23, gbp:500, currency:'USD',status:'close',statusLabel:'APR 2027 T212 ISA',note:'HL permanent block. On eToro GBP470. Q1 beat 33%.'},
   {rank:'⏳',ticker:'SK-ADR',name:'SK Hynix ADR',    yahoo:null,   entryUsd:0,  targetUsd:0,  gbp:1000,currency:'USD',status:'watch',statusLabel:'H2 2026',note:'ADR listing target H2 2026. GBP1k HL cash reserved.'},
+];
+
+
+const ETORO_DATA=[
+  {ticker:'QBTS', name:'D-Wave Quantum',    yahoo:'QBTS', pl:-237, value:880, cost:1117,status:'watch', statusLabel:'WATCH - QUANTUM GRANT SPIKE'},
+  {ticker:'RGTI', name:'Rigetti Computing', yahoo:'RGTI', pl:-552, value:706, cost:1258,status:'watch', statusLabel:'WATCH - WEAKEST QUANTUM'},
+  {ticker:'IONQ', name:'IonQ',              yahoo:'IONQ', pl:-244, value:948, cost:1192,status:'watch', statusLabel:'WATCH - BEST QUANTUM'},
+  {ticker:'OKLO', name:'Oklo Inc',          yahoo:'OKLO', pl:-497, value:315, cost:812, status:'hold',  statusLabel:'HOLD - NUCLEAR'},
+  {ticker:'NFLX', name:'Netflix',           yahoo:'NFLX', pl:-49,  value:100, cost:149, status:'hold',  statusLabel:'HOLD - SMALL'},
+  {ticker:'TTD',  name:'The Trade Desk',    yahoo:'TTD',  pl:-374, value:707, cost:1081,status:'hold',  statusLabel:'HOLD - APR 2027 HL ISA'},
+  {ticker:'WKP',  name:'Warpaint London',   yahoo:null,   pl:-93,  value:120, cost:213, status:'watch', statusLabel:'REVIEW'},
+  {ticker:'LULU', name:'Lululemon',         yahoo:null,   pl:-165, value:282, cost:447, status:'watch', statusLabel:'REVIEW'},
+  {ticker:'ORCL', name:'Oracle',            yahoo:'ORCL', pl:-391, value:726, cost:1117,status:'hold',  statusLabel:'HOLD - CLOUD/AI'},
+  {ticker:'PYPL', name:'PayPal',            yahoo:'PYPL', pl:-128, value:74,  cost:202, status:'watch', statusLabel:'REVIEW'},
+  {ticker:'SMCI', name:'Super Micro',       yahoo:'SMCI', pl:-72,  value:77,  cost:149, status:'watch', statusLabel:'REVIEW'},
+  {ticker:'CLBT', name:'Cellebrite',        yahoo:'CLBT', pl:-24,  value:474, cost:498, status:'hold',  statusLabel:'HOLD - APR 2027 T212 ISA'},
+  {ticker:'GOLD', name:'GoldWorldWide Copy',yahoo:null,   pl:-301, value:1937,cost:2238,status:'hold',  statusLabel:'HOLD - DEFENSIVE GOLD'},
 ];
 
 const EARNINGS=[
@@ -997,18 +1043,28 @@ return res;
 return null;
 }
 
-async function fetchHistory(t,range='3mo'){
-  try{
-    const url=`https://query1.finance.yahoo.com/v8/finance/chart/${t}?interval=1d&range=${range}`;
-    const r=await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`);
-    const o=await r.json();
-    const d=JSON.parse(o.contents);
-    const res=d.chart.result[0];
-    return res.timestamp.map((ts,i)=>({
-      date:new Date(ts*1000).toLocaleDateString('en-GB',{day:'2-digit',month:'short'}),
-      price:res.indicators.quote[0].close[i]
-    })).filter(d=>d.price!==null);
-  }catch(e){return null;}
+async function fetchHistory(t,range){
+range=range||'3mo';
+var yurl='https://query1.finance.yahoo.com/v8/finance/chart/'+t+'?interval=1d&range='+range;
+var proxies=[
+'https://api.allorigins.win/get?url='+encodeURIComponent(yurl),
+'https://corsproxy.io/?'+encodeURIComponent(yurl)
+];
+for(var pi=0;pi<proxies.length;pi++){
+try{
+var r=await fetchWithTimeout(proxies[pi],8000);
+if(!r.ok) continue;
+var o=await r.json();
+var raw=o.contents!=null?o.contents:o;
+var d=typeof raw==='string'?JSON.parse(raw):raw;
+var res=d.chart.result[0];
+var points=res.timestamp.map(function(ts,i){
+return{date:new Date(ts*1000).toLocaleDateString('en-GB',{day:'2-digit',month:'short'}),price:res.indicators.quote[0].close[i]};
+}).filter(function(p){return p.price!=null;});
+if(points.length>0) return points;
+}catch(e){continue;}
+}
+return null;
 }
 
 async function refreshAllPrices(){
@@ -1460,9 +1516,11 @@ function addMsg(role,content){
 // REVIEW LOG
 // ══════════════════════════════════════════════════
 const DEFAULT_REVIEWS=[
-  {date:'19 May 2026',content:'<strong>Market correction in progress.</strong> Three macro drivers: (1) Iran war keeping oil at $106-110/bbl, fuelling inflation. (2) New Fed Chair Kevin Warsh hawkish - rate HIKE now priced as possible, no cuts in 2026. (3) Trump-Xi summit produced no major breakthroughs - tech stocks losing AI rally tailwind. HL ISA GBP41,053 (-GBP529). Standouts holding: CRWD +34.8%, SNDK +37.5%, MU +5.8%, NVDA +4.7%. Pressure: ASML -9%, RR -11.2%, FIX -7.1%, MELI -14.4%. IBKR SK Hynix KRW1,748,000 (+GBP188 unrealised, down from +GBP523 peak). eToro quantum trio bleeding: IONQ/RGTI/QBTS/OKLO all -7%+. TTD and CLBT both green +5% today - ISA migration thesis building.'},
-  {date:'15 May 2026 PM',content:'<strong>Market down day. Diversity review.</strong> HL ISA GBP41,582 (-GBP123 day). MU 1 share top-up FILLED at higher price. eToro GBP6,942 (-GBP364 day) - quantum trio took heavy hits (IONQ -9.6%, QBTS -8%, RGTI -7.4%). IBKR SK Hynix back to KRW1,748,000 (-GBP200 today, still +GBP323 unrealised). NEW Motley Fool intel: Epic 50 portfolio + Hidden Gems Apr 2026 + AI Rankings reviewed. Diversification candidates for Apr 2027: DASH (consumer #8 AI rank), RKLB (space - just surged 34% post-Q1), KRYS (biotech, $1B cash, 95% margin), MRVL (custom AI silicon), ATZAF (Canadian fashion). Portfolio 85% AI/tech - rotation candidates identified.'},
-  {date:'15 May 2026',content:'<strong>Portfolio review 00:33.</strong> HL ISA fully deployed across 24 positions. MU top-up of 1 share placed (pending). Key moves since last review: CRWD +26.4%, SNDK +43%, NVDA +11.2%, ALAB +6.6%. Underperformers held: NET -17.7% (guidance miss overreaction), AXON -11.3%, MELI -13.1% (thesis intact), MANH -6.8%. IBKR SK Hynix KRW1,748,000 - unrealised +GBP523. CLBT Q1 beat 33% EPS - hold eToro. TTD eToro GBP672. All stale deployment plans removed - history logged.'},
+  {date:'21 May 2026',content:'<strong>Strong recovery day.</strong> HL ISA GBP42,357 (+GBP529 vs last update). New positions: TSLA GBP621, AMZN GBP999 (holding well). Standouts: SNDK +138% cumulative (GBP3,442) - extraordinary, CRWD +40.8% (GBP1,446), ALAB +38.3% (GBP1,106), MU +18%, IBM +11%. eToro quantum trio huge spike: QBTS +35.9%, RGTI +33.1%, IONQ +12.3% - may be a short-term spike, monitor. IBKR SK Hynix unrealised P&L back to +GBP473. eToro total GBP7,353 (+GBP536 day). Cash down to GBP2,281 after TSLA buy.'},
+  {date:'19 May 2026 - AMZN',content:'<strong>Amazon position opened.</strong> GBP1,000 deployed into AMZN on HL ISA. Bought into macro weakness - good timing. AWS hyperscaler gap in portfolio now filled. SA rec Mar 2026 @ $209. Analyst target $280 (+34%). HL ISA now 25 positions, GBP3,996 cash remaining.'},
+  {date:'19 May 2026',content:'<strong>Market correction in progress.</strong> Three macro drivers: (1) Iran war keeping oil at $106-110/bbl, fuelling inflation. (2) New Fed Chair Kevin Warsh hawkish - rate HIKE now priced as possible, no cuts in 2026. (3) Trump-Xi summit produced no major breakthroughs - tech stocks losing AI rally tailwind. HL ISA GBP41,053 (-GBP529). Standouts holding: CRWD +34.8%, SNDK +37.5%, MU +5.8%, NVDA +4.7%. Pressure: ASML -9%, RR -11.2%, FIX -7.1%, MELI -14.4%. IBKR SK Hynix KRW1,763,000 (+GBP473 unrealised, down from +GBP523 peak). eToro quantum trio bleeding: IONQ/RGTI/QBTS/OKLO all -7%+. TTD and CLBT both green +5% today - ISA migration thesis building.'},
+  {date:'15 May 2026 PM',content:'<strong>Market down day. Diversity review.</strong> HL ISA GBP41,582 (-GBP123 day). MU 1 share top-up FILLED at higher price. eToro GBP6,942 (-GBP364 day) - quantum trio took heavy hits (IONQ -9.6%, QBTS -8%, RGTI -7.4%). IBKR SK Hynix back to KRW1,763,000 (-GBP200 today, still +GBP323 unrealised). NEW Motley Fool intel: Epic 50 portfolio + Hidden Gems Apr 2026 + AI Rankings reviewed. Diversification candidates for Apr 2027: DASH (consumer #8 AI rank), RKLB (space - just surged 34% post-Q1), KRYS (biotech, $1B cash, 95% margin), MRVL (custom AI silicon), ATZAF (Canadian fashion). Portfolio 85% AI/tech - rotation candidates identified.'},
+  {date:'15 May 2026',content:'<strong>Portfolio review 00:33.</strong> HL ISA fully deployed across 24 positions. MU top-up of 1 share placed (pending). Key moves since last review: CRWD +26.4%, SNDK +43%, NVDA +11.2%, ALAB +6.6%. Underperformers held: NET -17.7% (guidance miss overreaction), AXON -11.3%, MELI -13.1% (thesis intact), MANH -6.8%. IBKR SK Hynix KRW1,763,000 - unrealised +GBP523. CLBT Q1 beat 33% EPS - hold eToro. TTD eToro GBP672. All stale deployment plans removed - history logged.'},
   {date:'12 May 2026',content:'<strong>Portfolio review 09:13.</strong> HL ISA GBP41,705 (+GBP443 since 7 May). Cash GBP5,569. Standouts: MU +20.1% (GBP2,350), SNDK +58.4% (GBP2,287), CRWD +18.9% (GBP1,201), INTC +15.4% (GBP765). Underperformers: NET -21.1% (GBP429), MELI -16.7% (GBP1,149), AXON -10.8% (GBP1,164). LSEG sold - proceeds redeployed. ASML added as new position. IBKR SK Hynix KRW1,863,000 - unrealised +KRW725K (+GBP399). eToro GBP8,042 across 13 positions.'},
   {date:'01 May 2026',content:'<strong>Initial setup.</strong> Cancelled QCOM + ALAB. Alphabet £600 pending. Vanguard partial sale £5k placed. AZN added at £700. Total deployable from ISA cash: ~£23,039. <strong style="color:#ff4757">BLOCKER: 2025/26 ISA allowance fully used — no new contributions. TTD blocked on HL (NASDAQ compliance). CLBT not available on HL (Israeli incorporation). Remaining 12 positions can deploy from existing ISA cash.</strong>'},
 ];
@@ -1890,9 +1948,50 @@ function renderPriority2027() {
 // ══════════════════════════════════════════════════
 // INIT
 // ══════════════════════════════════════════════════
+
+function renderEToro(){
+var el=document.getElementById('etoroTbody');
+if(!el) return;
+var totalVal=0,totalPL=0;
+var rows=ETORO_DATA.map(function(e){
+totalVal+=e.value;totalPL+=e.pl;
+var sc={hold:'status-hold',watch:'status-wait',close:'status-close'};
+return '<tr>'
++'<td><div class="ticker-badge">'+e.ticker+'</div><div class="ticker-name">'+e.name+'</div></td>'
++'<td class="td-right"><div id="eprice-'+e.ticker+'">'+(e.yahoo?'<span class="loading-price">...</span>':'<span class="neu">N/A</span>')+'</div><div id="echg-'+e.ticker+'" style="font-size:11px"></div></td>'
++'<td class="td-right">£'+e.value.toLocaleString()+'</td>'
++'<td class="td-right"><span class="'+(e.pl>=0?'pos':'neg')+'">'+(e.pl>=0?'+':'')+'£'+e.pl.toLocaleString()+'</span></td>'
++'<td class="td-right"><span class="'+(e.pl>=0?'pos':'neg')+'">'+(e.cost>0?(e.pl/e.cost*100).toFixed(1)+'%':'—')+'</span></td>'
++'<td class="td-right"><span class="status-badge '+(sc[e.status]||'status-wait')+'">'+e.statusLabel+'</span></td>'
++'<td class="td-right">'+(e.yahoo?'<button class="chart-btn" onclick="openChart(\"'+e.yahoo+'\",\"'+e.ticker+'\")">chart</button>':'—')+'</td>'
++'</tr>';
+}).join('');
+rows+='<tr style="background:var(--surface3);font-weight:700">'
++'<td colspan="2" style="padding:10px 14px">TOTAL (13 positions)</td>'
++'<td class="td-right" style="padding:10px 14px">£'+totalVal.toLocaleString()+'</td>'
++'<td class="td-right" style="padding:10px 14px"><span class="neg">£'+totalPL.toLocaleString()+'</span></td>'
++'<td class="td-right" style="padding:10px 14px"><span class="neg">'+(totalPL/( totalVal-totalPL)*100).toFixed(1)+'%</span></td>'
++'<td colspan="2" style="padding:10px 14px;font-size:11px;color:var(--text-dim)">CGT liable — not ISA wrapper</td>'
++'</tr>';
+el.innerHTML=rows;
+ETORO_DATA.filter(function(e){return e.yahoo;}).forEach(function(e){
+fetchPrice(e.yahoo).then(function(data){
+if(!data) return;
+var p=data.price;var sym='$';
+var cls=data.changePct>=0?'pos':'neg';
+var sign=data.changePct>=0?'+':'';
+var pel=document.getElementById('eprice-'+e.ticker);
+var cel=document.getElementById('echg-'+e.ticker);
+if(pel) pel.innerHTML='<span class="'+cls+'">'+sym+p.toFixed(2)+'</span>';
+if(cel) cel.innerHTML='<span class="'+cls+'">'+sign+data.changePct.toFixed(2)+'%</span>';
+}).catch(function(){});
+});
+}
+
 function init(){
   renderHoldings();
   renderDeploy();
+  renderEToro();
   renderEarnings();
   renderGCal();
   renderReviews();
