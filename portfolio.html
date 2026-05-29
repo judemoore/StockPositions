@@ -347,7 +347,7 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
     </div>
   </div>
   <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,71,87,0.2);color:#e2e8f0">
-    <strong style="color:#00ff9d">eToro update (29 May):</strong> CLBT, ORCL, TTD each show 2 lots. Total eToro value ~£7,685, all positions in unrealised loss. GoldWorldWide -£278. ORCL + TTD are best CGT loss-harvest candidates for 2026/27 tax year.
+    <strong style="color:#00ff9d">eToro update (29 May):</strong> 6 unique assets, 9 open positions — CLBT, ORCL and TTD each held as 2 separate lots (eToro confirms "Asset (6)"). Not a display glitch. Total unrealised loss -£1,890. TTD (-£754) and ORCL (-£613) are the two biggest losses — closing all 4 lots = <strong style="color:#ffd700">-£1,367 crystallisable for CGT offset</strong> before Apr 2027. 30-day rule applies on close.
   </div>
 </div>
 <div class="nav-tabs">
@@ -468,7 +468,9 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
     </div>
     <div class="section-body">
       <div style="background:rgba(255,71,87,0.08);border-left:3px solid #ff4757;padding:10px 16px;font-size:11px;color:var(--text-dim);margin:12px 14px 0">
-        ⚠️ These positions are outside an ISA wrapper. Gains are subject to CGT (20% above £3,000 exemption). Crystallised losses to date: <strong style="color:var(--green)">~£2,074</strong> (prior £870 + quantum trio ~£731 + OKLO £473). Quantum trio may be riding $2B US govt grant catalyst — monitor for exit.
+        ⚠️ CGT-liable positions (no ISA wrapper). <strong style="color:var(--text)">6 assets, 9 open positions</strong> — CLBT, ORCL and TTD are each held as <strong style="color:var(--amber)">2 separate lots</strong> (confirmed: "Asset (6)" shown in eToro). This is not a display glitch — they are genuine duplicate purchases at similar prices.
+        Total unrealised loss: <strong style="color:var(--green)">-£1,890</strong> available for CGT harvesting. Largest losses: TTD -£754 · ORCL -£613.
+        <span style="color:var(--amber)">⚡ Closing both TTD lots + both ORCL lots = -£1,367 crystallised losses</span> — enough to shelter ~£1,367 of gains from elsewhere (e.g. Microsoft close earlier this year) plus absorb into the £3,000 annual exemption.
       </div>
       <table class="data-table" style="margin-top:8px">
         <thead><tr>
@@ -712,9 +714,10 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 
   <!-- ALERT -->
   <div style="background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.3);padding:14px 20px;margin-bottom:16px;font-size:12px;color:#e2e8f0;line-height:1.7;">
-    <strong style="color:#ffd700">How this works:</strong> You have ~£3,314 in unrealised losses across eToro. Crystallising losses in the same tax year as gains can reduce or eliminate CGT. 
-    The 30-day bed & breakfast rule means you cannot rebuy the <em>same</em> asset within 30 days of selling at a loss — but you <em>can</em> sell IONQ at a loss and buy TTD (different asset). 
-    CGT annual exemption: <strong>£3,000</strong>. Higher-rate CGT: <strong>20%</strong>. Update the yellow cells with your actual figures.
+    <strong style="color:#ffd700">How this works:</strong> You have <strong>£1,890</strong> in unrealised losses across eToro (6 assets, 9 open positions).
+    CLBT, ORCL and TTD are each held as <strong style="color:var(--amber)">2 separate lots</strong> — confirmed by eToro showing "Asset (6)". Closing both lots of any ticker crystallises the full combined loss.
+    The 30-day bed &amp; breakfast rule means you cannot rebuy the <em>same</em> asset within 30 days of selling at a loss — but you <em>can</em> sell ORCL at a loss and hold TTD (different asset). 
+    CGT annual exemption: <strong>£3,000</strong>. Higher-rate CGT: <strong>20%</strong>. <strong style="color:var(--red)">Priority:</strong> TTD (-£754) and ORCL (-£613) are your largest loss positions — closing these two alone = <strong style="color:var(--green)">-£1,367 in crystallised losses</strong> to offset any gains this tax year.
   </div>
 
   <!-- ETORO POSITIONS TABLE -->
@@ -954,17 +957,16 @@ const DEPLOY=[
 ];
 
 
-// eToro updated 29 May 2026 00:44 from screenshot — note CLBT/ORCL/TTD appear twice (2 lots each)
+// eToro updated 29 May 2026 00:44 — Asset(6) confirmed. CLBT/ORCL/TTD each held as 2 separate lots
+// (eToro shows them as separate rows; values below are per-lot as displayed)
 const ETORO_DATA=[
-  {ticker:'SMCI', name:'Super Micro Computer (eToro)', yahoo:'SMCI', pl:-44,  value:105,  cost:149,  status:'watch', statusLabel:'WATCH - RECOVERY'},
-  {ticker:'CLBT', name:'Cellebrite (Lot A)',            yahoo:'CLBT', pl:-24,  value:474,  cost:498,  status:'hold',  statusLabel:'HOLD - APR 2027 T212 ISA'},
-  {ticker:'CLBT2',name:'Cellebrite (Lot B)',            yahoo:'CLBT', pl:-24,  value:474,  cost:498,  status:'hold',  statusLabel:'HOLD - APR 2027 T212 ISA'},
-  {ticker:'ORCL', name:'Oracle (Lot A)',                yahoo:'ORCL', pl:-307, value:809,  cost:1116, status:'hold',  statusLabel:'HOLD - CLOUD/AI'},
-  {ticker:'ORCL2',name:'Oracle (Lot B)',                yahoo:'ORCL', pl:-306, value:810,  cost:1116, status:'hold',  statusLabel:'HOLD - CLOUD/AI'},
-  {ticker:'TTD',  name:'The Trade Desk (Lot A)',        yahoo:'TTD',  pl:-377, value:704,  cost:1081, status:'hold',  statusLabel:'HOLD - APR 2027 HL ISA'},
-  {ticker:'TTD2', name:'The Trade Desk (Lot B)',        yahoo:'TTD',  pl:-377, value:704,  cost:1081, status:'hold',  statusLabel:'HOLD - APR 2027 HL ISA'},
-  {ticker:'LULU', name:'Lululemon',                     yahoo:'LULU', pl:-154, value:292,  cost:446,  status:'watch', statusLabel:'WATCH - RECOVERY'},
-  {ticker:'GOLD', name:'GoldWorldWide Copy (21 miners)',yahoo:null,   pl:-278, value:1959, cost:2237, status:'hold',  statusLabel:'HOLD - HORMUZ CATALYST?'},
+  // Lot A               value    P&L      cost
+  {ticker:'SMCI', name:'Super Micro Computer',      yahoo:'SMCI', pl:-44,   value:105,  cost:149,  status:'watch', statusLabel:'WATCH — RECOVERY?',  lots:1, lotNote:'Single lot'},
+  {ticker:'CLBT', name:'Cellebrite (2 lots)',        yahoo:'CLBT', pl:-47,   value:948,  cost:995,  status:'hold',  statusLabel:'HOLD — APR 2027 T212 ISA', lots:2, lotNote:'2 × £474 — identical lots @ $13.20'},
+  {ticker:'ORCL', name:'Oracle Corp (2 lots)',       yahoo:'ORCL', pl:-613,  value:1619, cost:2232, status:'hold',  statusLabel:'HOLD — CLOUD/AI',    lots:2, lotNote:'Lot A -£307 @ $211.20 · Lot B -£306 @ $211.50'},
+  {ticker:'TTD',  name:'The Trade Desk (2 lots)',    yahoo:'TTD',  pl:-754,  value:1408, cost:2162, status:'hold',  statusLabel:'HOLD — APR 2027 HL ISA', lots:2, lotNote:'2 × £704 — identical lots @ $21.20'},
+  {ticker:'LULU', name:'Lululemon Athletica',        yahoo:'LULU', pl:-154,  value:292,  cost:446,  status:'watch', statusLabel:'WATCH — RECOVERY?',  lots:1, lotNote:'Single lot'},
+  {ticker:'GOLD', name:'GoldWorldWide (21 miners)',  yahoo:null,   pl:-278,  value:1959, cost:2237, status:'hold',  statusLabel:'HOLD — HORMUZ CATALYST?', lots:1, lotNote:'CopyPortfolio — 21 gold miners'},
 ];
 
 const EARNINGS=[
@@ -2042,22 +2044,23 @@ var totalVal=0,totalPL=0;
 var rows=ETORO_DATA.map(function(e){
 totalVal+=e.value;totalPL+=e.pl;
 var sc={hold:'status-hold',watch:'status-wait',close:'status-close'};
+var lotBadge=e.lots>1?`<span style="font-size:9px;background:rgba(255,215,0,0.15);color:var(--amber);border:1px solid rgba(255,215,0,0.3);padding:1px 5px;margin-left:4px">${e.lots} LOTS</span>`:'';
 return '<tr>'
-+'<td><div class="ticker-badge">'+e.ticker+'</div><div class="ticker-name">'+e.name+'</div></td>'
++'<td><div class="ticker-badge">'+e.ticker+lotBadge+'</div><div class="ticker-name">'+e.name+'</div><div style="font-size:10px;color:var(--text-dim);margin-top:2px">'+e.lotNote+'</div></td>'
 +'<td class="td-right"><div id="eprice-'+e.ticker+'">'+(e.yahoo?'<span class="loading-price">...</span>':'<span class="neu">N/A</span>')+'</div><div id="echg-'+e.ticker+'" style="font-size:11px"></div></td>'
 +'<td class="td-right">£'+e.value.toLocaleString()+'</td>'
-+'<td class="td-right"><span class="'+(e.pl>=0?'pos':'neg')+'">'+(e.pl>=0?'+':'')+'£'+e.pl.toLocaleString()+'</span></td>'
++'<td class="td-right"><span class="'+(e.pl>=0?'pos':'neg')+'">'+(e.pl>=0?'+':'')+'£'+Math.abs(e.pl).toLocaleString()+'</span></td>'
 +'<td class="td-right"><span class="'+(e.pl>=0?'pos':'neg')+'">'+(e.cost>0?(e.pl/e.cost*100).toFixed(1)+'%':'—')+'</span></td>'
 +'<td class="td-right"><span class="status-badge '+(sc[e.status]||'status-wait')+'">'+e.statusLabel+'</span></td>'
 +'<td class="td-right">'+(e.yahoo?'<button class="chart-btn" onclick="openChart(\"'+e.yahoo+'\",\"'+e.ticker+'\")">chart</button>':'—')+'</td>'
 +'</tr>';
 }).join('');
 rows+='<tr style="background:var(--surface3);font-weight:700">'
-+'<td colspan="2" style="padding:10px 14px">TOTAL (9 positions · 6 active tickers)</td>'
++'<td colspan="2" style="padding:10px 14px">TOTAL — 6 assets · 9 open positions (CLBT/ORCL/TTD held as 2 lots each)</td>'
 +'<td class="td-right" style="padding:10px 14px">£'+totalVal.toLocaleString()+'</td>'
-+'<td class="td-right" style="padding:10px 14px"><span class="neg">£'+totalPL.toLocaleString()+'</span></td>'
-+'<td class="td-right" style="padding:10px 14px"><span class="neg">'+(totalPL/( totalVal-totalPL)*100).toFixed(1)+'%</span></td>'
-+'<td colspan="2" style="padding:10px 14px;font-size:11px;color:var(--text-dim)">CGT liable — not ISA wrapper | Cash GBP3,222 withdrawing to HSBC</td>'
++'<td class="td-right" style="padding:10px 14px"><span class="neg">-£'+Math.abs(totalPL).toLocaleString()+'</span></td>'
++'<td class="td-right" style="padding:10px 14px"><span class="neg">'+(totalPL/(totalVal-totalPL)*100).toFixed(1)+'%</span></td>'
++'<td colspan="2" style="padding:10px 14px;font-size:11px;color:var(--text-dim)">CGT liable — not ISA. Cash £3,341 available.</td>'
 +'</tr>';
 el.innerHTML=rows;
 ETORO_DATA.filter(function(e){return e.yahoo;}).forEach(function(e){
@@ -2155,6 +2158,12 @@ document.getElementById('chartModal').addEventListener('click',function(e){if(e.
   <div style="background:rgba(255,71,87,0.08);border-left:3px solid var(--red);padding:14px;font-size:12px;line-height:1.8;">
     <strong style="color:var(--red)">🔴 Priority 2: Trim MU (currently 8.2%)</strong><br>
     MU + SNDK = 17% of invested in memory/storage. MU's original HBM bridge thesis is now covered by SK Hynix (IBKR KRX + £1k ADR reserve). Consider trimming ~£1,000 to reduce overlap. Proceeds can add to IBM, MANH, or await SK Hynix ADR.
+  </div>
+  <div style="background:rgba(255,215,0,0.08);border-left:3px solid var(--amber);padding:14px;font-size:12px;line-height:1.8;">
+    <strong style="color:var(--amber)">🟡 eToro: TTD (-£754) + ORCL (-£613) — 2 lots each — CGT harvest before Apr 2027</strong><br>
+    eToro shows "Asset (6)" — confirmed 6 unique holdings. CLBT, ORCL and TTD were each bought as <strong>2 separate lots</strong> and show as separate rows in eToro's UI. Not a glitch.<br><br>
+    Closing <em>both</em> TTD lots crystallises <strong>-£754</strong>. Closing <em>both</em> ORCL lots crystallises <strong>-£613</strong>. Combined = <strong style="color:var(--green)">-£1,367 in losses</strong> to offset the Microsoft gain crystallised earlier in 2026/27, before the £3,000 exemption even applies.<br><br>
+    <strong style="color:var(--amber)">30-day rule:</strong> After closing TTD or ORCL, do not rebuy those specific tickers for 30 days or losses are disallowed. Holding CLBT, LULU and GoldWorldWide immediately after is fine (different assets). Plan for April 2027 ISA opens: rebuy TTD inside HL ISA once the NASDAQ compliance cure resolves.
   </div>
   <div style="background:rgba(255,215,0,0.08);border-left:3px solid var(--amber);padding:14px;font-size:12px;line-height:1.8;">
     <strong style="color:var(--amber)">🟡 Watch: FIX + EME dual infra (combined 6.3%)</strong><br>
