@@ -360,10 +360,14 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
   <button class="nav-tab" onclick="showTab('log')">📋 Review Log</button>
   <button class="nav-tab" onclick="showTab('cgt')">💰 CGT</button>
   <button class="nav-tab" onclick="showTab('watchlist')">👁 Watchlist</button>
+  <button class="nav-tab" onclick="showTab('tests')">🧪 Tests</button>
 </div>
 
 <!-- ═══════════════ TAB: DASHBOARD ═══════════════ -->
 <div class="tab-panel active" id="tab-dashboard">
+
+  <!-- URGENT ACTIONS BANNER -->
+  <div id="urgentActionsBanner"></div>
 
   <!-- EXISTING HOLDINGS -->
   <div class="section" id="sec-holdings">
@@ -373,7 +377,7 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
     </div>
     <div class="section-body">
       <table class="data-table"><thead><tr>
-        <th>Ticker</th><th style="text-align:right">Live Price</th><th style="text-align:right">Day %</th><th style="text-align:right">Value</th><th style="text-align:right">Gain/Loss</th><th style="text-align:right">Action</th><th style="text-align:right">Chart</th>
+        <th>Ticker</th><th style="text-align:right">Live Price</th><th style="text-align:right">Day %</th><th style="text-align:right">Value</th><th style="text-align:right">Gain/Loss</th><th style="text-align:right">Analyst Target</th><th style="text-align:right">Upside</th><th style="text-align:right">Action</th><th style="text-align:right">Chart</th>
       </tr></thead><tbody id="holdingsTbody"></tbody></table>
     </div>
   </div>
@@ -905,36 +909,211 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 // DATA
 // ══════════════════════════════════════════════════
 // Last synced: 02 Jun 2026 23:07 — HL total £46,327.81 | invested £43,045.68 | cash £3,282.13
-// USD/GBP 1.3464 · EUR/GBP 1.1379 (HL footnote) · 27 positions (DASH + PANW new)
+// Last synced: 02 Jun 2026. USD/GBP 1.3464 · EUR/GBP 1.1379 · 27 positions
+// analystTargetUsd: consensus 12-month target (USD, or GBX for UK-listed)
+// trimToGbp: sell down TO this £ value (null = no trim needed)
+// addTriggerGbp: add MORE if position falls to this £ value or below (April 2027 ISA)
+// addAmountGbp: how much to add at that trigger
+// reviewDate/reviewNote: drives GCAL reminder
 const HOLDINGS=[
-  {ticker:'AMD', name:'Advanced Micro Devices',  costGbp:950,  currentGbp:1161, action:'hold',actionLabel:'HOLD +22.3% — AI datacentre thesis intact',  currency:'USD',yahooTicker:'AMD',   concentration:'normal'},
-  {ticker:'GOOGL',name:'Alphabet Inc',           costGbp:875,  currentGbp:806,  action:'hold',actionLabel:'HOLD -7.9% — AI pivot. Hold, undervalued',   currency:'USD',yahooTicker:'GOOG',  concentration:'normal'},
-  {ticker:'AMZN',name:'Amazon',                  costGbp:1000, currentGbp:953,  action:'hold',actionLabel:'HOLD -3.6% — AWS AI cloud. Hold.',            currency:'USD',yahooTicker:'AMZN',  concentration:'normal'},
-  {ticker:'ASML',name:'ASML Holding NV',         costGbp:1175, currentGbp:1260, action:'hold',actionLabel:'HOLD +7.2% — EUV monopoly. High conviction',  currency:'USD',yahooTicker:'ASML',  concentration:'normal'},
-  {ticker:'ALAB',name:'Astera Labs',             costGbp:800,  currentGbp:1319, action:'hold',actionLabel:'HOLD +64.9% 🔥 — AI interconnect leader',     currency:'USD',yahooTicker:'ALAB',  concentration:'normal'},
-  {ticker:'AZN', name:'AstraZeneca',             costGbp:680,  currentGbp:662,  action:'hold',actionLabel:'HOLD -2.7% — oncology pipeline intact',       currency:'GBP',yahooTicker:'AZN.L', concentration:'normal'},
-  {ticker:'AXON',name:'Axon Enterprise',         costGbp:1305, currentGbp:1456, action:'hold',actionLabel:'HOLD +11.5% — public safety AI compounder',   currency:'USD',yahooTicker:'AXON',  concentration:'normal'},
-  {ticker:'BOX', name:'Box Inc',                 costGbp:685,  currentGbp:780,  action:'hold',actionLabel:'HOLD +13.9% — enterprise AI content layer',   currency:'USD',yahooTicker:'BOX',   concentration:'normal'},
-  {ticker:'AVGO',name:'Broadcom Inc',            costGbp:968,  currentGbp:1073, action:'hold',actionLabel:'HOLD +10.9% — custom AI silicon. Earnings 3 Jun',currency:'USD',yahooTicker:'AVGO',concentration:'normal'},
-  {ticker:'CDNS',name:'Cadence Design Systems',  costGbp:527,  currentGbp:618,  action:'hold',actionLabel:'HOLD +17.3% — EDA/chip design monopoly',      currency:'USD',yahooTicker:'CDNS',  concentration:'normal'},
-  {ticker:'DASH',name:'DoorDash',                costGbp:494,  currentGbp:466,  action:'watch',actionLabel:'NEW -5.6% — 44 analysts Buy, avg $246 (+51%)',currency:'USD',yahooTicker:'DASH',  concentration:'normal'},
-  {ticker:'NET', name:'Cloudflare',              costGbp:544,  currentGbp:509,  action:'hold',actionLabel:'HOLD -6.4% — conviction check needed',         currency:'USD',yahooTicker:'NET',   concentration:'normal'},
-  {ticker:'FIX', name:'Comfort Systems USA',     costGbp:1487, currentGbp:1399, action:'hold',actionLabel:'HOLD -5.9% — datacentre build-out. Dual w/ EME',currency:'USD',yahooTicker:'FIX', concentration:'normal'},
-  {ticker:'GLW', name:'Corning Inc',             costGbp:580,  currentGbp:595,  action:'hold',actionLabel:'HOLD +2.5% — fibre/AI infra. Small position',  currency:'USD',yahooTicker:'GLW',  concentration:'normal'},
-  {ticker:'CRWD',name:'CrowdStrike',             costGbp:1027, currentGbp:1711, action:'hold',actionLabel:'HOLD +66.6% 🔥 — cyber platform consolidation', currency:'USD',yahooTicker:'CRWD',  concentration:'normal'},
-  {ticker:'EME', name:'EMCOR Group',             costGbp:1390, currentGbp:1399, action:'hold',actionLabel:'HOLD +0.7% — recovering from lows. Dual w/ FIX',currency:'USD',yahooTicker:'EME',  concentration:'normal'},
-  {ticker:'IBM', name:'IBM',                     costGbp:850,  currentGbp:1223, action:'hold',actionLabel:'HOLD +43.9% 🔥 — AI hybrid cloud compounding',  currency:'USD',yahooTicker:'IBM',   concentration:'normal'},
-  {ticker:'MANH',name:'Manhattan Associates',    costGbp:1032, currentGbp:1151, action:'hold',actionLabel:'HOLD +11.5% — supply chain AI moat',           currency:'USD',yahooTicker:'MANH',  concentration:'normal'},
-  {ticker:'MRVL',name:'Marvell Technology',      costGbp:591,  currentGbp:864,  action:'hold',actionLabel:'HOLD +46.2% 🔥 — custom silicon/optical AI',    currency:'USD',yahooTicker:'MRVL',  concentration:'normal'},
-  {ticker:'MELI',name:'MercadoLibre',            costGbp:1380, currentGbp:1241, action:'hold',actionLabel:'HOLD -10.1% — LatAm fintech/ecom. Hold.',      currency:'USD',yahooTicker:'MELI',  concentration:'normal'},
-  {ticker:'MU',  name:'Micron Technology',       costGbp:2528, currentGbp:3952, action:'hold',actionLabel:'HOLD +56.3% ⚠ OVERWEIGHT 9.2% — trim candidate',currency:'USD',yahooTicker:'MU',   concentration:'critical'},
-  {ticker:'MSCI',name:'MSCI Inc',                costGbp:1750, currentGbp:1872, action:'hold',actionLabel:'HOLD +7.0% — index/data monopoly compounder',  currency:'USD',yahooTicker:'MSCI',  concentration:'watch'},
-  {ticker:'NVDA',name:'Nvidia Corp',             costGbp:1899, currentGbp:1986, action:'hold',actionLabel:'HOLD +4.5% — AI infra bellwether. Hold.',      currency:'USD',yahooTicker:'NVDA',  concentration:'watch'},
-  {ticker:'PANW',name:'Palo Alto Networks',      costGbp:662,  currentGbp:662,  action:'watch',actionLabel:'NEW ≈0% — Buy. Trading AT analyst avg target!',currency:'USD',yahooTicker:'PANW',  concentration:'normal'},
-  {ticker:'RR',  name:'Rolls-Royce Holdings',    costGbp:793,  currentGbp:783,  action:'hold',actionLabel:'HOLD -1.3% — defence/engine cycle. Hold.',     currency:'GBP',yahooTicker:'RR.L',  concentration:'normal'},
-  {ticker:'SNDK',name:'Sandisk Corporation',     costGbp:1444, currentGbp:3823, action:'hold',actionLabel:'HOLD +164.7% ⚠ OVERWEIGHT 8.9% — trim priority',currency:'USD',yahooTicker:'SNDK',  concentration:'critical'},
-  {ticker:'TSLA',name:'Tesla',                   costGbp:622,  currentGbp:629,  action:'hold',actionLabel:'HOLD -3.2% — AI/autonomy optionality. Hold.',  currency:'USD',yahooTicker:'TSLA',  concentration:'normal'},
-  {ticker:'VWRL',name:'Vanguard FTSE Global All Cap',costGbp:9994,currentGbp:10599,action:'hold',actionLabel:'HOLD +6.1% — passive core. Do not reduce.',currency:'GBP',hlOnly:true,          concentration:'core'},
+  // ── HOLD — no immediate action ───────────────────────────────────────────────────
+  {ticker:'AMD', name:'Advanced Micro Devices',  costGbp:950,  currentGbp:1161,
+   action:'hold', actionLabel:'HOLD — AI data centre +57% Q1',
+   currency:'USD', yahooTicker:'AMD',   concentration:'normal',
+   analystTargetUsd:175, analystCount:43,
+   trimToGbp:null, addTriggerGbp:900, addAmountGbp:500,
+   reviewDate:'2026-08-04', reviewNote:'AMD Q2 2026 earnings. Est EPS $1.39. If data centre rev continues +50%+ YoY, consider adding £500 in Apr 2027 ISA. Target add below £900 position value.'},
+
+  {ticker:'GOOGL',name:'Alphabet Inc',           costGbp:875,  currentGbp:806,
+   action:'hold', actionLabel:'HOLD — AI pivot undervalued vs peers',
+   currency:'USD', yahooTicker:'GOOG',  concentration:'normal',
+   analystTargetUsd:210, analystCount:65,
+   trimToGbp:null, addTriggerGbp:800, addAmountGbp:700,
+   reviewDate:'2026-10-01', reviewNote:'GOOGL Q3 2026 earnings. 65 analysts, avg target $210 (+30%+ upside from current). If Gemini monetisation accelerates, add £700 in Apr 2027. Below £800 position = strong buy signal.'},
+
+  {ticker:'AMZN',name:'Amazon',                  costGbp:1000, currentGbp:953,
+   action:'hold', actionLabel:'HOLD — AWS AI cloud. Add on dips.',
+   currency:'USD', yahooTicker:'AMZN',  concentration:'normal',
+   analystTargetUsd:280, analystCount:68,
+   trimToGbp:null, addTriggerGbp:850, addAmountGbp:700,
+   reviewDate:'2026-10-01', reviewNote:'AMZN Q3 2026 earnings. 68 analysts, avg $280 (+35% upside). AWS AI cloud thesis. Add £700 in Apr 2027 if position still below £1,500. Below £850 position value = add immediately.'},
+
+  {ticker:'ASML',name:'ASML Holding NV',         costGbp:1175, currentGbp:1260,
+   action:'hold', actionLabel:'HOLD — EUV monopoly. High conviction add Apr 2027.',
+   currency:'USD', yahooTicker:'ASML',  concentration:'normal',
+   analystTargetUsd:960, analystCount:38,
+   trimToGbp:null, addTriggerGbp:1100, addAmountGbp:1000,
+   reviewDate:'2026-10-14', reviewNote:'ASML Q3 2026 earnings. Highest-conviction add for April 2027 ISA — target £1,000 top-up. EUV monopoly; every AI chip fab needs ASML. Below £1,100 position value = priority add.'},
+
+  {ticker:'ALAB',name:'Astera Labs',             costGbp:800,  currentGbp:1319,
+   action:'hold', actionLabel:'HOLD +64.9% — AI PCIe interconnect. Let run.',
+   currency:'USD', yahooTicker:'ALAB',  concentration:'normal',
+   analystTargetUsd:110, analystCount:16,
+   trimToGbp:null, addTriggerGbp:null, addAmountGbp:null,
+   reviewDate:'2026-11-01', reviewNote:'ALAB Q3 2026 earnings. Position up +64.9%. Only 16 analysts — small coverage. Hold; do not add until analyst coverage expands and upside is clearer. Analyst target $110 is below current — reassess.'},
+
+  {ticker:'AZN', name:'AstraZeneca',             costGbp:680,  currentGbp:662,
+   action:'hold', actionLabel:'HOLD — oncology pipeline. Add on weakness.',
+   currency:'GBP', yahooTicker:'AZN.L', concentration:'normal',
+   analystTargetUsd:14500, analystCount:28,  // GBX target ~£145
+   trimToGbp:null, addTriggerGbp:600, addAmountGbp:500,
+   reviewDate:'2026-11-01', reviewNote:'AZN H2 2026 pipeline readouts. 28 analysts, GBX target 14,500 (~£145/share). Add £500 in Apr 2027 ISA — healthcare diversification, non-AI cycle. Below £600 position = strong add.'},
+
+  {ticker:'AXON',name:'Axon Enterprise',         costGbp:1305, currentGbp:1456,
+   action:'hold', actionLabel:'HOLD +11.5% — public safety AI. Let run.',
+   currency:'USD', yahooTicker:'AXON',  concentration:'normal',
+   analystTargetUsd:750, analystCount:22,
+   trimToGbp:null, addTriggerGbp:1200, addAmountGbp:500,
+   reviewDate:'2026-11-01', reviewNote:'AXON Q3 2026 earnings. $750 analyst target vs current ~$555 = +35% upside. Hold and let compound. Below £1,200 position = consider adding £500 in Apr 2027.'},
+
+  {ticker:'BOX', name:'Box Inc',                 costGbp:685,  currentGbp:780,
+   action:'hold', actionLabel:'HOLD +13.9% — enterprise AI content. Small.',
+   currency:'USD', yahooTicker:'BOX',   concentration:'normal',
+   analystTargetUsd:40, analystCount:18,
+   trimToGbp:null, addTriggerGbp:null, addAmountGbp:null,
+   reviewDate:'2026-09-01', reviewNote:'BOX FY2027 Q2 earnings. Analyst target $40 vs current ~$31 (+29%). Small position — hold. Only add if enterprise AI storage thesis strengthens materially. Otherwise let it run or close and redeploy into higher-conviction name.'},
+
+  {ticker:'AVGO',name:'Broadcom Inc',            costGbp:968,  currentGbp:1073,
+   action:'hold', actionLabel:'HOLD +10.9% — custom AI silicon. Q3 3 Jun.',
+   currency:'USD', yahooTicker:'AVGO',  concentration:'normal',
+   analystTargetUsd:280, analystCount:38,
+   trimToGbp:null, addTriggerGbp:900, addAmountGbp:600,
+   reviewDate:'2026-09-03', reviewNote:'AVGO Q3 FY2026 earnings Sep 2026. $280 target = +25% upside. Hold. Add £600 in Apr 2027 ISA if position still below £1,500. Below £900 position value = add signal.'},
+
+  {ticker:'CDNS',name:'Cadence Design Systems',  costGbp:527,  currentGbp:618,
+   action:'hold', actionLabel:'HOLD +17.3% — EDA/chip design monopoly.',
+   currency:'USD', yahooTicker:'CDNS',  concentration:'normal',
+   analystTargetUsd:350, analystCount:20,
+   trimToGbp:null, addTriggerGbp:500, addAmountGbp:500,
+   reviewDate:'2026-10-01', reviewNote:'CDNS Q3 2026 earnings. $350 analyst target vs current ~$262 = +34% upside. Small position — add £500 in Apr 2027. Below £500 position = add immediately.'},
+
+  {ticker:'DASH',name:'DoorDash',                costGbp:494,  currentGbp:466,
+   action:'watch', actionLabel:'NEW — add on dips. $246 target (+51%).',
+   currency:'USD', yahooTicker:'DASH',  concentration:'normal',
+   analystTargetUsd:246, analystCount:44,
+   trimToGbp:null, addTriggerGbp:400, addAmountGbp:1000,
+   reviewDate:'2026-08-06', reviewNote:'DASH Q2 2026 earnings ~Aug 2026. Deliveroo margin inflection expected H2 2026. 44 analysts Buy, $246 target (+51% upside). Add £1,000 in Apr 2027 ISA if still below $165. Below £400 position = strong add signal.'},
+
+  {ticker:'NET', name:'Cloudflare',              costGbp:544,  currentGbp:509,
+   action:'hold', actionLabel:'HOLD — 20% layoffs May 7. Watch H2.',
+   currency:'USD', yahooTicker:'NET',   concentration:'normal',
+   analystTargetUsd:168, analystCount:30,
+   trimToGbp:null, addTriggerGbp:400, addAmountGbp:500,
+   reviewDate:'2026-08-07', reviewNote:'NET Q2 2026 earnings Aug 2026. 20% workforce cut May 7 — "AI-first pivot". Revenue +34% YoY in Q1 despite this. If Q2 confirms restructuring paying off, consider adding £500 in Apr 2027. Below £400 position = potential add. Not in Morningstar top-4 AI cyber.'},
+
+  {ticker:'FIX', name:'Comfort Systems USA',     costGbp:1487, currentGbp:1399,
+   action:'hold', actionLabel:'HOLD -5.9% — data centre electrical. Dual w/ EME.',
+   currency:'USD', yahooTicker:'FIX',   concentration:'normal',
+   analystTargetUsd:430, analystCount:12,
+   trimToGbp:null, addTriggerGbp:null, addAmountGbp:null,
+   reviewDate:'2026-08-01', reviewNote:'FIX Q2 2026 earnings Aug 2026. $430 analyst target vs current ~$320 (+34%). Still -5.9% from cost. Hold alongside EME. Only 12 analysts — thin coverage. Do not add until one of FIX or EME is closed (dual infra redundancy). Reassess in Apr 2027.'},
+
+  {ticker:'GLW', name:'Corning Inc',             costGbp:580,  currentGbp:595,
+   action:'hold', actionLabel:'HOLD +2.5% — fibre/AI infra. Small.',
+   currency:'USD', yahooTicker:'GLW',   concentration:'normal',
+   analystTargetUsd:58, analystCount:20,
+   trimToGbp:null, addTriggerGbp:null, addAmountGbp:null,
+   reviewDate:'2026-07-29', reviewNote:'GLW Q2 2026 earnings ~Jul 2026. $58 target vs current ~$44 (+32%). Small position — hold. Fibre optic demand from AI data centres is the thesis. Do not add unless position shrinks below £500 AND thesis remains intact. Consider closing if conviction has dimmed.'},
+
+  {ticker:'CRWD',name:'CrowdStrike',             costGbp:1027, currentGbp:1711,
+   action:'hold', actionLabel:'HOLD +66.6% — cyber leader. Do not add (overvalued).',
+   currency:'USD', yahooTicker:'CRWD',  concentration:'normal',
+   analystTargetUsd:480, analystCount:44,
+   trimToGbp:null, addTriggerGbp:null, addAmountGbp:null,
+   reviewDate:'2026-09-09', reviewNote:'CRWD Q2 FY2027 earnings ~Sep 2026. +66.6% gain. Morningstar FV $132 vs current ~$580 = 199% premium. DO NOT ADD more. Already well-positioned. Hold and let compound. Trim only if it reaches 8%+ of invested.'},
+
+  {ticker:'EME', name:'EMCOR Group',             costGbp:1390, currentGbp:1399,
+   action:'hold', actionLabel:'HOLD +0.7% — data centre build. Back to cost.',
+   currency:'USD', yahooTicker:'EME',   concentration:'normal',
+   analystTargetUsd:530, analystCount:14,
+   trimToGbp:null, addTriggerGbp:null, addAmountGbp:null,
+   reviewDate:'2026-07-28', reviewNote:'EME Q2 2026 earnings ~Jul 2026. $530 target vs current ~$410 (+29%). Back near cost basis. Hold alongside FIX — same thesis. Do not add to both. If you close FIX, add to EME in Apr 2027.'},
+
+  {ticker:'IBM', name:'IBM',                     costGbp:850,  currentGbp:1223,
+   action:'hold', actionLabel:'HOLD +43.9% — AI hybrid cloud compounding.',
+   currency:'USD', yahooTicker:'IBM',   concentration:'normal',
+   analystTargetUsd:290, analystCount:22,
+   trimToGbp:null, addTriggerGbp:1000, addAmountGbp:500,
+   reviewDate:'2026-10-21', reviewNote:'IBM Q3 2026 earnings ~Oct 2026. $290 target vs current ~$222 (+31%). Solid compounder. Add £500 in Apr 2027 if still below £1,500 position. Below £1,000 = strong add signal.'},
+
+  {ticker:'MANH',name:'Manhattan Associates',    costGbp:1032, currentGbp:1151,
+   action:'hold', actionLabel:'HOLD +11.5% — supply chain AI moat.',
+   currency:'USD', yahooTicker:'MANH',  concentration:'normal',
+   analystTargetUsd:310, analystCount:18,
+   trimToGbp:null, addTriggerGbp:1000, addAmountGbp:500,
+   reviewDate:'2026-10-21', reviewNote:'MANH Q3 2026 earnings ~Oct 2026. $310 target vs current ~$236 (+31%). Supply chain software moat. Add £500 in Apr 2027. Below £1,000 position = add signal.'},
+
+  {ticker:'MRVL',name:'Marvell Technology',      costGbp:591,  currentGbp:864,
+   action:'hold', actionLabel:'HOLD +46.2% — custom silicon/optical AI. Let run.',
+   currency:'USD', yahooTicker:'MRVL',  concentration:'normal',
+   analystTargetUsd:125, analystCount:34,
+   trimToGbp:null, addTriggerGbp:700, addAmountGbp:600,
+   reviewDate:'2026-09-02', reviewNote:'MRVL Q2 FY2027 earnings Sep 2026. $125 target vs current ~$96 (+30%). Custom AI silicon and optical interconnect. Add £600 in Apr 2027. Below £700 position = add signal.'},
+
+  {ticker:'MELI',name:'MercadoLibre',            costGbp:1380, currentGbp:1241,
+   action:'hold', actionLabel:'HOLD -10.1% — LatAm fintech/ecom. Add on dip.',
+   currency:'USD', yahooTicker:'MELI',  concentration:'normal',
+   analystTargetUsd:2600, analystCount:28,
+   trimToGbp:null, addTriggerGbp:1100, addAmountGbp:700,
+   reviewDate:'2026-08-06', reviewNote:'MELI Q2 2026 earnings ~Aug 2026. $2,600 target vs current ~$1,885 (+38% upside). LatAm fintech/ecom. -10.1% from cost. Add £700 in Apr 2027. Below £1,100 position value = strong add — best EM exposure available in ISA.'},
+
+  // ── TRIM REQUIRED ────────────────────────────────────────────────────────────────
+  {ticker:'MU',  name:'Micron Technology',       costGbp:2528, currentGbp:3952,
+   action:'close', actionLabel:'⚠ TRIM £1,000–1,500 BEFORE 24 JUN EARNINGS',
+   currency:'USD', yahooTicker:'MU',   concentration:'critical',
+   analystTargetUsd:140, analystCount:44,
+   trimToGbp:2500, addTriggerGbp:2500, addAmountGbp:500,
+   reviewDate:'2026-06-24', reviewNote:'MU Q3 FY2026 EARNINGS — ACTION REQUIRED. BEFORE EARNINGS: Sell £1,000–1,500 in HL ISA to reduce from 9.2% to ~6–7%. No CGT (inside ISA). AFTER EARNINGS: if HBM demand guidance is strong, hold £2,500 remainder. If guidance disappoints, trim further to £2,000. In Apr 2027, consider adding back £500 if still below $140 analyst target.'},
+
+  {ticker:'SNDK',name:'Sandisk Corporation',     costGbp:1444, currentGbp:3823,
+   action:'close', actionLabel:'⚠ TRIM £1,300–1,500 NOW — AT analyst target',
+   currency:'USD', yahooTicker:'SNDK',  concentration:'critical',
+   analystTargetUsd:1460, analystCount:22,
+   trimToGbp:2300, addTriggerGbp:null, addAmountGbp:null,
+   reviewDate:'2026-06-10', reviewNote:'SNDK TRIM — ACTION NOW. Sell £1,300–1,500 in HL ISA to reduce from 8.9% to ~5.5–6%. No CGT (inside ISA). Stock at $1,478 vs analyst avg $1,460 — essentially AT consensus target, no upside left in analyst models. Pure NAND storage thesis; AI memory is better expressed via SK Hynix (IBKR). Do not add back — let position drift down naturally.'},
+
+  // ── WATCH — at or above target, no add ──────────────────────────────────────────
+  {ticker:'MSCI',name:'MSCI Inc',                costGbp:1750, currentGbp:1872,
+   action:'hold', actionLabel:'HOLD +7.0% — index monopoly. No add needed.',
+   currency:'USD', yahooTicker:'MSCI',  concentration:'watch',
+   analystTargetUsd:640, analystCount:20,
+   trimToGbp:null, addTriggerGbp:1600, addAmountGbp:500,
+   reviewDate:'2026-07-22', reviewNote:'MSCI Q2 2026 earnings 21 Jul 2026. $640 target vs current ~$490 (+31%). Good compounder. Hold. Add £500 in Apr 2027 if still below £1,700. Below £1,600 position = add signal.'},
+
+  {ticker:'NVDA',name:'Nvidia Corp',             costGbp:1899, currentGbp:1986,
+   action:'hold', actionLabel:'HOLD +4.5% — AI bellwether. No add at this price.',
+   currency:'USD', yahooTicker:'NVDA',  concentration:'watch',
+   analystTargetUsd:175, analystCount:65,
+   trimToGbp:null, addTriggerGbp:1700, addAmountGbp:500,
+   reviewDate:'2026-08-27', reviewNote:'NVDA Q2 FY2027 earnings ~Aug 2026. 65 analysts, target $175 — nearly at current price. Do not add here. Hold. If it pulls back to below £1,700 position value, consider adding £500 in Apr 2027.'},
+
+  {ticker:'PANW',name:'Palo Alto Networks',      costGbp:662,  currentGbp:662,
+   action:'watch', actionLabel:'HOLD — AT analyst target. Add only on -15% dip.',
+   currency:'USD', yahooTicker:'PANW',  concentration:'normal',
+   analystTargetUsd:217, analystCount:54,
+   trimToGbp:null, addTriggerGbp:550, addAmountGbp:700,
+   reviewDate:'2026-09-02', reviewNote:'PANW Q4 FY2026 earnings ~Sep 2026. $217 avg target vs current ~$213 = essentially AT consensus. Morningstar fair value is much lower (464% premium to FV). Hold starter position. Add £700 in Apr 2027 ONLY if stock pulls back 15%+ (below ~£550 position).'},
+
+  {ticker:'RR',  name:'Rolls-Royce Holdings',    costGbp:793,  currentGbp:783,
+   action:'hold', actionLabel:'HOLD -1.3% — defence/engine cycle. Hold.',
+   currency:'GBP', yahooTicker:'RR.L',  concentration:'normal',
+   analystTargetUsd:700, analystCount:18,  // GBX target ~£7.00/share
+   trimToGbp:null, addTriggerGbp:650, addAmountGbp:500,
+   reviewDate:'2026-08-01', reviewNote:'RR H1 2026 results ~Aug 2026. GBX target 700p vs current ~590p (+19%). Defence/aerospace cycle. Hold. Add £500 in Apr 2027. Below £650 position = add signal.'},
+
+  {ticker:'TSLA',name:'Tesla',                   costGbp:622,  currentGbp:629,
+   action:'hold', actionLabel:'HOLD -3.2% — AI/autonomy optionality.',
+   currency:'USD', yahooTicker:'TSLA',  concentration:'normal',
+   analystTargetUsd:310, analystCount:55,
+   trimToGbp:null, addTriggerGbp:500, addAmountGbp:500,
+   reviewDate:'2026-10-20', reviewNote:'TSLA Q3 2026 earnings ~Oct 2026. $310 target vs current ~$240 (+29%). MF Hidden Gems rec. Hold. Add £500 in Apr 2027. Below £500 position = add signal.'},
+
+  {ticker:'VWRL',name:'Vanguard FTSE Global All Cap', costGbp:9994, currentGbp:10599,
+   action:'hold', actionLabel:'HOLD +6.1% — passive core. Do not change.',
+   currency:'GBP', hlOnly:true, concentration:'core',
+   analystTargetUsd:null, analystCount:null,
+   trimToGbp:null, addTriggerGbp:null, addAmountGbp:null,
+   reviewDate:'2027-04-06', reviewNote:'Vanguard FTSE Global All Cap — passive core. No action required. Target ~25% of invested. Add £4,000–5,000 per year via new ISA contributions to maintain the 75/25 active/passive split.'},
 ];
 
 // Updated 02 Jun 2026 — reflects current positions, analyst targets, and entry signals
@@ -999,30 +1178,61 @@ const ETORO_DATA=[
 ];
 
 const EARNINGS=[
-  {date:'14 May - DONE',   ticker:'CLBT', company:'Cellebrite Q1 2026',     eps:'$0.12 BEAT $0.09 (+33%)', action:'Hold eToro GBP469. Guidance raised. 70% analyst upside.',urgent:false,isoDate:'2026-05-14'},
-  {date:'28 May 2026',     ticker:'000660',company:'SK Hynix Ex-Dividend',  eps:'KRW750/share',            action:'Hold IBKR through ex-div. Korean WHT 22% applies.',    urgent:false,isoDate:'2026-05-28'},
-  {date:'3 Jun 2026',      ticker:'AVGO', company:'Broadcom Q2 FY2026',     eps:'$2.32 est',               action:'Hold HL. AI custom chip thesis.',                      urgent:false,isoDate:'2026-06-03'},
-  {date:'9 Jun 2026',      ticker:'CRWD', company:'CrowdStrike Q1 FY2027',  eps:'$1.07 est',               action:'Hold HL. Already +26.4%.',                            urgent:false,isoDate:'2026-06-09'},
-  {date:'Jun 2026',        ticker:'MU',   company:'Micron Q3 FY2026',       eps:'TBC',                     action:'Hold HL + 1 share top-up pending. HBM demand key.',   urgent:false,isoDate:'2026-06-15'},
-  {date:'21 Jul 2026',     ticker:'MSCI', company:'MSCI Q2 2026',           eps:'$4.55+ est',              action:'Hold HL. Index licencing monopoly.',                   urgent:false,isoDate:'2026-07-21'},
-  {date:'29 Jul 2026',     ticker:'000660',company:'SK Hynix Q2 2026 (KRX)',eps:'KRW64,500 est',           action:'Hold IBKR. Revenue forecast KRW77.8T - major catalyst.',urgent:false,isoDate:'2026-07-29'},
-  {date:'4 Aug 2026',      ticker:'AMD',  company:'AMD Q2 2026',            eps:'$1.39 est',               action:'Hold HL. Data centre +57% Q1.',                       urgent:false,isoDate:'2026-08-04'},
-  {date:'H2 2026',         ticker:'SK-ADR',company:'SK Hynix ADR Listing',  eps:'LISTING EVENT',           action:'Sell IBKR KRX - buy ADR inside HL ISA. GBP1k reserved.',urgent:false,isoDate:'2026-09-01'},
-  {date:'6 Apr 2027',      ticker:'ISA',  company:'New ISA Allowance Opens', eps:'GBP20,000',              action:'TTD to HL ISA + CLBT to T212 ISA. Review eToro positions.',urgent:false,isoDate:'2027-04-06'},
+  {date:'14 May — DONE ✅',  ticker:'CLBT', company:'Cellebrite Q1 2026',      eps:'$0.12 BEAT $0.09 (+33%)', action:'CLOSED on eToro — position gone. Guidance raised.',                urgent:false,isoDate:'2026-05-14'},
+  {date:'28 May — DONE ✅',  ticker:'000660',company:'SK Hynix Ex-Dividend',   eps:'KRW750/share',            action:'Held through ex-div. Korean WHT 22% applied via IBKR.',         urgent:false,isoDate:'2026-05-28'},
+  {date:'3 Jun — DONE ✅',   ticker:'AVGO', company:'Broadcom Q2 FY2026',      eps:'$2.32 est',               action:'Hold HL £1,073 (+10.9%). AI custom chip thesis intact.',           urgent:false,isoDate:'2026-06-03'},
+  {date:'9 Jun 2026',        ticker:'CRWD', company:'CrowdStrike Q1 FY2027',   eps:'$1.07 est',               action:'Hold HL £1,711 (+66.6%). Platform consolidation accelerating. No action needed.', urgent:false,isoDate:'2026-06-09'},
+  {date:'16 Jun 2026',       ticker:'ORCL', company:'Oracle Q4 FY2026',        eps:'$2.00 est (consensus)',   action:'⚠ DECISION POINT (eToro). ORCL at $243 vs analyst avg $247 — nearly zero upside. Consider closing BOTH lots (-£366 loss) BEFORE earnings to harvest CGT loss. If earnings disappoint, stock could fall sharply. 30-day rule: no rebuy for 30 days after closing.', urgent:true,isoDate:'2026-06-16'},
+  {date:'24 Jun 2026 ⚠',    ticker:'MU',   company:'Micron Q3 FY2026',        eps:'EPS $19.88 est · Rev $34.89B est', action:'🔴 TRIM DECISION. Before earnings: trim £1,000–1,500 of MU (now 9.2% = overweight). After earnings: if HBM guidance strong and revenue beats, hold remainder or redeploy trim proceeds. If guidance disappoints, trim further. HBM AI memory fully booked 2026 — thesis intact but valuation extended. 44 analysts Strong Buy, avg target ~$140.', urgent:true,isoDate:'2026-06-24'},
+  {date:'21 Jul 2026',       ticker:'MSCI', company:'MSCI Q2 2026',            eps:'$4.55+ est',              action:'Hold HL £1,872 (+7%). Index licensing monopoly. No action.',       urgent:false,isoDate:'2026-07-21'},
+  {date:'29 Jul 2026',       ticker:'000660',company:'SK Hynix Q2 2026 (KRX)', eps:'KRW64,500 est',           action:'⭐ Major catalyst — Rev forecast ₩77.8T vs ₩52.6T Q1. Hold IBKR 3 shares. Watch for ADR listing announcement alongside earnings.',urgent:true,isoDate:'2026-07-29'},
+  {date:'3 Aug 2026',        ticker:'SMCI', company:'Super Micro FQ4 2026',    eps:'$0.68 est',               action:'Watch eToro 2 lots (-£68). Hold consensus — governance concerns persist. Close if another disappointment.',urgent:false,isoDate:'2026-08-03'},
+  {date:'4 Aug 2026',        ticker:'AMD',  company:'AMD Q2 2026',             eps:'$1.39 est',               action:'Hold HL £1,161 (+22.3%). Data centre +57% Q1. No action needed.',  urgent:false,isoDate:'2026-08-04'},
+  {date:'H2 2026',           ticker:'SK-ADR',company:'SK Hynix ADR Listing',   eps:'LISTING EVENT',           action:'⭐ Trigger: sell IBKR KRX → buy ADR in HL ISA same day. £1,000 cash reserved at HL. Unrealised gain ~+£460 now.',urgent:true,isoDate:'2026-09-01'},
+  {date:'21 Sep 2026',       ticker:'TTD',  company:'TTD NASDAQ Compliance Cure',eps:'COMPLIANCE DEADLINE',  action:'Check HL: if TTD re-enabled, it becomes available to buy inside ISA. Review eToro 2 lots for bed-and-ISA migration plan.',urgent:false,isoDate:'2026-09-21'},
+  {date:'6 Apr 2027',        ticker:'ISA',  company:'New ISA Allowance Opens',  eps:'£20,000',                action:'Priority buys: ZS (Zscaler — Morningstar top-4 cyber, +36% analyst upside), TTD (migrate from eToro), ASML add, DASH add. Review all eToro positions.',urgent:false,isoDate:'2027-04-06'},
 ];
 
 const GCAL_EVENTS=[
-  {title:'SK Hynix Ex-Dividend Date',date:'2026-05-28',notes:'Hold IBKR 3 shares through ex-div. KRW750/share. Korean withholding tax 22% via IBKR.',alarm:-1440},
-  {title:'Broadcom (AVGO) Earnings',date:'2026-06-03',notes:'Broadcom Q2 FY2026. Est EPS $2.32. AI custom chip revenue. Hold HL.',alarm:-60},
-  {title:'CrowdStrike (CRWD) Earnings',date:'2026-06-09',notes:'CrowdStrike Q1 FY2027. Est EPS $1.07. Up 26.4%. Hold HL.',alarm:-30},
-  {title:'Micron (MU) Earnings',date:'2026-06-15',notes:'Micron Q3 FY2026. 1 share top-up pending. HBM demand key for SK Hynix thesis.',alarm:-60},
-  {title:'MSCI Inc Earnings',date:'2026-07-21',notes:'MSCI Q2 2026. Hold HL.',alarm:-60},
-  {title:'SK Hynix Q2 Earnings (KRX)',date:'2026-07-29',notes:'Revenue forecast KRW77.8T vs KRW52.6T in Q1. Major catalyst. Hold IBKR.',alarm:-120},
-  {title:'AMD Q2 2026 Earnings',date:'2026-08-04',notes:'AMD Q2 2026. Est EPS $1.39. Hold HL.',alarm:-60},
-  {title:'SK Hynix ADR - Watch H2 2026',date:'2026-09-01',notes:'Sell IBKR KRX - buy ADR inside HL ISA on listing day. GBP1k cash reserved at HL.',alarm:-1440},
-  {title:'TTD HL Block - Check Status',date:'2026-09-21',notes:'NASDAQ compliance cure deadline Sep 2026. If resolved TTD available on HL. Migrate from eToro.',alarm:-1440},
-  {title:'New ISA Allowance Opens',date:'2027-04-06',notes:'GBP20k new allowance. TTD to HL ISA + CLBT to T212 ISA. Review all eToro positions.',alarm:-1440},
+  // ── EARNINGS & KEY EVENTS ─────────────────────────────────────────────────
+  {title:'CrowdStrike (CRWD) Earnings',date:'2026-06-09',notes:'CrowdStrike Q1 FY2027. Est EPS $1.07. Hold HL £1,711 (+66.6%). Platform consolidation. No action needed.',alarm:-60},
+  {title:'Oracle (ORCL) Earnings — eToro Decision',date:'2026-06-16',notes:'Oracle Q4 FY2026. Est EPS $2.00. ACTION: Consider closing BOTH eToro lots BEFORE earnings to crystallise -£366 CGT loss. ORCL at $243 vs analyst avg $247 — nearly no upside. 30-day rule applies after close.',alarm:-1440},
+  {title:'⚠ MICRON (MU) Earnings — TRIM DECISION',date:'2026-06-24',notes:'Micron Q3 FY2026. ACTION BEFORE EARNINGS: Sell £1,000-1,500 in HL ISA (no CGT). Reduce from 9.2% to ~6-7%. After: if HBM guidance strong, hold £2,500 remainder. If disappoints, trim further to £2,000.',alarm:-1440},
+  {title:'MSCI Inc Earnings',date:'2026-07-21',notes:'MSCI Q2 2026. Hold HL £1,872 (+7%). Add £500 in Apr 2027 if below £1,600. No action now.',alarm:-60},
+  {title:'SK Hynix Q2 Earnings (KRX) ⭐',date:'2026-07-29',notes:'Major catalyst. Revenue forecast KRW77.8T vs KRW52.6T Q1. Watch for ADR listing announcement alongside earnings. Hold IBKR 3 shares.',alarm:-120},
+  {title:'AMD Q2 2026 Earnings',date:'2026-08-04',notes:'AMD Q2 2026. Est EPS $1.39. Hold HL £1,161. If data centre +50%+ continues, target add £500 in Apr 2027 below £900 position.',alarm:-60},
+  {title:'Super Micro (SMCI) FQ4 Earnings',date:'2026-08-03',notes:'SMCI eToro 2 lots (-£68). Hold consensus, governance concerns. Close if disappoints.',alarm:-60},
+  {title:'SK Hynix ADR Listing Watch',date:'2026-09-01',notes:'Target: sell IBKR KRX → buy ADR in HL ISA same day. £1,000 cash reserved at HL.',alarm:-1440},
+  {title:'TTD NASDAQ Compliance Cure Check',date:'2026-09-21',notes:'If TTD compliance resolved, HL re-enables buying. Review eToro 2 lots (-£758) for bed-and-ISA migration. 30-day rule applies.',alarm:-1440},
+  // ── POSITION REVIEW REMINDERS — auto-generated from HOLDINGS reviewDate ──
+  // (These are added programmatically below via buildGcalFromHoldings)
 ];
+
+// Build additional GCAL entries from HOLDINGS review dates
+function buildGcalFromHoldings(){
+  const extra=[];
+  HOLDINGS.forEach(h=>{
+    if(!h.reviewDate||!h.reviewNote) return;
+    // Avoid duplicates with existing GCAL_EVENTS
+    const alreadyExists=GCAL_EVENTS.some(g=>g.date===h.reviewDate&&g.title.toUpperCase().includes(h.ticker.toUpperCase()));
+    if(alreadyExists) return;
+    const isTrim=!!h.trimToGbp;
+    const isAdd=!!h.addTriggerGbp;
+    const prefix=isTrim?'⚠ TRIM — ':isAdd?'📥 REVIEW/ADD — ':'📋 REVIEW — ';
+    extra.push({
+      title:`${prefix}${h.ticker} (${h.name})`,
+      date:h.reviewDate,
+      notes:h.reviewNote,
+      alarm:isTrim?-1440:-60
+    });
+  });
+  return extra;
+}
+
+// ── Final ISA allowance event ─────────────────────────────────────────────
+const GCAL_ISA={title:'New ISA Allowance Opens — Full Deploy Plan',date:'2027-04-06',
+  notes:'£20,000 new allowance. Priority: 1) ZS (Zscaler +36% upside) 2) TTD (migrate from eToro) 3) ASML +£1,000 4) DASH +£1,000 5) MELI +£700 6) GOOGL +£700 7) AMZN +£700. Close remaining eToro: TTD harvest -£758 loss, ORCL -£366 if still open. Review all trim positions.',
+  alarm:-1440};
 
 // ══════════════════════════════════════════════════
 // TABS
@@ -1031,11 +1241,12 @@ function showTab(id){
   document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
   document.getElementById('tab-'+id).classList.add('active');
-  const tabs={'dashboard':0,'concentration':1,'calculator':2,'gcal':3,'import':4,'claude':5,'log':6,'cgt':7,'watchlist':8};
+  const tabs={'dashboard':0,'concentration':1,'calculator':2,'gcal':3,'import':4,'claude':5,'log':6,'cgt':7,'watchlist':8,'tests':9};
   document.querySelectorAll('.nav-tab')[tabs[id]]?.classList.add('active');
   if(id==='calculator') runCalc();
   if(id==='concentration') renderConcentration();
   if(id==='watchlist') { renderWatchlist(); renderCyberCompare(); }
+  if(id==='tests') runAllTests();
 }
 
 function toggleSection(id){document.getElementById(id).classList.toggle('collapsed');}
@@ -1103,8 +1314,9 @@ return null;
 async function refreshAllPrices(){
   const btn=document.getElementById('refreshBtn');
   btn.disabled=true; btn.textContent='↻ ...';
+  const FX_USD_GBP = 1/1.3464;
   const tickers=[
-    ...HOLDINGS.filter(h=>h.yahooTicker).map(h=>({id:h.ticker,yahoo:h.yahooTicker,type:'h'})),
+    ...HOLDINGS.filter(h=>h.yahooTicker).map(h=>({id:h.ticker,yahoo:h.yahooTicker,type:'h',holding:h})),
     ...DEPLOY.filter(p=>p.yahoo).map(p=>({id:p.ticker,yahoo:p.yahoo,type:'d'})),
   ];
   for(const t of tickers){
@@ -1121,6 +1333,23 @@ async function refreshAllPrices(){
     const cel=document.getElementById(cfx+t.id);
     if(el) el.innerHTML=`<span class="${cls}">${sym}${p.toFixed(2)}</span>`;
     if(cel) cel.innerHTML=`<span class="${cls}">${sign}${data.changePct.toFixed(2)}%</span>`;
+
+    // Update upside cell with live price for holdings
+    if(t.type==='h' && t.holding && t.holding.analystTargetUsd){
+      const h=t.holding;
+      const uel=document.getElementById('upside-'+t.id);
+      if(uel){
+        // Live price in native currency; convert to GBP for upside calc
+        const livePriceGbp = isGbx ? p : p * FX_USD_GBP;
+        const targetGbp = h.currency==='GBP' ? h.analystTargetUsd/100 : h.analystTargetUsd * FX_USD_GBP;
+        const upPct = (targetGbp - livePriceGbp) / livePriceGbp * 100;
+        const uCol = upPct>=15?'var(--green)':upPct>=5?'var(--accent2)':upPct>=-5?'var(--amber)':'var(--red)';
+        const targetDisplay = h.currency==='GBP' ? `£${(h.analystTargetUsd/100).toFixed(0)}` : `$${h.analystTargetUsd.toLocaleString()}`;
+        uel.innerHTML=`<div style="font-size:12px;font-weight:600;color:${uCol}">${upPct>=0?'+':''}${upPct.toFixed(0)}%</div>
+          <div style="font-size:10px;color:var(--text-dim)">${targetDisplay}</div>
+          ${h.analystCount?`<div style="font-size:10px;color:var(--text-dim)">${h.analystCount} analysts</div>`:''}`;
+      }
+    }
   }
   document.getElementById('lastUpdated').textContent='Updated '+new Date().toLocaleTimeString('en-GB');
   btn.disabled=false; btn.textContent='↻ Prices';
@@ -1132,16 +1361,72 @@ async function refreshAllPrices(){
 function badge(s,l){return`<span class="status-badge status-${s}">${l}</span>`;}
 
 function renderHoldings(){
+  const FX_USD_GBP = 1/1.3464;
   document.getElementById('holdingsTbody').innerHTML=HOLDINGS.map(h=>{
     const gl=h.currentGbp-h.costGbp;
     const glP=h.costGbp>0?gl/h.costGbp*100:0;
+
+    // ── Analyst upside ────────────────────────────────────────────
+    let targetStr='—', upsideStr='—', upsideCol='var(--text-dim)';
+    if(h.analystTargetUsd){
+      if(h.currency==='GBP'){
+        const targetGbp=h.analystTargetUsd/100;
+        const upPct=(targetGbp-h.currentGbp)/h.currentGbp*100;
+        targetStr=`£${targetGbp.toFixed(0)}`;
+        upsideStr=(upPct>=0?'+':'')+upPct.toFixed(0)+'%';
+        upsideCol=upPct>=10?'var(--green)':upPct>=0?'var(--accent2)':upPct>=-10?'var(--amber)':'var(--red)';
+      } else {
+        const targetGbp=h.analystTargetUsd*FX_USD_GBP;
+        const upPct=(targetGbp-h.currentGbp)/h.currentGbp*100;
+        targetStr=`$${h.analystTargetUsd.toLocaleString()}`;
+        upsideStr=(upPct>=0?'+':'')+upPct.toFixed(0)+'%';
+        upsideCol=upPct>=15?'var(--green)':upPct>=5?'var(--accent2)':upPct>=-5?'var(--amber)':'var(--red)';
+      }
+    }
+
+    // ── Trim / Add instruction pill ───────────────────────────────
+    let instructionHtml='';
+    if(h.trimToGbp){
+      const trimAmt=h.currentGbp-h.trimToGbp;
+      instructionHtml=`<div style="margin-top:5px">
+        <span style="display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;
+          background:rgba(255,71,87,0.15);color:var(--red);border:1px solid rgba(255,71,87,0.35);
+          padding:2px 9px;letter-spacing:0.04em">
+          ✂ TRIM -£${trimAmt.toLocaleString()} → £${h.trimToGbp.toLocaleString()}
+        </span>
+      </div>`;
+    } else if(h.addTriggerGbp && h.addAmountGbp){
+      const triggered=h.currentGbp<=h.addTriggerGbp;
+      const label=triggered?'+ ADD £'+h.addAmountGbp.toLocaleString()+' NOW':'+ ADD £'+h.addAmountGbp.toLocaleString()+' Apr 2027';
+      const col=triggered?'var(--green)':'var(--accent2)';
+      const bg=triggered?'rgba(0,255,157,0.12)':'rgba(0,212,255,0.08)';
+      const border=triggered?'rgba(0,255,157,0.35)':'rgba(0,212,255,0.25)';
+      instructionHtml=`<div style="margin-top:5px">
+        <span style="display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;
+          background:${bg};color:${col};border:1px solid ${border};padding:2px 9px;letter-spacing:0.04em">
+          ${label}
+        </span>
+        ${!triggered?`<span style="font-size:10px;color:var(--text-dim);margin-left:4px">if &lt;£${h.addTriggerGbp.toLocaleString()}</span>`:''}
+      </div>`;
+    }
+
     const aMap={hold:'hold',watch:'watch',close:'close'};
     return`<tr>
-      <td><div class="ticker-badge">${h.ticker}<span class="ticker-flag ${h.currency==='GBP'?'uk':''}">${h.currency}</span></div><div class="ticker-name">${h.name}</div></td>
+      <td style="min-width:150px">
+        <div class="ticker-badge">${h.ticker}<span class="ticker-flag ${h.currency==='GBP'?'uk':''}">${h.currency}</span></div>
+        <div class="ticker-name">${h.name}</div>
+        ${instructionHtml}
+      </td>
       <td class="td-right"><div class="price-live" id="price-${h.ticker}">${h.yahooTicker?'<span class="loading-price">...</span>':'<span class="neu">N/A</span>'}</div></td>
       <td class="td-right" id="change-${h.ticker}"><span class="neu">—</span></td>
       <td class="td-right">£${h.currentGbp.toLocaleString()}</td>
       <td class="td-right"><span class="${gl>=0?'pos':'neg'}">${gl>=0?'+':''} £${Math.abs(gl).toLocaleString()} (${glP.toFixed(1)}%)</span></td>
+      <td class="td-right" id="upside-${h.ticker}">
+        ${h.analystTargetUsd?`<div style="font-size:12px;font-weight:600;color:${upsideCol}">${upsideStr}</div>
+          <div style="font-size:10px;color:var(--text-dim)">${targetStr}</div>
+          ${h.analystCount?`<div style="font-size:10px;color:var(--text-dim)">${h.analystCount} analysts</div>`:''}`:
+          '<span class="neu">—</span>'}
+      </td>
       <td class="td-right">${badge(aMap[h.action]||'hold',h.actionLabel)}</td>
       <td class="td-right">${h.yahooTicker?`<button class="chart-btn" onclick="openChart('${h.yahooTicker}','${h.ticker}')">📈</button>`:'—'}</td>
     </tr>`;
@@ -1240,13 +1525,35 @@ function renderWatchlist(){
 }
 
 function renderEarnings(){
-  document.getElementById('earningsList').innerHTML=EARNINGS.map(e=>`
-    <div class="earnings-item">
-      <div class="earnings-date">${e.date}</div>
-      <div class="earnings-ticker">${e.ticker}</div>
-      <div style="font-size:12px;color:var(--text-dim)">${e.company} — ${e.eps}</div>
-      <div>${badge(e.urgent?'wait':'watch',e.action)}</div>
-    </div>`).join('');
+  const today=new Date();
+  document.getElementById('earningsList').innerHTML=EARNINGS.map(e=>{
+    const eDate=new Date(e.isoDate);
+    const daysAway=Math.round((eDate-today)/(1000*60*60*24));
+    const isPast=daysAway<0;
+    const isImminent=daysAway>=0&&daysAway<=10;
+    const borderCol=e.urgent&&!isPast?'var(--red)':isImminent?'var(--amber)':'rgba(30,58,95,0.3)';
+    const bgCol=e.urgent&&!isPast?'rgba(255,71,87,0.06)':isImminent?'rgba(255,215,0,0.04)':'transparent';
+    const countdownStr=isPast?'<span style="color:var(--text-dim);font-size:10px">PAST</span>'
+      :daysAway===0?'<span style="color:var(--red);font-size:10px;font-weight:600">TODAY</span>'
+      :daysAway<=3?`<span style="color:var(--red);font-size:10px;font-weight:600">${daysAway}d away</span>`
+      :daysAway<=10?`<span style="color:var(--amber);font-size:10px">${daysAway}d away</span>`
+      :`<span style="color:var(--text-dim);font-size:10px">${daysAway}d away</span>`;
+    const urgentLabel=e.urgent&&!isPast?`<span style="font-size:9px;background:rgba(255,71,87,0.15);color:var(--red);border:1px solid rgba(255,71,87,0.3);padding:1px 6px;margin-left:6px;text-transform:uppercase;letter-spacing:0.05em">ACTION REQUIRED</span>`:'';
+    return`<div style="padding:12px 0;border-bottom:1px solid ${borderCol};background:${bgCol};padding-left:${e.urgent&&!isPast?'12px':'0'};border-left:${e.urgent&&!isPast?'3px solid var(--red)':'none'};margin-bottom:${e.urgent&&!isPast?'4px':'0'}">
+      <div style="display:grid;grid-template-columns:140px 80px 1fr;gap:12px;align-items:start">
+        <div>
+          <div class="earnings-date">${e.date}</div>
+          <div style="margin-top:3px">${countdownStr}</div>
+        </div>
+        <div>
+          <div class="earnings-ticker">${e.ticker}${urgentLabel}</div>
+          <div style="font-size:10px;color:var(--text-dim);margin-top:2px">${e.company}</div>
+          <div style="font-size:10px;color:var(--text-dim)">${e.eps}</div>
+        </div>
+        <div style="font-size:11px;color:var(--text);line-height:1.65">${e.action}</div>
+      </div>
+    </div>`;
+  }).join('');
 }
 
 // ══════════════════════════════════════════════════
@@ -1366,17 +1673,60 @@ function runCalc(){
 // ══════════════════════════════════════════════════
 // GOOGLE CALENDAR / ICS
 // ══════════════════════════════════════════════════
+function getAllGcalEvents(){
+  const holdingReviews = buildGcalFromHoldings();
+  const custom = JSON.parse(localStorage.getItem('customReminders')||'[]');
+  // Sort all events chronologically
+  const all = [...GCAL_EVENTS, ...holdingReviews, GCAL_ISA, ...custom];
+  all.sort((a,b) => a.date < b.date ? -1 : a.date > b.date ? 1 : 0);
+  return all;
+}
+
 function renderGCal(){
-  const customEvents=JSON.parse(localStorage.getItem('customReminders')||'[]');
-  const allEvents=[...GCAL_EVENTS,...customEvents];
-  document.getElementById('gcalList').innerHTML=allEvents.map((e,i)=>`
-    <div class="gcal-item">
-      <div class="gcal-info">
-        <div class="gcal-title">${e.title}</div>
-        <div class="gcal-detail">${e.date} — ${e.notes}</div>
-      </div>
-      <button class="btn btn-outline" onclick="downloadICS([${JSON.stringify(e)}],'reminder_${i}')" style="margin-left:16px;white-space:nowrap">📅 Add to Calendar</button>
-    </div>`).join('');
+  const allEvents = getAllGcalEvents();
+  const today = new Date().toISOString().slice(0,10);
+
+  // Group into: Urgent / Upcoming / Position Reviews / Future
+  const urgent   = allEvents.filter(e => e.date >= today && e.date <= addDays(today,14) && (e.title.includes('⚠') || e.title.includes('TRIM') || e.title.includes('ORCL')));
+  const upcoming = allEvents.filter(e => e.date >= today && e.date <= addDays(today,90) && !urgent.includes(e));
+  const future   = allEvents.filter(e => e.date >  addDays(today,90));
+  const past     = allEvents.filter(e => e.date <  today);
+
+  function renderGroup(title, events, color){
+    if(!events.length) return '';
+    return `<div style="margin-bottom:20px">
+      <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:${color};text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px">${title} (${events.length})</div>
+      ${events.map((e,i)=>{
+        const safeE = JSON.stringify(e).replace(/'/g,"\\'");
+        const isTrim = e.title.includes('TRIM')||e.title.includes('⚠');
+        const isAdd  = e.title.includes('ADD')||e.title.includes('📥');
+        const tagCol = isTrim?'var(--red)':isAdd?'var(--accent2)':'var(--text-dim)';
+        const tag    = isTrim?'TRIM':'';
+        return `<div class="gcal-item" style="border-left:3px solid ${isTrim?'var(--red)':isAdd?'var(--accent2)':'var(--border)'};padding-left:10px">
+          <div class="gcal-info" style="flex:1">
+            <div class="gcal-title" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+              <span>${e.title}</span>
+              ${tag?`<span style="font-size:9px;background:rgba(255,71,87,0.15);color:var(--red);border:1px solid rgba(255,71,87,0.3);padding:1px 6px">${tag}</span>`:''}
+            </div>
+            <div class="gcal-detail">${e.date} — ${e.notes}</div>
+          </div>
+          <button class="btn btn-outline" onclick='downloadICS([${safeE}],"reminder_${allEvents.indexOf(e)}")' style="margin-left:12px;white-space:nowrap;flex-shrink:0">📅 Add</button>
+        </div>`;
+      }).join('')}
+    </div>`;
+  }
+
+  document.getElementById('gcalList').innerHTML =
+    renderGroup('⚠ Action Required (Next 14 Days)', urgent, 'var(--red)') +
+    renderGroup('📅 Upcoming (Next 90 Days)', upcoming, 'var(--accent)') +
+    renderGroup('📋 Future Reviews & Events', future, 'var(--text-dim)') +
+    (past.length ? renderGroup('✅ Past Events', past, 'var(--text-dim)') : '');
+}
+
+function addDays(isoDate, n){
+  const d = new Date(isoDate);
+  d.setDate(d.getDate()+n);
+  return d.toISOString().slice(0,10);
 }
 
 function makeICS(events){
@@ -1407,8 +1757,7 @@ function downloadICS(events,filename='portfolio_reminders'){
 }
 
 function exportAllICS(){
-  const custom=JSON.parse(localStorage.getItem('customReminders')||'[]');
-  downloadICS([...GCAL_EVENTS,...custom],'jude_isa_all_reminders');
+  downloadICS(getAllGcalEvents(), 'jude_isa_all_reminders');
 }
 
 function addCustomReminder(){
@@ -1518,32 +1867,115 @@ function loadHLData(){
 // ══════════════════════════════════════════════════
 // CHART MODAL
 // ══════════════════════════════════════════════════
-let chartInst=null,currentTicker=null;
+let chartInst=null,currentTicker=null,currentDisplay=null;
 async function openChart(yahoo,display){
   currentTicker=yahoo;
+  currentDisplay=display;
   document.getElementById('modalTitle').textContent=`${display} — Price History`;
   document.getElementById('chartModal').classList.add('open');
   await loadChart(yahoo,'3mo');
 }
 
 async function loadChart(yahoo,range){
-  const history=await fetchHistory(yahoo,range);
+  const statsEl=document.getElementById('chartStats');
   const ctx=document.getElementById('priceChart').getContext('2d');
   if(chartInst){chartInst.destroy();chartInst=null;}
-  if(!history){document.getElementById('chartStats').innerHTML='<span style="color:var(--red)">Could not load price data</span>';return;}
-  const first=history[0].price,last=history[history.length-1].price;
+
+  // Show loading state
+  statsEl.innerHTML=`<div style="color:var(--text-dim);font-size:12px;grid-column:1/-1;padding:8px 0">
+    <span class="loading-price">Loading ${range} data for ${currentDisplay||yahoo}...</span>
+  </div>`;
+
+  // Try primary fetch, then retry once with shorter range on failure
+  let history = await fetchHistory(yahoo, range);
+
+  // If failed and range was long, retry with 1mo (catches new listings like SNDK with limited history)
+  if(!history && range !== '1mo'){
+    history = await fetchHistory(yahoo, '1mo');
+    if(history){
+      statsEl.innerHTML=`<div style="color:var(--amber);font-size:11px;grid-column:1/-1;padding:4px 0">
+        ⚠ Limited history — ${yahoo} has less than ${range} of data (new listing). Showing 1M.
+      </div>`;
+    }
+  }
+
+  if(!history){
+    statsEl.innerHTML=`<div style="grid-column:1/-1">
+      <div style="color:var(--red);font-size:12px;margin-bottom:8px">Could not load price data for ${yahoo} (${range})</div>
+      <div style="font-size:11px;color:var(--text-dim);line-height:1.6">
+        This can happen for new listings with limited history (e.g. SNDK spun off Feb 2025),
+        or when the price proxy is unavailable. Try a shorter range or check directly:
+      </div>
+      <a href="https://finance.yahoo.com/chart/${yahoo}" target="_blank"
+         style="display:inline-block;margin-top:8px;font-size:11px;color:var(--accent);
+                background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.2);
+                padding:4px 12px;text-decoration:none">
+        ↗ Open ${yahoo} chart on Yahoo Finance
+      </a>
+    </div>`;
+    return;
+  }
+
+  const first=history[0].price, last=history[history.length-1].price;
   const chg=((last-first)/first*100).toFixed(2);
-  const col=chg>=0?'#00ff9d':'#ff4757';
+  const col=parseFloat(chg)>=0?'#00ff9d':'#ff4757';
   chartInst=new Chart(ctx,{
     type:'line',
-    data:{labels:history.map(d=>d.date),datasets:[{label:'Price',data:history.map(d=>d.price),borderColor:col,backgroundColor:col.replace(')',',0.05)').replace('rgb','rgba'),borderWidth:2,pointRadius:0,tension:0.3,fill:true}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false,backgroundColor:'#111827',borderColor:'#1e3a5f',borderWidth:1,titleColor:'#00d4ff',bodyColor:'#e2e8f0'}},scales:{x:{grid:{color:'rgba(30,58,95,0.4)'},ticks:{color:'#64748b',font:{family:'DM Mono',size:10},maxTicksLimit:8}},y:{grid:{color:'rgba(30,58,95,0.4)'},ticks:{color:'#64748b',font:{family:'DM Mono',size:10}},position:'right'}}}
+    data:{
+      labels:history.map(d=>d.date),
+      datasets:[{
+        label:'Price',data:history.map(d=>d.price),
+        borderColor:col,
+        backgroundColor:col+'22',
+        borderWidth:2,pointRadius:0,tension:0.3,fill:true
+      }]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{
+        legend:{display:false},
+        tooltip:{mode:'index',intersect:false,
+          backgroundColor:'#111827',borderColor:'#1e3a5f',borderWidth:1,
+          titleColor:'#00d4ff',bodyColor:'#e2e8f0'}
+      },
+      scales:{
+        x:{grid:{color:'rgba(30,58,95,0.4)'},ticks:{color:'#64748b',font:{family:'DM Mono',size:10},maxTicksLimit:8}},
+        y:{grid:{color:'rgba(30,58,95,0.4)'},ticks:{color:'#64748b',font:{family:'DM Mono',size:10}},position:'right'}
+      }
+    }
   });
-  document.getElementById('chartStats').innerHTML=`
-    <div style="background:var(--surface2);padding:10px;border:1px solid var(--border)"><div class="stat-label">Period Open</div><div style="font-family:var(--font-display);font-size:16px;font-weight:700;margin-top:4px">${first.toFixed(2)}</div></div>
-    <div style="background:var(--surface2);padding:10px;border:1px solid var(--border)"><div class="stat-label">Current</div><div style="font-family:var(--font-display);font-size:16px;font-weight:700;color:var(--accent);margin-top:4px">${last.toFixed(2)}</div></div>
-    <div style="background:var(--surface2);padding:10px;border:1px solid var(--border)"><div class="stat-label">Period Return</div><div style="font-family:var(--font-display);font-size:16px;font-weight:700;color:${col};margin-top:4px">${chg>=0?'+':''}${chg}%</div></div>
-    <div style="background:var(--surface2);padding:10px;border:1px solid var(--border)"><div class="stat-label">Data Points</div><div style="font-family:var(--font-display);font-size:16px;font-weight:700;margin-top:4px">${history.length}d</div></div>`;
+
+  // Find holding for context
+  const holding = HOLDINGS.find(h=>h.yahooTicker===yahoo);
+  const targetStr = holding?.analystTargetUsd
+    ? (holding.currency==='GBP' ? `£${(holding.analystTargetUsd/100).toFixed(0)}` : `$${holding.analystTargetUsd.toLocaleString()}`)
+    : null;
+
+  statsEl.innerHTML=`
+    <div style="background:var(--surface2);padding:10px;border:1px solid var(--border)">
+      <div class="stat-label">Period Open</div>
+      <div style="font-family:var(--font-display);font-size:16px;font-weight:700;margin-top:4px">${first.toFixed(2)}</div>
+    </div>
+    <div style="background:var(--surface2);padding:10px;border:1px solid var(--border)">
+      <div class="stat-label">Current</div>
+      <div style="font-family:var(--font-display);font-size:16px;font-weight:700;color:var(--accent);margin-top:4px">${last.toFixed(2)}</div>
+    </div>
+    <div style="background:var(--surface2);padding:10px;border:1px solid var(--border)">
+      <div class="stat-label">Period Return</div>
+      <div style="font-family:var(--font-display);font-size:16px;font-weight:700;color:${col};margin-top:4px">${parseFloat(chg)>=0?'+':''}${chg}%</div>
+    </div>
+    ${targetStr ? `<div style="background:var(--surface2);padding:10px;border:1px solid var(--border)">
+      <div class="stat-label">Analyst Target</div>
+      <div style="font-family:var(--font-display);font-size:16px;font-weight:700;color:var(--amber);margin-top:4px">${targetStr}</div>
+      <div style="font-size:10px;color:var(--text-dim);margin-top:2px">${holding.analystCount||''} analysts</div>
+    </div>` : `<div style="background:var(--surface2);padding:10px;border:1px solid var(--border)">
+      <div class="stat-label">Data Points</div>
+      <div style="font-family:var(--font-display);font-size:16px;font-weight:700;margin-top:4px">${history.length}d</div>
+    </div>`}
+    <div style="grid-column:1/-1;text-align:right;padding-top:4px">
+      <a href="https://finance.yahoo.com/chart/${yahoo}" target="_blank"
+         style="font-size:10px;color:var(--text-dim);text-decoration:none">↗ Yahoo Finance</a>
+    </div>`;
 }
 
 function closeModal(){
@@ -2280,6 +2712,46 @@ function renderCyberCompare(){
 }
 
 // ══════════════════════════════════════════════════
+// URGENT ACTIONS BANNER
+// ══════════════════════════════════════════════════
+function renderUrgentBanner(){
+  const el=document.getElementById('urgentActionsBanner');
+  if(!el) return;
+  const today=new Date();
+  const urgent=EARNINGS.filter(e=>{
+    const d=new Date(e.isoDate);
+    const days=Math.round((d-today)/(1000*60*60*24));
+    return e.urgent && days>=-1 && days<=30;
+  });
+  if(!urgent.length){el.innerHTML='';return;}
+
+  const items=urgent.map(e=>{
+    const d=new Date(e.isoDate);
+    const days=Math.round((d-today)/(1000*60*60*24));
+    const daysStr=days<0?'OVERDUE':days===0?'TODAY':days===1?'TOMORROW':`${days} days`;
+    const daysCol=days<=0?'var(--red)':days<=7?'var(--red)':'var(--amber)';
+    return`<div style="background:var(--surface2);border:1px solid rgba(255,71,87,0.25);border-left:3px solid var(--red);padding:12px 14px;border-radius:2px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:4px">
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--text-bright)">${e.ticker}</span>
+          <span style="font-size:11px;color:var(--text-dim)">${e.company}</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-size:11px;color:var(--text-dim)">${e.date}</span>
+          <span style="font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:${daysCol};background:rgba(255,71,87,0.1);padding:2px 10px;border-radius:20px">${daysStr}</span>
+        </div>
+      </div>
+      <div style="font-size:11px;color:var(--text);line-height:1.65">${e.action}</div>
+    </div>`;
+  }).join('');
+
+  el.innerHTML=`<div style="margin-bottom:16px">
+    <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px">⚠ Action Required — Next 30 Days</div>
+    <div style="display:grid;gap:8px">${items}</div>
+  </div>`;
+}
+
+// ══════════════════════════════════════════════════
 // INIT
 // ══════════════════════════════════════════════════
 
@@ -2329,6 +2801,7 @@ function init(){
   renderDeploy();
   renderWatchlist();
   renderCyberCompare();
+  renderUrgentBanner();
   renderEToro();
   renderEarnings();
   renderGCal();
@@ -2490,5 +2963,742 @@ document.getElementById('chartModal').addEventListener('click',function(e){if(e.
 </div>
 
 </div><!-- /tab-watchlist -->
+
+<!-- ═══════════════ TAB: TESTS ═══════════════ -->
+<div class="tab-panel" id="tab-tests">
+  <div style="background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.3);padding:12px 16px;margin-bottom:16px;font-size:12px;color:var(--text)">
+    <strong style="color:#a78bfa">🧪 Data Integrity Tests</strong> — Catches stale dates, miscalculated gains, broken lot accounting, missing fields, concentration drift, and mismatched calendar entries. Run before every data update.
+  </div>
+  <div style="margin-bottom:12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+    <button class="btn" onclick="runAllTests()">▶ Run All Tests</button>
+    <span id="testSummaryBadge" style="font-size:12px;color:var(--text-dim)">Not run yet</span>
+  </div>
+  <div id="testResults"></div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════
+// TEST SUITE
+// ══════════════════════════════════════════════════
+
+const VALID_CONCENTRATIONS = ['normal','watch','critical','core'];
+const VALID_ACTIONS        = ['hold','watch','close'];
+const VALID_STATUSES       = ['hold','watch','close'];
+const VALID_CURRENCIES     = ['USD','GBP'];
+const VALID_ETORO_STATUS   = ['hold','watch','close'];
+
+function runAllTests() {
+  const suites = [
+    testHoldings(),
+    testEarnings(),
+    testGcalVsEarnings(),
+    testEtoro(),
+    testDeploy(),
+    testConcentrationCalc(),
+    testUrgentActionsBanner(),
+    testCyberData(),
+    testNoStaleDates(),
+    testGainCalculations(),
+  ];
+
+  const allTests = suites.flat();
+  const passed   = allTests.filter(t => t.pass).length;
+  const failed   = allTests.filter(t => !t.pass).length;
+  const warned   = allTests.filter(t => t.warn).length;
+
+  // Summary badge
+  const badge = document.getElementById('testSummaryBadge');
+  if (failed === 0) {
+    badge.innerHTML = `<span style="color:var(--green);font-weight:600">✅ All ${passed} tests passed</span>${warned ? ` · <span style="color:var(--amber)">${warned} warnings</span>` : ''}`;
+  } else {
+    badge.innerHTML = `<span style="color:var(--red);font-weight:600">❌ ${failed} failed</span> · <span style="color:var(--green)">${passed} passed</span>${warned ? ` · <span style="color:var(--amber)">${warned} warnings</span>` : ''}`;
+  }
+
+  // Render results grouped by suite
+  const el = document.getElementById('testResults');
+  el.innerHTML = suites.map((suite, i) => {
+    const suiteName  = suite[0]?._suite || `Suite ${i+1}`;
+    const sf = suite.filter(t => !t.pass).length;
+    const sp = suite.filter(t => t.pass).length;
+    const headerCol  = sf > 0 ? 'var(--red)' : 'var(--green)';
+    const headerIcon = sf > 0 ? '❌' : '✅';
+    const rows = suite.map(t => {
+      const icon  = t.pass  ? (t.warn ? '⚠' : '✓') : '✗';
+      const col   = t.pass  ? (t.warn ? 'var(--amber)' : 'var(--green)') : 'var(--red)';
+      const bg    = !t.pass ? 'rgba(255,71,87,0.05)' : t.warn ? 'rgba(255,215,0,0.04)' : 'transparent';
+      return `<div style="display:grid;grid-template-columns:18px 1fr auto;gap:10px;align-items:start;padding:7px 12px;border-bottom:1px solid rgba(30,58,95,0.2);background:${bg}">
+        <span style="color:${col};font-weight:700;font-size:13px">${icon}</span>
+        <div>
+          <div style="font-size:12px;color:var(--text)">${t.name}</div>
+          ${t.detail ? `<div style="font-size:11px;color:var(--text-dim);margin-top:2px;line-height:1.5">${t.detail}</div>` : ''}
+        </div>
+        <span style="font-size:10px;color:${col};white-space:nowrap">${t.pass ? (t.warn ? 'WARN' : 'PASS') : 'FAIL'}</span>
+      </div>`;
+    }).join('');
+    return `<div style="background:var(--surface);border:1px solid var(--border);margin-bottom:12px;overflow:hidden">
+      <div style="padding:10px 14px;background:var(--surface2);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center">
+        <span style="font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:${headerCol};text-transform:uppercase;letter-spacing:0.08em">${headerIcon} ${suiteName}</span>
+        <span style="font-size:11px;color:var(--text-dim)">${sp} passed · ${sf} failed</span>
+      </div>
+      ${rows}
+    </div>`;
+  }).join('');
+}
+
+// ── Helper ────────────────────────────────────────
+function t(suite, name, pass, detail, warn=false) {
+  return { _suite:suite, name, pass, detail: pass&&!warn ? null : detail, warn };
+}
+
+// ══ SUITE 1 — HOLDINGS array ══════════════════════
+function testHoldings() {
+  const S = 'HOLDINGS Data Integrity';
+  const results = [];
+  const tickers = HOLDINGS.map(h => h.ticker);
+
+  // No duplicate tickers
+  const dupTickers = tickers.filter((x,i) => tickers.indexOf(x) !== i);
+  results.push(t(S, 'No duplicate tickers in HOLDINGS',
+    dupTickers.length === 0, `Duplicates: ${dupTickers.join(', ')}`));
+
+  // All required fields present
+  HOLDINGS.forEach(h => {
+    const missing = ['ticker','name','costGbp','currentGbp','action','actionLabel','currency','concentration']
+      .filter(f => h[f] === undefined || h[f] === null || h[f] === '');
+    results.push(t(S, `${h.ticker}: all required fields present`,
+      missing.length === 0, `Missing: ${missing.join(', ')}`));
+  });
+
+  // Valid concentration values
+  HOLDINGS.forEach(h => {
+    results.push(t(S, `${h.ticker}: valid concentration value`,
+      VALID_CONCENTRATIONS.includes(h.concentration),
+      `Got '${h.concentration}', expected one of: ${VALID_CONCENTRATIONS.join(', ')}`));
+  });
+
+  // Valid action values
+  HOLDINGS.forEach(h => {
+    results.push(t(S, `${h.ticker}: valid action value`,
+      VALID_ACTIONS.includes(h.action),
+      `Got '${h.action}'`));
+  });
+
+  // costGbp > 0
+  HOLDINGS.forEach(h => {
+    results.push(t(S, `${h.ticker}: costGbp > 0`,
+      h.costGbp > 0, `costGbp = ${h.costGbp}`));
+  });
+
+  // currentGbp > 0
+  HOLDINGS.forEach(h => {
+    results.push(t(S, `${h.ticker}: currentGbp > 0`,
+      h.currentGbp > 0, `currentGbp = ${h.currentGbp}`));
+  });
+
+  // actionLabel gain% sign matches actual gain direction
+  HOLDINGS.forEach(h => {
+    const gl = h.currentGbp - h.costGbp;
+    const labelHasPlus  = h.actionLabel.includes('+');
+    const labelHasMinus = h.actionLabel.includes('-');
+    const actualPos = gl >= 0;
+    // Only check if label has an explicit +/- sign
+    if (labelHasPlus || labelHasMinus) {
+      const signMatch = actualPos ? labelHasPlus : labelHasMinus;
+      results.push(t(S, `${h.ticker}: actionLabel gain sign matches actual P&L`,
+        signMatch, `Actual G/L £${gl.toFixed(0)} (${gl>=0?'GAIN':'LOSS'}) but label says: "${h.actionLabel}"`));
+    }
+  });
+
+  // 'critical' concentration only when >7% of invested total
+  const invested = HOLDINGS.reduce((s,h) => s + h.currentGbp, 0);
+  HOLDINGS.filter(h => h.concentration === 'critical').forEach(h => {
+    const pct = h.currentGbp / invested * 100;
+    results.push(t(S, `${h.ticker}: 'critical' concentration flag justified (>7%)`,
+      pct >= 7, `${h.ticker} is ${pct.toFixed(1)}% of invested — below 7% threshold`, pct < 8));
+  });
+
+  // 'watch' concentration only when 4-7%
+  HOLDINGS.filter(h => h.concentration === 'watch').forEach(h => {
+    const pct = h.currentGbp / invested * 100;
+    results.push(t(S, `${h.ticker}: 'watch' concentration flag in 4-7% band`,
+      pct >= 3.5 && pct < 10,
+      `${h.ticker} is ${pct.toFixed(1)}% — outside expected 4-7% watch band`, pct < 4 || pct >= 7));
+  });
+
+  // Non-GBP holdings have yahooTicker (unless hlOnly)
+  HOLDINGS.filter(h => !h.hlOnly).forEach(h => {
+    results.push(t(S, `${h.ticker}: has yahooTicker for price fetch`,
+      !!h.yahooTicker, `Missing yahooTicker`));
+  });
+
+  return results;
+}
+
+// ══ SUITE 2 — EARNINGS array ══════════════════════
+function testEarnings() {
+  const S = 'EARNINGS Data Integrity';
+  const results = [];
+  const today = new Date();
+
+  // All required fields
+  EARNINGS.forEach(e => {
+    const missing = ['date','ticker','company','eps','action','isoDate']
+      .filter(f => !e[f] && e[f] !== false);
+    results.push(t(S, `${e.ticker} (${e.date}): all required fields`,
+      missing.length === 0, `Missing: ${missing.join(', ')}`));
+  });
+
+  // isoDate parses as a valid date
+  EARNINGS.forEach(e => {
+    if (!e.isoDate) return;
+    const d = new Date(e.isoDate);
+    results.push(t(S, `${e.ticker}: isoDate '${e.isoDate}' is a valid date`,
+      !isNaN(d.getTime()), `'${e.isoDate}' cannot be parsed`));
+  });
+
+  // No duplicate isoDate+ticker combos
+  const keys = EARNINGS.map(e => `${e.ticker}:${e.isoDate}`);
+  const dupKeys = keys.filter((x,i) => keys.indexOf(x) !== i);
+  results.push(t(S, 'No duplicate ticker+date entries in EARNINGS',
+    dupKeys.length === 0, `Duplicates: ${dupKeys.join(', ')}`));
+
+  // Urgent items must have action text longer than 40 chars (not a placeholder)
+  EARNINGS.filter(e => e.urgent).forEach(e => {
+    results.push(t(S, `${e.ticker}: urgent item has substantive action text`,
+      e.action.length > 40,
+      `Action too short (${e.action.length} chars): "${e.action.slice(0,60)}..."`));
+  });
+
+  // MU earnings must be 24 Jun 2026
+  const mu = EARNINGS.find(e => e.ticker === 'MU');
+  results.push(t(S, 'MU earnings date is 2026-06-24',
+    mu?.isoDate === '2026-06-24',
+    `MU isoDate is '${mu?.isoDate}' — should be '2026-06-24'`));
+  results.push(t(S, 'MU earnings flagged urgent',
+    mu?.urgent === true, 'MU should be urgent:true'));
+
+  // ORCL earnings must be present (16 Jun 2026)
+  const orcl = EARNINGS.find(e => e.ticker === 'ORCL');
+  results.push(t(S, 'ORCL earnings entry present (16 Jun 2026)',
+    !!orcl, 'ORCL missing from EARNINGS array'));
+  results.push(t(S, 'ORCL earnings date is 2026-06-16',
+    orcl?.isoDate === '2026-06-16',
+    `ORCL isoDate is '${orcl?.isoDate}'`));
+  results.push(t(S, 'ORCL earnings flagged urgent',
+    orcl?.urgent === true, 'ORCL should be urgent:true'));
+
+  // SK Hynix ADR event present
+  const adr = EARNINGS.find(e => e.ticker === 'SK-ADR');
+  results.push(t(S, 'SK Hynix ADR listing event present',
+    !!adr, 'SK-ADR missing from EARNINGS'));
+  results.push(t(S, 'SK Hynix ADR event is urgent',
+    adr?.urgent === true, 'SK-ADR should be urgent:true'));
+
+  // No future earnings with vague date string still showing 'Jun 2026' (catches old MU bug)
+  const vague = EARNINGS.filter(e => /^\s*Jun\s*2026\s*$/.test(e.date));
+  results.push(t(S, 'No remaining vague "Jun 2026" date strings (old MU bug)',
+    vague.length === 0,
+    `Vague entries: ${vague.map(e=>e.ticker).join(', ')}`));
+
+  // Entries are in chronological order by isoDate
+  const dates = EARNINGS.map(e => e.isoDate);
+  let ordered = true;
+  for (let i = 1; i < dates.length; i++) {
+    if (dates[i] < dates[i-1]) { ordered = false; break; }
+  }
+  results.push(t(S, 'EARNINGS entries are in chronological order',
+    ordered, 'Entries are out of order — check isoDate values', !ordered));
+
+  // New ISA allowance event present and dated April 2027
+  const isa = EARNINGS.find(e => e.ticker === 'ISA');
+  results.push(t(S, 'New ISA allowance event present (Apr 2027)',
+    isa?.isoDate === '2027-04-06',
+    `ISA event isoDate: '${isa?.isoDate}'`));
+
+  return results;
+}
+
+// ══ SUITE 3 — GCAL vs EARNINGS sync ══════════════
+function testGcalVsEarnings() {
+  const S = 'Calendar vs Earnings Sync';
+  const results = [];
+
+  // Every urgent earnings entry must have a matching GCAL_EVENT
+  const urgentEarnings = EARNINGS.filter(e => e.urgent && e.isoDate !== '2026-09-01');
+  urgentEarnings.forEach(e => {
+    const gcalMatch = GCAL_EVENTS.find(g =>
+      g.date === e.isoDate ||
+      (g.title.toUpperCase().includes(e.ticker.toUpperCase()))
+    );
+    results.push(t(S, `${e.ticker} urgent earnings has matching GCAL_EVENT`,
+      !!gcalMatch,
+      `No GCAL_EVENT found for ${e.ticker} (${e.isoDate}). Add to GCAL_EVENTS.`));
+  });
+
+  // MU GCAL date must match EARNINGS isoDate
+  const muEarnings = EARNINGS.find(e => e.ticker === 'MU');
+  const muGcal     = GCAL_EVENTS.find(g => g.title.toUpperCase().includes('MICRON') || g.title.toUpperCase().includes('MU'));
+  results.push(t(S, 'MU GCAL date matches MU EARNINGS isoDate',
+    muGcal?.date === muEarnings?.isoDate,
+    `GCAL: '${muGcal?.date}' vs EARNINGS: '${muEarnings?.isoDate}'`));
+
+  // ORCL GCAL date must match EARNINGS isoDate
+  const orclEarnings = EARNINGS.find(e => e.ticker === 'ORCL');
+  const orclGcal     = GCAL_EVENTS.find(g => g.title.toUpperCase().includes('ORACLE') || g.title.toUpperCase().includes('ORCL'));
+  results.push(t(S, 'ORCL GCAL date matches ORCL EARNINGS isoDate',
+    orclGcal?.date === orclEarnings?.isoDate,
+    `GCAL: '${orclGcal?.date}' vs EARNINGS: '${orclEarnings?.isoDate}'`));
+
+  // GCAL events have alarm set (not 0 or undefined)
+  GCAL_EVENTS.forEach(g => {
+    results.push(t(S, `GCAL '${g.title.slice(0,30)}': alarm is set`,
+      g.alarm !== undefined && g.alarm !== 0 && g.alarm !== null,
+      `alarm is ${g.alarm}`));
+  });
+
+  // GCAL notes non-empty
+  GCAL_EVENTS.forEach(g => {
+    results.push(t(S, `GCAL '${g.title.slice(0,30)}': notes non-empty`,
+      g.notes && g.notes.length > 10,
+      `notes too short: "${g.notes}"`));
+  });
+
+  // GCAL ISA allowance date correct
+  const gcalIsa = GCAL_EVENTS.find(g => g.title.toLowerCase().includes('isa allowance'));
+  results.push(t(S, 'ISA allowance GCAL event date is 2027-04-06',
+    gcalIsa?.date === '2027-04-06',
+    `ISA GCAL date: '${gcalIsa?.date}'`));
+
+  return results;
+}
+
+// ══ SUITE 4 — ETORO_DATA ══════════════════════════
+function testEtoro() {
+  const S = 'eToro Data Integrity';
+  const results = [];
+
+  // Required fields
+  ETORO_DATA.forEach(e => {
+    const missing = ['ticker','name','pl','value','cost','status','statusLabel','lots','lotNote']
+      .filter(f => e[f] === undefined || e[f] === null);
+    results.push(t(S, `${e.ticker}: all required fields present`,
+      missing.length === 0, `Missing: ${missing.join(', ')}`));
+  });
+
+  // value + |pl| should approximately equal cost (within 5% tolerance)
+  ETORO_DATA.forEach(e => {
+    const implied = e.value + Math.abs(e.pl); // if loss, cost ~ value + loss
+    const tolerance = e.cost * 0.05;
+    const ok = Math.abs(implied - e.cost) <= tolerance + 5; // +5 for rounding
+    results.push(t(S, `${e.ticker}: value + |P&L| ≈ cost (accounting check)`,
+      ok, `value(${e.value}) + |pl|(${Math.abs(e.pl)}) = ${implied.toFixed(0)}, cost = ${e.cost}`, !ok));
+  });
+
+  // All P&L values are negative (all positions in loss per screenshots)
+  ETORO_DATA.forEach(e => {
+    results.push(t(S, `${e.ticker}: P&L is negative (all eToro positions in loss)`,
+      e.pl < 0, `pl = ${e.pl} (expected negative)`));
+  });
+
+  // lots >= 1
+  ETORO_DATA.forEach(e => {
+    results.push(t(S, `${e.ticker}: lots >= 1`,
+      e.lots >= 1, `lots = ${e.lots}`));
+  });
+
+  // Multi-lot entries have informative lotNote
+  ETORO_DATA.filter(e => e.lots > 1).forEach(e => {
+    results.push(t(S, `${e.ticker} (${e.lots} lots): lotNote is descriptive`,
+      e.lotNote && e.lotNote.length > 15,
+      `lotNote: "${e.lotNote}"`));
+  });
+
+  // CLBT should NOT be in eToro (it was closed)
+  const clbt = ETORO_DATA.find(e => e.ticker === 'CLBT' || e.ticker === 'CLBT2');
+  results.push(t(S, 'CLBT is not in ETORO_DATA (position closed)',
+    !clbt, `CLBT still present in ETORO_DATA — was closed in May 2026`));
+
+  // Total eToro value sanity check (should be roughly £3,500-6,000 based on screenshots)
+  const totalVal = ETORO_DATA.reduce((s,e) => s+e.value, 0);
+  results.push(t(S, `eToro total value in expected range (£3,500–6,000)`,
+    totalVal >= 3500 && totalVal <= 6000,
+    `Total = £${totalVal.toLocaleString()}`, totalVal < 4000 || totalVal > 5500));
+
+  // Total loss shouldn't exceed total value (sanity)
+  const totalLoss = Math.abs(ETORO_DATA.reduce((s,e) => s+e.pl, 0));
+  results.push(t(S, 'Total eToro losses < total eToro value (sanity)',
+    totalLoss < totalVal, `Losses £${totalLoss} vs value £${totalVal}`));
+
+  // Valid status values
+  ETORO_DATA.forEach(e => {
+    results.push(t(S, `${e.ticker}: valid status value`,
+      VALID_ETORO_STATUS.includes(e.status), `Got '${e.status}'`));
+  });
+
+  return results;
+}
+
+// ══ SUITE 5 — DEPLOY array ════════════════════════
+function testDeploy() {
+  const S = 'Watchlist / DEPLOY Integrity';
+  const results = [];
+
+  const tickers = DEPLOY.map(d => d.ticker);
+
+  // No duplicate tickers
+  const dups = tickers.filter((x,i) => tickers.indexOf(x) !== i);
+  results.push(t(S, 'No duplicate tickers in DEPLOY',
+    dups.length === 0, `Duplicates: ${dups.join(', ')}`));
+
+  // Required fields
+  DEPLOY.forEach(d => {
+    const missing = ['ticker','name','status','statusLabel','note']
+      .filter(f => !d[f]);
+    results.push(t(S, `${d.ticker}: required fields present`,
+      missing.length === 0, `Missing: ${missing.join(', ')}`));
+  });
+
+  // All have refs array (since we added reference links)
+  DEPLOY.forEach(d => {
+    results.push(t(S, `${d.ticker}: has refs array`,
+      Array.isArray(d.refs) && d.refs.length > 0,
+      `No refs array — add analyst reference links`, !d.refs?.length));
+  });
+
+  // SNDK should be flagged close (trim target)
+  const sndk = DEPLOY.find(d => d.ticker === 'SNDK');
+  results.push(t(S, 'SNDK flagged as close/trim in DEPLOY',
+    sndk?.status === 'close', `SNDK status = '${sndk?.status}' (expected 'close')`));
+
+  // RKLB should be watch with above-target note
+  const rklb = DEPLOY.find(d => d.ticker === 'RKLB');
+  results.push(t(S, 'RKLB is in DEPLOY as watch',
+    rklb?.status === 'watch', `RKLB status = '${rklb?.status}'`));
+  results.push(t(S, 'RKLB note mentions current price above analyst target',
+    rklb?.note?.toLowerCase().includes('above') || rklb?.note?.toLowerCase().includes('target'),
+    `RKLB note may not warn about overvaluation: "${rklb?.note?.slice(0,80)}"`));
+
+  // Valid status values
+  DEPLOY.forEach(d => {
+    results.push(t(S, `${d.ticker}: valid status`,
+      VALID_STATUSES.includes(d.status), `Got '${d.status}'`));
+  });
+
+  // Ref URLs should start with https://
+  DEPLOY.forEach(d => {
+    (d.refs||[]).forEach((r,i) => {
+      results.push(t(S, `${d.ticker} ref[${i}] '${r.label}': URL starts with https`,
+        r.url?.startsWith('https://'),
+        `URL: '${r.url}'`));
+    });
+  });
+
+  return results;
+}
+
+// ══ SUITE 6 — Concentration calculations ══════════
+function testConcentrationCalc() {
+  const S = 'Concentration Calculations';
+  const results = [];
+
+  const invested = HOLDINGS.reduce((s,h) => s+h.currentGbp, 0);
+
+  // MU concentration flag — should be critical given 9%+
+  const mu = HOLDINGS.find(h => h.ticker === 'MU');
+  const muPct = mu ? mu.currentGbp / invested * 100 : 0;
+  results.push(t(S, `MU is flagged 'critical' (currently ${muPct.toFixed(1)}%)`,
+    mu?.concentration === 'critical',
+    `MU is '${mu?.concentration}' — at ${muPct.toFixed(1)}% should be 'critical'`));
+
+  // SNDK concentration flag — should be critical
+  const sndk = HOLDINGS.find(h => h.ticker === 'SNDK');
+  const sndkPct = sndk ? sndk.currentGbp / invested * 100 : 0;
+  results.push(t(S, `SNDK is flagged 'critical' (currently ${sndkPct.toFixed(1)}%)`,
+    sndk?.concentration === 'critical',
+    `SNDK is '${sndk?.concentration}' — at ${sndkPct.toFixed(1)}% should be 'critical'`));
+
+  // Combined MU+SNDK should be > 15% (structural alert)
+  const combined = (mu?.currentGbp || 0) + (sndk?.currentGbp || 0);
+  const combinedPct = combined / invested * 100;
+  results.push(t(S, `MU + SNDK combined > 15% (memory cluster alert)`,
+    combinedPct > 15,
+    `Combined = ${combinedPct.toFixed(1)}% (below 15% threshold)`, combinedPct < 17));
+
+  // Vanguard should be flagged 'core'
+  const vwrl = HOLDINGS.find(h => h.ticker === 'VWRL');
+  results.push(t(S, "Vanguard FTSE All Cap flagged as 'core'",
+    vwrl?.concentration === 'core',
+    `VWRL concentration = '${vwrl?.concentration}'`));
+
+  // Total invested check — should be close to £43,046 (within 10%)
+  const expectedInvested = 43046;
+  const pctDiff = Math.abs(invested - expectedInvested) / expectedInvested * 100;
+  results.push(t(S, `Total invested ≈ £43,046 (within 10% of last sync)`,
+    pctDiff < 10,
+    `Calculated £${invested.toLocaleString()}, expected ~£${expectedInvested.toLocaleString()} (${pctDiff.toFixed(1)}% diff)`,
+    pctDiff > 5));
+
+  // No individual non-core position > 12% (extreme overweight guard)
+  HOLDINGS.filter(h => h.concentration !== 'core').forEach(h => {
+    const pct = h.currentGbp / invested * 100;
+    results.push(t(S, `${h.ticker}: position < 12% of invested (extreme overweight guard)`,
+      pct < 12, `${h.ticker} = ${pct.toFixed(1)}% — investigate immediately`, pct > 10));
+  });
+
+  return results;
+}
+
+// ══ SUITE 7 — Urgent actions banner ═══════════════
+function testUrgentActionsBanner() {
+  const S = 'Urgent Actions Banner';
+  const results = [];
+  const today = new Date();
+
+  // Banner DOM element exists
+  const el = document.getElementById('urgentActionsBanner');
+  results.push(t(S, 'urgentActionsBanner DOM element exists',
+    !!el, 'Element #urgentActionsBanner not found in DOM'));
+
+  // MU should appear in banner (within 30 days)
+  const muEarnings = EARNINGS.find(e => e.ticker === 'MU');
+  if (muEarnings) {
+    const daysAway = Math.round((new Date(muEarnings.isoDate) - today) / (1000*60*60*24));
+    const shouldShow = muEarnings.urgent && daysAway <= 30 && daysAway >= -1;
+    results.push(t(S, `MU appears in urgent banner (${daysAway} days away)`,
+      shouldShow,
+      `MU isoDate: ${muEarnings.isoDate}, urgent: ${muEarnings.urgent}, days: ${daysAway}`,
+      daysAway < 0));
+  }
+
+  // ORCL should appear in banner
+  const orclEarnings = EARNINGS.find(e => e.ticker === 'ORCL');
+  if (orclEarnings) {
+    const daysAway = Math.round((new Date(orclEarnings.isoDate) - today) / (1000*60*60*24));
+    const shouldShow = orclEarnings.urgent && daysAway <= 30 && daysAway >= -1;
+    results.push(t(S, `ORCL appears in urgent banner (${daysAway} days away)`,
+      shouldShow,
+      `ORCL isoDate: ${orclEarnings.isoDate}, urgent: ${orclEarnings.urgent}, days: ${daysAway}`,
+      daysAway < 0));
+  }
+
+  // renderUrgentBanner function exists
+  results.push(t(S, 'renderUrgentBanner function exists',
+    typeof renderUrgentBanner === 'function',
+    'renderUrgentBanner is not defined'));
+
+  return results;
+}
+
+// ══ SUITE 8 — CYBER_DATA ══════════════════════════
+function testCyberData() {
+  const S = 'Cybersecurity Comparison Data';
+  const results = [];
+
+  const expectedTickers = ['NET','CRWD','PANW','ZS','FTNT'];
+  expectedTickers.forEach(ticker => {
+    const found = CYBER_DATA.find(c => c.ticker === ticker);
+    results.push(t(S, `${ticker} present in CYBER_DATA`,
+      !!found, `${ticker} missing — add to CYBER_DATA`));
+  });
+
+  CYBER_DATA.forEach(c => {
+    const missing = ['ticker','name','yahoo','analystRating','analystTarget','verdict','verdictLabel','summary']
+      .filter(f => !c[f] && c[f] !== 0 && c[f] !== false);
+    results.push(t(S, `${c.ticker}: required fields present`,
+      missing.length === 0, `Missing: ${missing.join(', ')}`));
+  });
+
+  // Held positions correctly marked
+  const held = ['NET','CRWD','PANW'];
+  held.forEach(ticker => {
+    const c = CYBER_DATA.find(d => d.ticker === ticker);
+    results.push(t(S, `${ticker}: held:true (in ISA)`,
+      c?.held === true, `${ticker} held should be true`));
+  });
+
+  // ZS and FTNT not yet held
+  ['ZS','FTNT'].forEach(ticker => {
+    const c = CYBER_DATA.find(d => d.ticker === ticker);
+    results.push(t(S, `${ticker}: held:false (not yet in ISA)`,
+      c?.held === false, `${ticker} held should be false`));
+  });
+
+  // ZS should be the starred entry with highest upside
+  const zs = CYBER_DATA.find(c => c.ticker === 'ZS');
+  results.push(t(S, 'ZS has positive analyst upside figure',
+    zs?.analystUpside > 0, `ZS analystUpside = ${zs?.analystUpside}`));
+
+  // All refs URLs valid
+  CYBER_DATA.forEach(c => {
+    (c.refs||[]).forEach((r,i) => {
+      results.push(t(S, `${c.ticker} ref[${i}] URL valid`,
+        r.url?.startsWith('https://'), `URL: '${r.url}'`));
+    });
+  });
+
+  // Morningstar AI ranking: CRWD should be #1
+  const crwd = CYBER_DATA.find(c => c.ticker === 'CRWD');
+  results.push(t(S, 'CRWD has Morningstar AI rank #1',
+    crwd?.morningstarAI === '#1', `Got '${crwd?.morningstarAI}'`));
+
+  return results;
+}
+
+// ══ SUITE 9 — Stale date detection ════════════════
+function testNoStaleDates() {
+  const S = 'Stale Date Detection';
+  const results = [];
+  const today = new Date();
+  const twoYearsAgo = new Date(today);
+  twoYearsAgo.setFullYear(twoYearsAgo.getFullYear() - 2);
+
+  // EARNINGS — no dates more than 60 days in the past without DONE marker
+  EARNINGS.forEach(e => {
+    const d = new Date(e.isoDate);
+    const daysAgo = Math.round((today - d) / (1000*60*60*24));
+    const hasDoneMarker = e.date.toUpperCase().includes('DONE') || e.date.includes('✅');
+    if (daysAgo > 60) {
+      results.push(t(S, `${e.ticker} (${e.isoDate}): past entry marked DONE`,
+        hasDoneMarker,
+        `Entry is ${daysAgo} days old but not marked DONE. Update the date field.`, !hasDoneMarker));
+    }
+  });
+
+  // GCAL_EVENTS — no dates in the past (they've already fired)
+  GCAL_EVENTS.forEach(g => {
+    const d = new Date(g.date);
+    const daysAgo = Math.round((today - d) / (1000*60*60*24));
+    if (daysAgo > 14) {
+      results.push(t(S, `GCAL '${g.title.slice(0,40)}' is not stale (>14 days past)`,
+        false, `Event date '${g.date}' was ${daysAgo} days ago — remove or update`, true));
+    }
+  });
+
+  // App header sync date should be within 30 days
+  const headerDateMatch = document.querySelector('.header-left p')?.textContent.match(/(\d{2}\s+\w+\s+\d{4})/);
+  if (headerDateMatch) {
+    const headerDate = new Date(headerDateMatch[1]);
+    const daysSinceSync = Math.round((today - headerDate) / (1000*60*60*24));
+    results.push(t(S, `App header sync date is within 30 days`,
+      daysSinceSync <= 30,
+      `Last sync was ${daysSinceSync} days ago — update holdings from HL screenshots`, daysSinceSync > 7));
+  }
+
+  // HOLDINGS actionLabel should not contain dates from > 60 days ago
+  // (catches things like "bought May 2025" in labels that haven't been updated)
+  const staleYearPattern = /20(?:2[0-3])\b/; // 2020-2023 = definitely stale
+  HOLDINGS.forEach(h => {
+    const stale = staleYearPattern.test(h.actionLabel);
+    results.push(t(S, `${h.ticker} actionLabel: no stale year reference`,
+      !stale, `actionLabel contains old year: "${h.actionLabel}"`, stale));
+  });
+
+  return results;
+}
+
+// ══ SUITE 10 — Gain calculation cross-check ════════
+function testGainCalculations() {
+  const S = 'Gain % Calculation Accuracy';
+  const results = [];
+
+  HOLDINGS.forEach(h => {
+    if (!h.costGbp || h.costGbp <= 0) return;
+    const actualPct = (h.currentGbp - h.costGbp) / h.costGbp * 100;
+
+    // Extract % from actionLabel if present
+    const match = h.actionLabel.match(/([+-]?\d+\.?\d*)%/);
+    if (match) {
+      const labelPct = parseFloat(match[1]);
+      const diff = Math.abs(labelPct - actualPct);
+      // Allow 5% tolerance (rounding, minor price moves since last sync)
+      results.push(t(S, `${h.ticker}: actionLabel % (${labelPct}%) matches calculated (${actualPct.toFixed(1)}%)`,
+        diff <= 5,
+        `Label says ${labelPct}%, actual is ${actualPct.toFixed(1)}% — difference of ${diff.toFixed(1)}pp`, diff > 2));
+    }
+  });
+
+  // eToro: cost should equal value + |loss| (double-entry check)
+  ETORO_DATA.forEach(e => {
+    if (e.lots > 1) {
+      // For multi-lot entries, verify pl makes sense as a % of cost
+      const plPct = Math.abs(e.pl) / e.cost * 100;
+      results.push(t(S, `${e.ticker}: P&L% of cost is plausible (<80%)`,
+        plPct < 80, `P&L is ${plPct.toFixed(1)}% of cost — seems extreme`, plPct > 40));
+    }
+  });
+
+  // HOLDINGS sum should match the stated ISA invested value (within 5%)
+  const calcInvested = HOLDINGS.reduce((s,h) => s+h.currentGbp, 0);
+  const statedInvested = 43046; // from last HL sync
+  const diffPct = Math.abs(calcInvested - statedInvested) / statedInvested * 100;
+  results.push(t(S, `Sum of HOLDINGS (£${calcInvested.toLocaleString()}) ≈ stated ISA value £${statedInvested.toLocaleString()}`,
+    diffPct < 5,
+    `${diffPct.toFixed(1)}% difference — re-sync holdings from HL`, diffPct > 2));
+
+  return results;
+}
+
+// Auto-run on tab load (also called from showTab)
+function runAllTests() {
+  // Call the real implementation above
+  const suites = [
+    testHoldings(),
+    testEarnings(),
+    testGcalVsEarnings(),
+    testEtoro(),
+    testDeploy(),
+    testConcentrationCalc(),
+    testUrgentActionsBanner(),
+    testCyberData(),
+    testNoStaleDates(),
+    testGainCalculations(),
+  ];
+
+  const allTests = suites.flat();
+  const passed   = allTests.filter(t => t.pass && !t.warn).length;
+  const warned   = allTests.filter(t => t.pass && t.warn).length;
+  const failed   = allTests.filter(t => !t.pass).length;
+
+  const badge = document.getElementById('testSummaryBadge');
+  if (badge) {
+    if (failed === 0) {
+      badge.innerHTML = `<span style="color:var(--green);font-weight:600">✅ All ${passed} tests passed</span>${warned?` · <span style="color:var(--amber)">⚠ ${warned} warnings</span>`:''}`;
+    } else {
+      badge.innerHTML = `<span style="color:var(--red);font-weight:600">❌ ${failed} FAILED</span> · <span style="color:var(--green)">${passed} passed</span>${warned?` · <span style="color:var(--amber)">⚠ ${warned} warnings</span>`:''}`;
+    }
+  }
+
+  const el = document.getElementById('testResults');
+  if (!el) return;
+  el.innerHTML = suites.map((suite) => {
+    const suiteName = suite[0]?._suite || 'Suite';
+    const sf = suite.filter(t => !t.pass).length;
+    const sw = suite.filter(t => t.pass && t.warn).length;
+    const sp = suite.filter(t => t.pass && !t.warn).length;
+    const headerCol = sf > 0 ? 'var(--red)' : sw > 0 ? 'var(--amber)' : 'var(--green)';
+    const headerIcon = sf > 0 ? '❌' : sw > 0 ? '⚠' : '✅';
+    const rows = suite.map(t => {
+      const icon = !t.pass ? '✗' : t.warn ? '⚠' : '✓';
+      const col  = !t.pass ? 'var(--red)' : t.warn ? 'var(--amber)' : 'var(--green)';
+      const bg   = !t.pass ? 'rgba(255,71,87,0.05)' : t.warn ? 'rgba(255,215,0,0.03)' : 'transparent';
+      return `<div style="display:grid;grid-template-columns:18px 1fr 44px;gap:10px;align-items:start;padding:7px 12px;border-bottom:1px solid rgba(30,58,95,0.15);background:${bg}">
+        <span style="color:${col};font-size:13px;font-weight:700;margin-top:1px">${icon}</span>
+        <div>
+          <div style="font-size:12px;color:var(--text);line-height:1.4">${t.name}</div>
+          ${t.detail?`<div style="font-size:11px;color:var(--text-dim);margin-top:3px;line-height:1.5">${t.detail}</div>`:''}
+        </div>
+        <span style="font-size:10px;color:${col};font-weight:600;text-align:right;padding-top:2px">${!t.pass?'FAIL':t.warn?'WARN':'PASS'}</span>
+      </div>`;
+    }).join('');
+    return `<div style="background:var(--surface);border:1px solid var(--border);margin-bottom:10px;overflow:hidden;border-radius:2px">
+      <div style="padding:9px 14px;background:var(--surface2);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center">
+        <span style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:${headerCol};text-transform:uppercase;letter-spacing:0.08em">${headerIcon} ${suiteName}</span>
+        <span style="font-size:10px;color:var(--text-dim)">${sp} pass · ${sw} warn · ${sf} fail</span>
+      </div>
+      ${rows}
+    </div>`;
+  }).join('');
+}
+</script>
 </body>
 </html>
