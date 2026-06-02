@@ -1035,7 +1035,7 @@ function showTab(id){
   document.querySelectorAll('.nav-tab')[tabs[id]]?.classList.add('active');
   if(id==='calculator') runCalc();
   if(id==='concentration') renderConcentration();
-  if(id==='watchlist') renderWatchlist();
+  if(id==='watchlist') { renderWatchlist(); renderCyberCompare(); }
 }
 
 function toggleSection(id){document.getElementById(id).classList.toggle('collapsed');}
@@ -2135,6 +2135,151 @@ function renderConcentration(){
 }
 
 // ══════════════════════════════════════════════════
+// CYBERSECURITY COMPARISON
+// ══════════════════════════════════════════════════
+const CYBER_DATA=[
+  {
+    ticker:'NET', name:'Cloudflare', yahoo:'NET',
+    held:true, hlValue:509,
+    analystRating:'Moderate Buy', analystTarget:168, analystCount:30, analystUpside:null,
+    morningstarFV:235, morningstarMoat:'Wide', morningstarAI:null,
+    verdict:'watch',
+    verdictLabel:'HOLD — post-restructuring. Watch for stabilisation.',
+    posColor:'#ff6b35',
+    summary:'Q1 rev +34% YoY to $640M but 20% workforce cut on 7 May (-23% stock day). CEO calls it AI-first pivot. Guidance +28% maintained. Needham Buy. Morningstar FV $235 — check how far stock has recovered. NOT in Morningstar\'s top-4 AI cyber names.',
+    refs:[
+      {label:'Morningstar FV $235',url:'https://www.morningstar.com/stocks/xnas/net/quote'},
+      {label:'TheStreet: layoff analysis',url:'https://www.thestreet.com/employment/cloudflare-stock-plummets-23-amid-ai-driven-layoffs'},
+      {label:'Q1 2026 earnings (SEC)',url:'https://www.sec.gov/Archives/edgar/data/0001477333/000147733326000035/q126exhibit991.htm'},
+      {label:'Analyst consensus',url:'https://stockanalysis.com/stocks/net/forecast/'}
+    ]
+  },
+  {
+    ticker:'CRWD', name:'CrowdStrike', yahoo:'CRWD',
+    held:true, hlValue:1711,
+    analystRating:'Strong Buy', analystTarget:132, analystCount:44, analystUpside:null,
+    morningstarFV:132, morningstarMoat:'Wide', morningstarAI:'#1',
+    verdict:'hold',
+    verdictLabel:'HOLD — already in ISA, +66%. Do not add.',
+    posColor:'var(--green)',
+    summary:'Morningstar #1 AI cyber name. $5.25B ARR +24%. Falcon platform stickiness is exceptional. BUT: Morningstar FV $132 vs current ~$782 — trading at 199% premium. You already hold at +66%. Not the time to add more.',
+    refs:[
+      {label:'Morningstar: FV $132 (199% prem)',url:'https://www.morningstar.com/stocks/xnas/crwd/quote'},
+      {label:'Analyst consensus',url:'https://stockanalysis.com/stocks/crwd/forecast/'}
+    ]
+  },
+  {
+    ticker:'PANW', name:'Palo Alto Networks', yahoo:'PANW',
+    held:true, hlValue:662,
+    analystRating:'Buy', analystTarget:234, analystCount:54, analystUpside:null,
+    morningstarFV:46, morningstarMoat:'Wide', morningstarAI:'#2',
+    verdict:'hold',
+    verdictLabel:'HOLD — in ISA. At analyst target. Morningstar FV much lower.',
+    posColor:'var(--amber)',
+    summary:'Morningstar #2 AI cyber name. Wide moat: network, cloud, SecOps platform. BUT: Morningstar FV is very low vs current price — 464% premium. Analyst avg ~$234 also at or below current level. RPO +23% YoY. Platformisation thesis intact but stock is not cheap on any fundamental metric. Hold starter position, add only on meaningful pullback (>15-20%).',
+    refs:[
+      {label:'Morningstar: wide moat, 464% prem',url:'https://www.morningstar.com/stocks/xnas/PANW/quote'},
+      {label:'Analyst consensus',url:'https://stockanalysis.com/stocks/panw/forecast/'},
+      {label:'Morningstar cyber AI ranking',url:'https://www.morningstar.com/stocks/3-cybersecurity-stocks-invest-ai-reshapes-industries'}
+    ]
+  },
+  {
+    ticker:'ZS', name:'Zscaler', yahoo:'ZS',
+    held:false, hlValue:0,
+    analystRating:'Strong Buy', analystTarget:194, analystCount:47, analystUpside:36,
+    morningstarFV:null, morningstarMoat:'Wide', morningstarAI:'#4',
+    verdict:'watch',
+    verdictLabel:'⭐ BEST ENTRY POINT — just had 24% post-earnings drop',
+    posColor:'var(--accent2)',
+    summary:'Morningstar #4 AI cyber name. Zero-trust leader. Q3 FY26 rev +26% YoY, ARR $3.36B. Stock dropped ~24% after guiding FY27 growth 16-17% vs consensus 19%. Guggenheim upgraded to Buy on 1 Jun with $214 target (+53%). 47 analysts Buy, avg $194 (+36%). This is the Morningstar top-4 name not yet in the portfolio — and it just had a meaningful pullback. ISA-eligible on HL. April 2027 priority candidate.',
+    refs:[
+      {label:'Guggenheim upgrade: Buy $214',url:'https://www.gurufocus.com/news/8894309/zscaler-zs-upgraded-to-buy-with-214-price-target-following-earnings-guidance'},
+      {label:'Analyst consensus (+36%)',url:'https://stockanalysis.com/stocks/zs/forecast/'},
+      {label:'Morningstar AI ranking',url:'https://www.morningstar.com/stocks/3-cybersecurity-stocks-invest-ai-reshapes-industries'},
+      {label:'Heygotrade: CRWD vs ZS vs PANW vs FTNT',url:'https://www.heygotrade.com/en/blog/buy-crwd-zs-panw-ftnt-cybersecurity-stock-picks-2026/'}
+    ]
+  },
+  {
+    ticker:'FTNT', name:'Fortinet', yahoo:'FTNT',
+    held:false, hlValue:0,
+    analystRating:'Buy', analystTarget:115, analystCount:35, analystUpside:null,
+    morningstarFV:null, morningstarMoat:'Wide', morningstarAI:'#3',
+    verdict:'watch',
+    verdictLabel:'WATCH — cheapest quality cyber name on earnings multiples',
+    posColor:'var(--text-dim)',
+    summary:'Morningstar #3 AI cyber name. Q2 FY26 billings +31% to $2.09B. ~30x forward earnings with 80% gross margins — the cheapest quality name in the sector per Heygotrade. Slower revenue growth at 14-15% vs CRWD/ZS. Good for income-oriented or diversified cyber exposure. Less exciting than ZS right now but worth monitoring. ISA-eligible on HL.',
+    refs:[
+      {label:'Analyst consensus',url:'https://stockanalysis.com/stocks/ftnt/forecast/'},
+      {label:'Morningstar AI ranking',url:'https://www.morningstar.com/stocks/3-cybersecurity-stocks-invest-ai-reshapes-industries'},
+      {label:'Heygotrade comparison',url:'https://www.heygotrade.com/en/blog/buy-crwd-zs-panw-ftnt-cybersecurity-stock-picks-2026/'}
+    ]
+  },
+];
+
+function renderCyberCompare(){
+  const el=document.getElementById('cyberCompareGrid');
+  if(!el) return;
+
+  // Fetch live prices for all
+  CYBER_DATA.forEach(c=>{
+    if(c.yahoo) fetchPrice(c.yahoo).then(data=>{
+      if(!data) return;
+      const el2=document.getElementById('cyberprice-'+c.ticker);
+      const el3=document.getElementById('cyberchg-'+c.ticker);
+      const p=data.price; const cls=data.changePct>=0?'pos':'neg'; const sign=data.changePct>=0?'+':'';
+      if(el2) el2.innerHTML=`<span class="${cls}">$${p.toFixed(2)}</span>`;
+      if(el3) el3.innerHTML=`<span class="${cls}" style="font-size:10px">${sign}${data.changePct.toFixed(2)}%</span>`;
+    }).catch(()=>{});
+  });
+
+  el.innerHTML=CYBER_DATA.map(c=>{
+    const borderCol=c.verdict==='hold'?'var(--accent)':c.verdict==='watch'&&c.analystUpside&&c.analystUpside>30?'var(--accent2)':'var(--border)';
+    const heldBadge=c.held?`<span style="font-size:9px;background:rgba(0,212,255,0.12);color:var(--accent);border:1px solid rgba(0,212,255,0.3);padding:1px 6px;margin-left:6px">IN ISA</span>`:'';
+    const aiRank=c.morningstarAI?`<span style="font-size:9px;background:rgba(255,107,53,0.15);color:var(--accent3);border:1px solid rgba(255,107,53,0.3);padding:1px 6px;margin-left:4px">MS AI ${c.morningstarAI}</span>`:'';
+    const refLinks=(c.refs||[]).map(r=>
+      `<a href="${r.url}" target="_blank" style="display:inline-block;font-size:10px;color:var(--accent);background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.2);padding:2px 7px;margin:2px 3px 0 0;text-decoration:none;border-radius:2px">↗ ${r.label}</a>`
+    ).join('');
+    const chartBtn=`<button class="chart-btn" style="padding:4px 10px;font-size:11px;margin:2px 3px 0 0" onclick="openChart('${c.yahoo}','${c.ticker}')">📈 Chart</button>`;
+
+    return`<div style="background:var(--surface2);border:1px solid ${borderCol};border-left:3px solid ${c.posColor};padding:14px;margin-bottom:10px">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:8px">
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+          <span style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--text-bright)">${c.ticker}</span>
+          <span style="font-size:11px;color:var(--text-dim)">${c.name}</span>
+          ${heldBadge}${aiRank}
+        </div>
+        <div style="text-align:right">
+          <div id="cyberprice-${c.ticker}" style="font-size:14px;font-weight:600"><span class="loading-price">...</span></div>
+          <div id="cyberchg-${c.ticker}"></div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px">
+        <div style="background:var(--surface3);padding:8px;border-radius:3px">
+          <div style="font-size:9px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.08em">Analyst Rating</div>
+          <div style="font-size:12px;font-weight:600;color:var(--accent2);margin-top:2px">${c.analystRating}</div>
+          <div style="font-size:10px;color:var(--text-dim)">${c.analystCount} analysts</div>
+        </div>
+        <div style="background:var(--surface3);padding:8px;border-radius:3px">
+          <div style="font-size:9px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.08em">Analyst Avg Target</div>
+          <div style="font-size:12px;font-weight:600;color:var(--amber);margin-top:2px">$${c.analystTarget}</div>
+          <div style="font-size:10px;color:var(--accent2)">${c.analystUpside?'+'+c.analystUpside+'% upside':'see live'}</div>
+        </div>
+        <div style="background:var(--surface3);padding:8px;border-radius:3px">
+          <div style="font-size:9px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.08em">Morningstar Moat</div>
+          <div style="font-size:12px;font-weight:600;color:var(--accent2);margin-top:2px">${c.morningstarMoat||'—'}</div>
+          <div style="font-size:10px;color:var(--text-dim)">${c.morningstarFV?'FV $'+c.morningstarFV:'check MS'}</div>
+        </div>
+      </div>
+      <div style="font-size:11px;color:var(--text-dim);line-height:1.65;margin-bottom:8px">${c.summary}</div>
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:2px">
+        <span class="status-badge status-${c.verdict}" style="font-size:10px;margin-right:6px">${c.verdictLabel}</span>
+        ${chartBtn}${refLinks}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════════════
 // INIT
 // ══════════════════════════════════════════════════
 
@@ -2183,6 +2328,7 @@ function init(){
   renderHoldings();
   renderDeploy();
   renderWatchlist();
+  renderCyberCompare();
   renderEToro();
   renderEarnings();
   renderGCal();
@@ -2294,9 +2440,34 @@ document.getElementById('chartModal').addEventListener('click',function(e){if(e.
 </div>
 
 </div><!-- /tab-concentration -->
+
+<!-- ═══════════════ TAB: WATCHLIST ═══════════════ -->
+<div class="tab-panel" id="tab-watchlist">
+
 <div style="background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.3);padding:12px 16px;margin-bottom:14px;font-size:12px;color:var(--text)">
 <strong style="color:#a78bfa">Candidates + Watchlist</strong> — In ISA, pending migration, and new candidates. Live prices on refresh. Reference links open analyst consensus pages.
 </div>
+
+<!-- CYBERSECURITY COMPARISON SECTION -->
+<div class="section" id="sec-cyber">
+<div class="section-header" onclick="toggleSection('sec-cyber')">
+  <div class="section-title"><div class="dot" style="background:var(--accent3)"></div>Cybersecurity — NET vs Alternatives (Morningstar AI Quality Ranking)</div>
+  <span class="section-toggle">▼</span>
+</div>
+<div class="section-body">
+<div style="background:rgba(255,107,53,0.08);border-left:3px solid var(--accent3);padding:12px 16px;font-size:11px;color:var(--text);margin:12px 14px 6px;line-height:1.7">
+  <strong style="color:var(--accent3)">Morningstar AI Quality Scale (Mar 2026, analyst Malik Ahmed Khan):</strong>
+  The top 4 cyber names ranked highest for AI product monetisation, enterprise data richness, and platform consolidation are: <strong style="color:var(--text-bright)">CrowdStrike → Palo Alto → Fortinet → Zscaler</strong>.
+  Cloudflare is notably absent from this top tier. The thesis: AI turbocharged vendor consolidation — enterprises want fewer, deeper security platforms, and these four have the data network effects to benefit most.
+  <br><br>
+  <strong style="color:var(--amber)">Cloudflare update (7 May 2026):</strong> 20% workforce reduction announced alongside Q1 earnings (revenue +34% YoY to £640M — strong). Stock dropped 23% on the day.
+  CEO framed it as "AI-first" pivot, not cost-cutting. Restructuring cost $140-150M. Needham maintained Buy saying layoffs are non-technical roles. 2026 revenue guidance +28% maintained.
+  <strong>Key risk:</strong> Morningstar's fair value for NET is $235 — if the stock has bounced from the 23% drop, it may be closer to fair value again.
+</div>
+<div id="cyberCompareGrid" style="padding:14px"></div>
+</div>
+</div>
+
 <div class="section">
 <div class="section-header" onclick="toggleSection('sec-wl')">
 <div class="section-title"><div class="dot" style="background:#a78bfa"></div>All Positions — Watchlist & Migration Plan</div>
@@ -2317,6 +2488,7 @@ document.getElementById('chartModal').addEventListener('click',function(e){if(e.
 </table>
 </div>
 </div>
-</div>
+
+</div><!-- /tab-watchlist -->
 </body>
 </html>
