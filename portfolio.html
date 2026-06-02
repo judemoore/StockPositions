@@ -937,22 +937,54 @@ const HOLDINGS=[
   {ticker:'VWRL',name:'Vanguard FTSE Global All Cap',costGbp:9994,currentGbp:10599,action:'hold',actionLabel:'HOLD +6.1% — passive core. Do not reduce.',currency:'GBP',hlOnly:true,          concentration:'core'},
 ];
 
+// Updated 02 Jun 2026 — reflects current positions, analyst targets, and entry signals
 const DEPLOY=[
-  // ── DIVERSIFICATION CANDIDATES (April 2027 priority) ──
-  {rank:'🆕',ticker:'DASH',name:'DoorDash',          yahoo:'DASH', entryUsd:167,targetUsd:258,gbp:1500,currency:'USD',status:'watch', statusLabel:'NEW MF + AI #8 - DIVERSIFICATION',note:'Hidden Gems Apr 2026 + Epic 50 + AI Rankings #8. Consumer cycle, not AI. Target $258 (+64%). 45 analysts Buy. Q1 rev +27%.'},
-  {rank:'🆕',ticker:'RKLB',name:'Rocket Lab',         yahoo:'RKLB', entryUsd:120,targetUsd:120,gbp:1000,currency:'USD',status:'watch', statusLabel:'NEW MF EPIC 50 - WAIT PULLBACK',note:'Epic 50 2.70%. Q1 rev +63.5% to $200M. Stock surged to $123 - blew past all analyst targets. Wait for pullback. Space defence diversification.'},
-  {rank:'🆕',ticker:'KRYS',name:'Krystal Biotech',    yahoo:'KRYS', entryUsd:130,targetUsd:180,gbp:1200,currency:'USD',status:'watch', statusLabel:'NEW MF EPIC 50 - BIOTECH',note:'Epic 50 2.04%. Vyjuvek +32% YoY to $116M. 95% gross margin. $1B cash. Strong Buy. Healthcare diversification - non-AI cycle.'},
-  {rank:'🆕',ticker:'MRVL',name:'Marvell Technology', yahoo:'MRVL', entryUsd:75, targetUsd:110,gbp:1200,currency:'USD',status:'watch', statusLabel:'NEW MF EPIC 50 - AI INFRA',note:'Epic 50 2.22%. Custom AI silicon. Complements AVGO/AMD exposure but adds custom chip angle. Optical interconnect leader.'},
-  {rank:'🆕',ticker:'ATZAF',name:'Aritzia',            yahoo:'ATZAF',entryUsd:48, targetUsd:65, gbp:1000,currency:'USD',status:'watch', statusLabel:'NEW MF HG - CONSUMER',note:'Hidden Gems Apr 2026. Canadian fashion. Consumer discretionary. OTC ADR - check HL availability.'},
-  // ── EXISTING WATCHLIST ──
-  {rank:'👁',ticker:'STRL',name:'Sterling Infrastructure',yahoo:'STRL',entryUsd:700,targetUsd:900,gbp:1500,currency:'USD',status:'watch',statusLabel:'WAIT PULLBACK',note:'SA +207%. Wait for $650-700.'},
-  {rank:'✅',ticker:'AMZN',name:'Amazon',             yahoo:'AMZN', entryUsd:209,targetUsd:280,gbp:1000,currency:'USD',status:'hold', statusLabel:'IN HL ISA - NEW GBP1000',note:'AWS + AI cloud. SA Mar 2026. Bought May 2026. Consider adding on dips.'},
-  {rank:'👁',ticker:'PRYMY',name:'Prysmian ADR',      yahoo:'PRYMY',entryUsd:81, targetUsd:95, gbp:700, currency:'USD',status:'watch',statusLabel:'CHECK HL',note:'Cable infrastructure. OTC ADR.'},
-  // ── ISA MIGRATIONS APR 2027 ──
-  {rank:'✅',ticker:'TSLA',name:'Tesla',yahoo:'TSLA',entryUsd:350,targetUsd:500,gbp:622,currency:'USD',status:'hold',statusLabel:'IN HL ISA - NEW GBP622',note:'New position May 2026. Hidden Gems rec. AI + energy + autonomy thesis.'},
-  {rank:'⏳',ticker:'TTD', name:'The Trade Desk (ISA)',yahoo:'TTD',  entryUsd:20, targetUsd:41, gbp:2300,currency:'USD',status:'close',statusLabel:'APR 2027 HL ISA',note:'HL blocked Sep 2026 cure. On eToro GBP707.'},
-  {rank:'⏳',ticker:'CLBT',name:'Cellebrite (ISA)',   yahoo:'CLBT', entryUsd:13, targetUsd:23, gbp:500, currency:'USD',status:'close',statusLabel:'APR 2027 T212 ISA',note:'HL permanent block. On eToro GBP470. Q1 beat 33%.'},
-  {rank:'⏳',ticker:'SK-ADR',name:'SK Hynix ADR',    yahoo:null,   entryUsd:0,  targetUsd:0,  gbp:1000,currency:'USD',status:'watch',statusLabel:'H2 2026',note:'ADR listing target H2 2026. GBP1k HL cash reserved.'},
+  // ── IN ISA — BOUGHT ──
+  {rank:'✅',ticker:'DASH',name:'DoorDash',          yahoo:'DASH', entryUsd:167,targetUsd:258,gbp:466,  currency:'USD',status:'hold', statusLabel:'IN HL ISA — STARTER',
+   note:'IN ISA. 44 analysts Buy, avg target $246 (+51%). MF Hidden Gems Apr 2026 + AI Rankings #8. Deliveroo drag reverting H2 2026. GTV +39% YoY. Add on dips below $155 in Apr 2027.',
+   refs:[{label:'Analyst consensus',url:'https://stockanalysis.com/stocks/dash/forecast/'},
+         {label:'MF Hidden Gems rec',url:'https://www.fool.com/investing/'},
+         {label:'24/7 WallSt analysis',url:'https://247wallst.com/investing/2026/05/06/doordash-sits-near-52-week-121010275.html'}]},
+  {rank:'✅',ticker:'AMZN',name:'Amazon',             yahoo:'AMZN', entryUsd:209,targetUsd:280,gbp:953,  currency:'USD',status:'hold', statusLabel:'IN HL ISA',
+   note:'IN ISA. AWS AI cloud. Analysts avg $280 (+15% from current). Bought May 2026. Consider adding on dips below $175.',
+   refs:[{label:'Analyst consensus',url:'https://stockanalysis.com/stocks/amzn/forecast/'}]},
+  {rank:'✅',ticker:'TSLA',name:'Tesla',               yahoo:'TSLA', entryUsd:350,targetUsd:500,gbp:629,  currency:'USD',status:'hold', statusLabel:'IN HL ISA',
+   note:'IN ISA. MF Hidden Gems rec. AI + energy + autonomy optionality. Hold.',
+   refs:[{label:'Analyst consensus',url:'https://stockanalysis.com/stocks/tsla/forecast/'}]},
+  {rank:'✅',ticker:'PANW',name:'Palo Alto Networks',  yahoo:'PANW', entryUsd:213,targetUsd:217,gbp:662,  currency:'USD',status:'hold', statusLabel:'IN HL ISA — AT TARGET',
+   note:'IN ISA. Buy consensus (54 analysts) but avg target ~$217 — stock already there. Platform consolidation (platformisation) thesis intact. RPO +23% YoY. Do not add until pullback or new target upgrades post Q4 FY26 earnings (reporting 2 Jun).',
+   refs:[{label:'Analyst consensus',url:'https://stockanalysis.com/stocks/panw/forecast/'},
+         {label:'MarketBeat ratings',url:'https://www.marketbeat.com/stocks/NASDAQ/PANW/forecast/'}]},
+  // ── FUTURE ADD — APR 2027 ──
+  {rank:'⏳',ticker:'MU',  name:'Micron Technology',   yahoo:'MU',   entryUsd:105,targetUsd:140,gbp:1500, currency:'USD',status:'hold', statusLabel:'IN ISA — OVERWEIGHT. TRIM THEN ADD',
+   note:'IN ISA (9.2% = overweight). TRIM ~£1,000-1,500 first, then consider re-adding post Q3 earnings (24 Jun 2026) if guidance is strong. 44 analysts Strong Buy, avg target ~$140 (+30%+). Susquehanna target $1,750 is an outlier. Raymond James just raised to $1,100 — but these may reflect pre-split pricing or reverse-split adjustments. Core HBM thesis intact. AI memory fully booked 2026.',
+   refs:[{label:'Analyst consensus',url:'https://stockanalysis.com/stocks/mu/forecast/'},
+         {label:'Raymond James upgrade',url:'https://stockanalysis.com/stocks/mu/'},
+         {label:'Earnings 24 Jun 2026',url:'https://www.benzinga.com/quote/MU/analyst-ratings'}]},
+  {rank:'⏳',ticker:'SK-ADR',name:'SK Hynix ADR',      yahoo:null,   entryUsd:0,  targetUsd:0,  gbp:1000, currency:'USD',status:'watch',statusLabel:'JUN/JUL 2026 ADR LISTING',
+   note:'Hold 3 shares on IBKR @ ₩1,620,000 cost. Now ₩2,339,000 = +₩1,050K unrealised (~+£460). ADR listing trigger: sell KRX → buy ADR inside HL ISA using £1k reserved cash.',
+   refs:[{label:'SK Hynix KRX',url:'https://finance.yahoo.com/quote/000660.KS/'}]},
+  {rank:'⏳',ticker:'TTD', name:'The Trade Desk',       yahoo:'TTD',  entryUsd:21, targetUsd:30, gbp:2300, currency:'USD',status:'watch',statusLabel:'APR 2027 HL ISA',
+   note:'On eToro (2 lots, -£758 total). HL NASDAQ compliance cure target Sep 2026. 37 analysts Buy, avg target $25.81 (+14%), median $30 (+43%). FIFA World Cup H2 2026 ad spend catalyst. Harvest loss vs gains before Apr 2027, then rebuy in HL ISA.',
+   refs:[{label:'Analyst consensus',url:'https://stockanalysis.com/stocks/ttd/forecast/'},
+         {label:'Investing.com targets',url:'https://www.investing.com/equities/trade-desk-inc-consensus-estimates'}]},
+  // ── WATCHLIST — NOT YET BOUGHT ──
+  {rank:'👁',ticker:'RKLB',name:'Rocket Lab',           yahoo:'RKLB', entryUsd:90, targetUsd:104,gbp:1000, currency:'USD',status:'watch',statusLabel:'WAIT — ABOVE ALL ANALYST TARGETS',
+   note:'STILL NOT A SAFE ENTRY. Trading ~$122 vs analyst avg target $104 (18 analysts, S&P Global) — stock is ~17% ABOVE consensus. Neutron vehicle delayed to late 2026. SpaceX IPO hype is lifting the whole sector. No buy until either: (a) price pulls back to $80-90 zone, or (b) analyst targets are revised up materially post-Neutron launch. Space defence thesis intact but valuation is ahead of fundamentals.',
+   refs:[{label:'Analyst consensus',url:'https://stockanalysis.com/stocks/rklb/forecast/'},
+         {label:'S&P Global avg $103.91',url:'https://stockanalysis.com/stocks/rklb/forecast/'}]},
+  {rank:'👁',ticker:'SNDK',name:'Sandisk — TRIM TARGET',yahoo:'SNDK', entryUsd:0,  targetUsd:0,  gbp:0,    currency:'USD',status:'close',statusLabel:'IN ISA — TRIM TO ~5-6%',
+   note:'TRIM PRIORITY. Now 8.9% of invested (£3,823) after +164.7% run. The plan was to reduce exposure — this is overdue. Trim ~£1,300-1,500 inside ISA (no CGT). Proceeds: add to DASH, or hold for April 2027 redeployment. Storage is a different thesis from HBM/AI memory — SK Hynix covers the AI memory angle more purely.',
+   refs:[{label:'SanDisk Corp overview',url:'https://finance.yahoo.com/quote/SNDK/'}]},
+  {rank:'👁',ticker:'KRYS',name:'Krystal Biotech',      yahoo:'KRYS', entryUsd:130,targetUsd:180,gbp:1200, currency:'USD',status:'watch',statusLabel:'MF EPIC 50 — WATCH',
+   note:'MF Epic 50 2.04%. Vyjuvek gene therapy +32% YoY to $116M. 95% gross margin, $1B cash. Strong Buy consensus. Healthcare diversification — non-AI cycle. Entry point ~$130 remains valid. Target Apr 2027 ISA.',
+   refs:[{label:'Analyst consensus',url:'https://stockanalysis.com/stocks/krys/forecast/'}]},
+  {rank:'👁',ticker:'STRL',name:'Sterling Infrastructure',yahoo:'STRL',entryUsd:0,  targetUsd:900,gbp:1500, currency:'USD',status:'watch',statusLabel:'WAIT PULLBACK',
+   note:'SA +207%. Data centre electrical infrastructure. Wait for pullback — entry around $120-140 range. Strong AI power build-out thesis.',
+   refs:[{label:'Analyst consensus',url:'https://stockanalysis.com/stocks/strl/forecast/'}]},
+  {rank:'👁',ticker:'ATZAF',name:'Aritzia',              yahoo:'ATZAF',entryUsd:48, targetUsd:65, gbp:1000, currency:'USD',status:'watch',statusLabel:'MF HIDDEN GEMS — CHECK HL',
+   note:'MF Hidden Gems Apr 2026. Canadian fashion retailer expanding into US. Consumer discretionary diversification. OTC ADR — check HL ISA availability before targeting.',
+   refs:[{label:'Aritzia investor relations',url:'https://investor.aritzia.com/'}]},
 ];
 
 
@@ -1003,6 +1035,7 @@ function showTab(id){
   document.querySelectorAll('.nav-tab')[tabs[id]]?.classList.add('active');
   if(id==='calculator') runCalc();
   if(id==='concentration') renderConcentration();
+  if(id==='watchlist') renderWatchlist();
 }
 
 function toggleSection(id){document.getElementById(id).classList.toggle('collapsed');}
@@ -1116,23 +1149,94 @@ function renderHoldings(){
 }
 
 function renderDeploy(){
-  document.getElementById('deployTbody').innerHTML=DEPLOY.map(p=>{
-    const up=p.currency==='GBP'?p.targetGbp&&p.entryGbp?Math.round((p.targetGbp-p.entryGbp)/p.entryGbp*100):null
-              :p.targetUsd&&p.entryUsd?Math.round((p.targetUsd-p.entryUsd)/p.entryUsd*100):null;
-    const entStr=p.currency==='GBP'?`£${p.entryGbp||'TBC'}`:(p.entryUsd?`$${p.entryUsd.toLocaleString()}`:'TBC');
-    const tgtStr=p.currency==='GBP'?`£${p.targetGbp||'TBC'}`:(p.targetUsd?`$${p.targetUsd.toLocaleString()}`:'TBC');
+  // Dashboard table — quick overview
+  const el=document.getElementById('deployTbody');
+  if(!el) return;
+  el.innerHTML=DEPLOY.map(p=>{
+    const up=p.targetUsd&&p.entryUsd&&p.entryUsd>0?Math.round((p.targetUsd-p.entryUsd)/p.entryUsd*100):null;
+    const entStr=p.entryUsd?`$${p.entryUsd}`:'—';
+    const tgtStr=p.targetUsd&&p.targetUsd>0?`$${p.targetUsd}`:'—';
     return`<tr title="${p.note}">
       <td class="td-right" style="color:var(--text-dim)">${p.rank}</td>
-      <td><div class="ticker-badge">${p.ticker}<span class="ticker-flag ${p.currency==='GBP'?'uk':''}">${p.currency}</span></div><div class="ticker-name">${p.name}</div></td>
+      <td><div class="ticker-badge">${p.ticker}</div><div class="ticker-name">${p.name}</div></td>
       <td class="td-right"><div class="price-live" id="dprice-${p.ticker}">${p.yahoo?'<span class="loading-price">...</span>':'<span class="neu">—</span>'}</div><div id="dchange-${p.ticker}"></div></td>
       <td class="td-right"><span style="color:var(--amber)">${entStr}</span></td>
       <td class="td-right"><span style="color:var(--accent2)">${tgtStr}</span></td>
       <td class="td-right">${up?`<span class="pos">+${up}%</span>`:'—'}</td>
-      <td class="td-right"><strong style="color:var(--text-bright)">£${p.gbp.toLocaleString()}</strong></td>
+      <td class="td-right"><strong style="color:var(--text-bright)">${p.gbp>0?'£'+p.gbp.toLocaleString():'—'}</strong></td>
       <td class="td-right">${badge(p.status,p.statusLabel)}</td>
       <td class="td-right">${p.yahoo?`<button class="chart-btn" onclick="openChart('${p.yahoo}','${p.ticker}')">📈</button>`:'—'}</td>
     </tr>`;
   }).join('');
+}
+
+function renderWatchlist(){
+  const el=document.getElementById('watchlistBody');
+  if(!el) return;
+
+  const statusColors={
+    hold:'rgba(0,212,255,0.08)',
+    watch:'rgba(167,139,250,0.06)',
+    close:'rgba(255,71,87,0.08)',
+  };
+  const statusBorder={hold:'var(--accent)',watch:'#a78bfa',close:'var(--red)'};
+
+  el.innerHTML=DEPLOY.map(p=>{
+    const up=p.targetUsd&&p.entryUsd&&p.entryUsd>0?((p.targetUsd-p.entryUsd)/p.entryUsd*100).toFixed(0):null;
+    const upColor=up&&up>0?'var(--green)':up&&up<0?'var(--red)':'var(--text-dim)';
+    const borderCol=statusBorder[p.status]||'var(--border)';
+    const bgCol=statusColors[p.status]||'transparent';
+
+    // Reference links
+    const refLinks=(p.refs&&p.refs.length)?p.refs.map(r=>
+      `<a href="${r.url}" target="_blank" style="display:inline-block;font-size:10px;color:var(--accent);background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.2);padding:2px 8px;margin:2px 3px 0 0;text-decoration:none;border-radius:2px" onclick="event.stopPropagation()">↗ ${r.label}</a>`
+    ).join(''):'';
+
+    const chartBtn=p.yahoo?`<button class="chart-btn" style="padding:4px 10px;font-size:11px" onclick="openChart('${p.yahoo}','${p.ticker}')">📈 Chart</button>`:'';
+
+    return`<tr style="background:${bgCol}">
+      <td style="border-left:3px solid ${borderCol};padding:12px 14px">
+        <div style="display:flex;align-items:center;gap:8px">
+          <div>
+            <div class="ticker-badge" style="font-size:15px">${p.ticker}</div>
+            <div class="ticker-name" style="font-size:11px;margin-top:2px">${p.name}</div>
+          </div>
+          <span class="status-badge status-${p.status}" style="font-size:10px">${p.statusLabel}</span>
+        </div>
+      </td>
+      <td class="td-right">
+        <div class="price-live" id="wlprice-${p.ticker}">${p.yahoo?'<span class="loading-price">...</span>':'<span class="neu">—</span>'}</div>
+        <div id="wlchg-${p.ticker}" style="font-size:11px"></div>
+      </td>
+      <td class="td-right"><span style="color:var(--amber);font-size:12px">${p.entryUsd?'$'+p.entryUsd:'—'}</span></td>
+      <td class="td-right"><span style="color:var(--accent2);font-size:12px">${p.targetUsd&&p.targetUsd>0?'$'+p.targetUsd:'—'}</span></td>
+      <td class="td-right"><span style="color:${upColor};font-size:12px;font-weight:600">${up?'+'+up+'%':'—'}</span></td>
+      <td class="td-right"><span style="color:var(--text-bright);font-size:12px">${p.gbp>0?'£'+p.gbp.toLocaleString():'—'}</span></td>
+      <td style="padding:10px 14px;max-width:340px">
+        <div style="font-size:11px;color:var(--text-dim);line-height:1.6;margin-bottom:6px">${p.note}</div>
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:4px">
+          ${chartBtn}
+          ${refLinks}
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+
+  // Fetch prices for watchlist
+  DEPLOY.filter(p=>p.yahoo).forEach(p=>{
+    fetchPrice(p.yahoo).then(data=>{
+      if(!data) return;
+      const isGbx=data.currency==='GBp'||data.currency==='GBX';
+      const price=isGbx?data.price/100:data.price;
+      const sym=p.yahoo.endsWith('.L')?'£':'$';
+      const cls=data.changePct>=0?'pos':'neg';
+      const sign=data.changePct>=0?'+':'';
+      const pel=document.getElementById('wlprice-'+p.ticker);
+      const cel=document.getElementById('wlchg-'+p.ticker);
+      if(pel) pel.innerHTML=`<span class="${cls}">${sym}${price.toFixed(2)}</span>`;
+      if(cel) cel.innerHTML=`<span class="${cls}">${sign}${data.changePct.toFixed(2)}%</span>`;
+    }).catch(()=>{});
+  });
 }
 
 function renderEarnings(){
@@ -2078,6 +2182,7 @@ if(cel) cel.innerHTML='<span class="'+cls+'">'+sign+data.changePct.toFixed(2)+'%
 function init(){
   renderHoldings();
   renderDeploy();
+  renderWatchlist();
   renderEToro();
   renderEarnings();
   renderGCal();
@@ -2190,25 +2295,23 @@ document.getElementById('chartModal').addEventListener('click',function(e){if(e.
 
 </div><!-- /tab-concentration -->
 <div style="background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.3);padding:12px 16px;margin-bottom:14px;font-size:12px;color:var(--text)">
-<strong style="color:#a78bfa">Watchlist</strong> — Motley Fool New Candidates. Live prices on refresh.
+<strong style="color:#a78bfa">Candidates + Watchlist</strong> — In ISA, pending migration, and new candidates. Live prices on refresh. Reference links open analyst consensus pages.
 </div>
 <div class="section">
 <div class="section-header" onclick="toggleSection('sec-wl')">
-<div class="section-title"><div class="dot" style="background:#a78bfa"></div>Candidates + Pending</div>
+<div class="section-title"><div class="dot" style="background:#a78bfa"></div>All Positions — Watchlist & Migration Plan</div>
 <span class="section-toggle">&#9660;</span>
 </div>
 <div class="section-body">
 <table class="data-table">
 <thead><tr>
-<th style="text-align:left">Ticker</th>
-<th style="text-align:right">Live</th>
+<th style="text-align:left">Ticker / Status</th>
+<th style="text-align:right">Live Price</th>
 <th style="text-align:right">Entry</th>
 <th style="text-align:right">Target</th>
 <th style="text-align:right">Upside</th>
-<th style="text-align:right">Planned</th>
-<th style="text-align:right">Rec</th>
-<th style="text-align:right">Status</th>
-<th>Notes</th>
+<th style="text-align:right">Allocated £</th>
+<th>Notes + References</th>
 </tr></thead>
 <tbody id="watchlistBody"></tbody>
 </table>
