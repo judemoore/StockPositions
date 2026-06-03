@@ -412,7 +412,7 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
           <div style="background:var(--surface2);border:1px solid var(--border);padding:14px">
             <div class="stat-label">Current Price (02 Jun)</div>
             <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--accent2);margin-top:4px">₩2,339,000</div>
-            <div style="font-size:11px;color:var(--accent2);margin-top:2px">3 shares | ~£5,215 total | -₩24K today</div>
+            <div style="font-size:11px;color:var(--accent2);margin-top:2px">Still 3 shares — Day order expired unfilled · Re-place tonight at ₩2,339,000</div>
           </div>
           <div style="background:var(--surface2);border:1px solid var(--border);padding:14px">
             <div class="stat-label">Unrealised Gain (IBKR)</div>
@@ -917,77 +917,77 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 // reviewDate/reviewNote: drives GCAL reminder
 const HOLDINGS=[
   // ── HOLD — no immediate action ───────────────────────────────────────────────────
-  {ticker:'AMD', name:'Advanced Micro Devices',  costGbp:950,  currentGbp:1161,
+  {ticker:'AMD', name:'Advanced Micro Devices',  costGbp:950,  currentGbp:1213,
    action:'hold', actionLabel:'HOLD — AI data centre +57% Q1',
    currency:'USD', yahooTicker:'AMD',   concentration:'normal',
    analystTargetUsd:175, analystCount:43,
    trimToGbp:null, addTriggerGbp:900, addAmountGbp:500,
    reviewDate:'2026-08-04', reviewNote:'AMD Q2 2026 earnings. Est EPS $1.39. If data centre rev continues +50%+ YoY, consider adding £500 in Apr 2027 ISA. Target add below £900 position value.'},
 
-  {ticker:'GOOGL',name:'Alphabet Inc',           costGbp:875,  currentGbp:806,
+  {ticker:'GOOGL',name:'Alphabet Inc',           costGbp:875,  currentGbp:804,
    action:'hold', actionLabel:'HOLD — AI pivot undervalued vs peers',
    currency:'USD', yahooTicker:'GOOG',  concentration:'normal',
    analystTargetUsd:210, analystCount:65,
    trimToGbp:null, addTriggerGbp:800, addAmountGbp:700,
    reviewDate:'2026-10-01', reviewNote:'GOOGL Q3 2026 earnings. 65 analysts, avg target $210 (+30%+ upside from current). If Gemini monetisation accelerates, add £700 in Apr 2027. Below £800 position = strong buy signal.'},
 
-  {ticker:'AMZN',name:'Amazon',                  costGbp:1000, currentGbp:953,
+  {ticker:'AMZN',name:'Amazon',                  costGbp:1000, currentGbp:932,
    action:'hold', actionLabel:'HOLD — AWS AI cloud. Add on dips.',
    currency:'USD', yahooTicker:'AMZN',  concentration:'normal',
    analystTargetUsd:280, analystCount:68,
    trimToGbp:null, addTriggerGbp:850, addAmountGbp:700,
    reviewDate:'2026-10-01', reviewNote:'AMZN Q3 2026 earnings. 68 analysts, avg $280 (+35% upside). AWS AI cloud thesis. Add £700 in Apr 2027 if position still below £1,500. Below £850 position value = add immediately.'},
 
-  {ticker:'ASML',name:'ASML Holding NV',         costGbp:1175, currentGbp:1260,
+  {ticker:'ASML',name:'ASML Holding NV',         costGbp:1175, currentGbp:1283,
    action:'hold', actionLabel:'HOLD — EUV monopoly. High conviction add Apr 2027.',
    currency:'USD', yahooTicker:'ASML',  concentration:'normal',
    analystTargetUsd:960, analystCount:38,
    trimToGbp:null, addTriggerGbp:1100, addAmountGbp:1000,
    reviewDate:'2026-10-14', reviewNote:'ASML Q3 2026 earnings. Highest-conviction add for April 2027 ISA — target £1,000 top-up. EUV monopoly; every AI chip fab needs ASML. Below £1,100 position value = priority add.'},
 
-  {ticker:'ALAB',name:'Astera Labs',             costGbp:800,  currentGbp:1319,
+  {ticker:'ALAB',name:'Astera Labs',             costGbp:800,  currentGbp:1352,
    action:'hold', actionLabel:'HOLD +64.9% — AI PCIe interconnect. Let run.',
    currency:'USD', yahooTicker:'ALAB',  concentration:'normal',
    analystTargetUsd:110, analystCount:16,
    trimToGbp:null, addTriggerGbp:null, addAmountGbp:null,
    reviewDate:'2026-11-01', reviewNote:'ALAB Q3 2026 earnings. Position up +64.9%. Only 16 analysts — small coverage. Hold; do not add until analyst coverage expands and upside is clearer. Analyst target $110 is below current — reassess.'},
 
-  {ticker:'AZN', name:'AstraZeneca',             costGbp:680,  currentGbp:662,
+  {ticker:'AZN', name:'AstraZeneca',             costGbp:680,  currentGbp:658,
    action:'hold', actionLabel:'HOLD — oncology pipeline. Add on weakness.',
    currency:'GBP', yahooTicker:'AZN.L', concentration:'normal',
    analystTargetUsd:14500, analystCount:28,  // GBX target ~£145
    trimToGbp:null, addTriggerGbp:600, addAmountGbp:500,
    reviewDate:'2026-11-01', reviewNote:'AZN H2 2026 pipeline readouts. 28 analysts, GBX target 14,500 (~£145/share). Add £500 in Apr 2027 ISA — healthcare diversification, non-AI cycle. Below £600 position = strong add.'},
 
-  {ticker:'AXON',name:'Axon Enterprise',         costGbp:1305, currentGbp:1456,
+  {ticker:'AXON',name:'Axon Enterprise',         costGbp:1305, currentGbp:1435,
    action:'hold', actionLabel:'HOLD +11.5% — public safety AI. Let run.',
    currency:'USD', yahooTicker:'AXON',  concentration:'normal',
    analystTargetUsd:750, analystCount:22,
    trimToGbp:null, addTriggerGbp:1200, addAmountGbp:500,
    reviewDate:'2026-11-01', reviewNote:'AXON Q3 2026 earnings. $750 analyst target vs current ~$555 = +35% upside. Hold and let compound. Below £1,200 position = consider adding £500 in Apr 2027.'},
 
-  {ticker:'BOX', name:'Box Inc',                 costGbp:685,  currentGbp:780,
+  {ticker:'BOX', name:'Box Inc',                 costGbp:685,  currentGbp:756,
    action:'hold', actionLabel:'HOLD +13.9% — enterprise AI content. Small.',
    currency:'USD', yahooTicker:'BOX',   concentration:'normal',
    analystTargetUsd:40, analystCount:18,
    trimToGbp:null, addTriggerGbp:null, addAmountGbp:null,
    reviewDate:'2026-09-01', reviewNote:'BOX FY2027 Q2 earnings. Analyst target $40 vs current ~$31 (+29%). Small position — hold. Only add if enterprise AI storage thesis strengthens materially. Otherwise let it run or close and redeploy into higher-conviction name.'},
 
-  {ticker:'AVGO',name:'Broadcom Inc',            costGbp:968,  currentGbp:1073,
+  {ticker:'AVGO',name:'Broadcom Inc',            costGbp:968,  currentGbp:1069,
    action:'hold', actionLabel:'HOLD +10.9% — custom AI silicon. Q3 3 Jun.',
    currency:'USD', yahooTicker:'AVGO',  concentration:'normal',
    analystTargetUsd:280, analystCount:38,
    trimToGbp:null, addTriggerGbp:900, addAmountGbp:600,
    reviewDate:'2026-09-03', reviewNote:'AVGO Q3 FY2026 earnings Sep 2026. $280 target = +25% upside. Hold. Add £600 in Apr 2027 ISA if position still below £1,500. Below £900 position value = add signal.'},
 
-  {ticker:'CDNS',name:'Cadence Design Systems',  costGbp:527,  currentGbp:618,
+  {ticker:'CDNS',name:'Cadence Design Systems',  costGbp:527,  currentGbp:609,
    action:'hold', actionLabel:'HOLD +17.3% — EDA/chip design monopoly.',
    currency:'USD', yahooTicker:'CDNS',  concentration:'normal',
    analystTargetUsd:350, analystCount:20,
    trimToGbp:null, addTriggerGbp:500, addAmountGbp:500,
    reviewDate:'2026-10-01', reviewNote:'CDNS Q3 2026 earnings. $350 analyst target vs current ~$262 = +34% upside. Small position — add £500 in Apr 2027. Below £500 position = add immediately.'},
 
-  {ticker:'DASH',name:'DoorDash',                costGbp:494,  currentGbp:466,
+  {ticker:'DASH',name:'DoorDash',                costGbp:494,  currentGbp:461,
    action:'watch', actionLabel:'NEW — add on dips. $246 target (+51%).',
    currency:'USD', yahooTicker:'DASH',  concentration:'normal',
    analystTargetUsd:246, analystCount:44,
@@ -1001,21 +1001,21 @@ const HOLDINGS=[
    trimToGbp:null, addTriggerGbp:400, addAmountGbp:500,
    reviewDate:'2026-08-07', reviewNote:'NET Q2 2026 earnings Aug 2026. 20% workforce cut May 7 — "AI-first pivot". Revenue +34% YoY in Q1 despite this. If Q2 confirms restructuring paying off, consider adding £500 in Apr 2027. Below £400 position = potential add. Not in Morningstar top-4 AI cyber.'},
 
-  {ticker:'FIX', name:'Comfort Systems USA',     costGbp:1487, currentGbp:1399,
+  {ticker:'FIX', name:'Comfort Systems USA',     costGbp:1487, currentGbp:1379,
    action:'hold', actionLabel:'HOLD -5.9% — data centre electrical. Dual w/ EME.',
    currency:'USD', yahooTicker:'FIX',   concentration:'normal',
    analystTargetUsd:430, analystCount:12,
    trimToGbp:null, addTriggerGbp:null, addAmountGbp:null,
    reviewDate:'2026-08-01', reviewNote:'FIX Q2 2026 earnings Aug 2026. $430 analyst target vs current ~$320 (+34%). Still -5.9% from cost. Hold alongside EME. Only 12 analysts — thin coverage. Do not add until one of FIX or EME is closed (dual infra redundancy). Reassess in Apr 2027.'},
 
-  {ticker:'GLW', name:'Corning Inc',             costGbp:580,  currentGbp:595,
+  {ticker:'GLW', name:'Corning Inc',             costGbp:580,  currentGbp:599,
    action:'hold', actionLabel:'HOLD +2.5% — fibre/AI infra. Small.',
    currency:'USD', yahooTicker:'GLW',   concentration:'normal',
    analystTargetUsd:58, analystCount:20,
    trimToGbp:null, addTriggerGbp:null, addAmountGbp:null,
    reviewDate:'2026-07-29', reviewNote:'GLW Q2 2026 earnings ~Jul 2026. $58 target vs current ~$44 (+32%). Small position — hold. Fibre optic demand from AI data centres is the thesis. Do not add unless position shrinks below £500 AND thesis remains intact. Consider closing if conviction has dimmed.'},
 
-  {ticker:'CRWD',name:'CrowdStrike',             costGbp:1027, currentGbp:1711,
+  {ticker:'CRWD',name:'CrowdStrike',             costGbp:1027, currentGbp:1671,
    action:'hold', actionLabel:'HOLD +66.6% — cyber leader. Do not add (overvalued).',
    currency:'USD', yahooTicker:'CRWD',  concentration:'normal',
    analystTargetUsd:480, analystCount:44,
@@ -1029,28 +1029,28 @@ const HOLDINGS=[
    trimToGbp:null, addTriggerGbp:null, addAmountGbp:null,
    reviewDate:'2026-07-28', reviewNote:'EME Q2 2026 earnings ~Jul 2026. $530 target vs current ~$410 (+29%). Back near cost basis. Hold alongside FIX — same thesis. Do not add to both. If you close FIX, add to EME in Apr 2027.'},
 
-  {ticker:'IBM', name:'IBM',                     costGbp:850,  currentGbp:1223,
+  {ticker:'IBM', name:'IBM',                     costGbp:850,  currentGbp:1140,
    action:'hold', actionLabel:'HOLD +43.9% — AI hybrid cloud compounding.',
    currency:'USD', yahooTicker:'IBM',   concentration:'normal',
    analystTargetUsd:290, analystCount:22,
    trimToGbp:null, addTriggerGbp:1000, addAmountGbp:500,
    reviewDate:'2026-10-21', reviewNote:'IBM Q3 2026 earnings ~Oct 2026. $290 target vs current ~$222 (+31%). Solid compounder. Add £500 in Apr 2027 if still below £1,500 position. Below £1,000 = strong add signal.'},
 
-  {ticker:'MANH',name:'Manhattan Associates',    costGbp:1032, currentGbp:1151,
+  {ticker:'MANH',name:'Manhattan Associates',    costGbp:1032, currentGbp:1127,
    action:'hold', actionLabel:'HOLD +11.5% — supply chain AI moat.',
    currency:'USD', yahooTicker:'MANH',  concentration:'normal',
    analystTargetUsd:310, analystCount:18,
    trimToGbp:null, addTriggerGbp:1000, addAmountGbp:500,
    reviewDate:'2026-10-21', reviewNote:'MANH Q3 2026 earnings ~Oct 2026. $310 target vs current ~$236 (+31%). Supply chain software moat. Add £500 in Apr 2027. Below £1,000 position = add signal.'},
 
-  {ticker:'MRVL',name:'Marvell Technology',      costGbp:591,  currentGbp:864,
+  {ticker:'MRVL',name:'Marvell Technology',      costGbp:591,  currentGbp:898,
    action:'hold', actionLabel:'HOLD +46.2% — custom silicon/optical AI. Let run.',
    currency:'USD', yahooTicker:'MRVL',  concentration:'normal',
    analystTargetUsd:125, analystCount:34,
    trimToGbp:null, addTriggerGbp:700, addAmountGbp:600,
    reviewDate:'2026-09-02', reviewNote:'MRVL Q2 FY2027 earnings Sep 2026. $125 target vs current ~$96 (+30%). Custom AI silicon and optical interconnect. Add £600 in Apr 2027. Below £700 position = add signal.'},
 
-  {ticker:'MELI',name:'MercadoLibre',            costGbp:1380, currentGbp:1241,
+  {ticker:'MELI',name:'MercadoLibre',            costGbp:1380, currentGbp:1221,
    action:'hold', actionLabel:'HOLD -10.1% — LatAm fintech/ecom. Add on dip.',
    currency:'USD', yahooTicker:'MELI',  concentration:'normal',
    analystTargetUsd:2600, analystCount:28,
@@ -1058,57 +1058,57 @@ const HOLDINGS=[
    reviewDate:'2026-08-06', reviewNote:'MELI Q2 2026 earnings ~Aug 2026. $2,600 target vs current ~$1,885 (+38% upside). LatAm fintech/ecom. -10.1% from cost. Add £700 in Apr 2027. Below £1,100 position value = strong add — best EM exposure available in ISA.'},
 
   // ── TRIM REQUIRED ────────────────────────────────────────────────────────────────
-  {ticker:'MU',  name:'Micron Technology',       costGbp:2528, currentGbp:3952,
-   action:'close', actionLabel:'⚠ TRIM £1,000–1,500 BEFORE 24 JUN EARNINGS',
+  {ticker:'MU',  name:'Micron Technology',       costGbp:2528, currentGbp:2414,
+   action:'close', actionLabel:'✅ TRIMMED £1,300 on 03 Jun → £2,414 (5.8%)',
    currency:'USD', yahooTicker:'MU',   concentration:'critical',
    analystTargetUsd:140, analystCount:44,
-   trimToGbp:2500, addTriggerGbp:2500, addAmountGbp:500,
+   trimToGbp:null, addTriggerGbp:2500, addAmountGbp:500,
    reviewDate:'2026-06-24', reviewNote:'MU Q3 FY2026 EARNINGS — ACTION REQUIRED. BEFORE EARNINGS: Sell £1,000–1,500 in HL ISA to reduce from 9.2% to ~6–7%. No CGT (inside ISA). AFTER EARNINGS: if HBM demand guidance is strong, hold £2,500 remainder. If guidance disappoints, trim further to £2,000. In Apr 2027, consider adding back £500 if still below $140 analyst target.'},
 
-  {ticker:'SNDK',name:'Sandisk Corporation',     costGbp:1444, currentGbp:3823,
+  {ticker:'SNDK',name:'Sandisk Corporation',     costGbp:1444, currentGbp:4099,
    action:'close', actionLabel:'⚠ TRIM £1,300–1,500 NOW — AT analyst target',
    currency:'USD', yahooTicker:'SNDK',  concentration:'critical',
    analystTargetUsd:1460, analystCount:22,
-   trimToGbp:2300, addTriggerGbp:null, addAmountGbp:null,
+   trimToGbp:2500, addTriggerGbp:null, addAmountGbp:null,
    reviewDate:'2026-06-10', reviewNote:'SNDK TRIM — ACTION NOW. Sell £1,300–1,500 in HL ISA to reduce from 8.9% to ~5.5–6%. No CGT (inside ISA). Stock at $1,478 vs analyst avg $1,460 — essentially AT consensus target, no upside left in analyst models. Pure NAND storage thesis; AI memory is better expressed via SK Hynix (IBKR). Do not add back — let position drift down naturally.'},
 
   // ── WATCH — at or above target, no add ──────────────────────────────────────────
-  {ticker:'MSCI',name:'MSCI Inc',                costGbp:1750, currentGbp:1872,
+  {ticker:'MSCI',name:'MSCI Inc',                costGbp:1750, currentGbp:1830,
    action:'hold', actionLabel:'HOLD +7.0% — index monopoly. No add needed.',
    currency:'USD', yahooTicker:'MSCI',  concentration:'watch',
    analystTargetUsd:640, analystCount:20,
    trimToGbp:null, addTriggerGbp:1600, addAmountGbp:500,
    reviewDate:'2026-07-22', reviewNote:'MSCI Q2 2026 earnings 21 Jul 2026. $640 target vs current ~$490 (+31%). Good compounder. Hold. Add £500 in Apr 2027 if still below £1,700. Below £1,600 position = add signal.'},
 
-  {ticker:'NVDA',name:'Nvidia Corp',             costGbp:1899, currentGbp:1986,
+  {ticker:'NVDA',name:'Nvidia Corp',             costGbp:1899, currentGbp:1922,
    action:'hold', actionLabel:'HOLD +4.5% — AI bellwether. No add at this price.',
    currency:'USD', yahooTicker:'NVDA',  concentration:'watch',
    analystTargetUsd:175, analystCount:65,
    trimToGbp:null, addTriggerGbp:1700, addAmountGbp:500,
    reviewDate:'2026-08-27', reviewNote:'NVDA Q2 FY2027 earnings ~Aug 2026. 65 analysts, target $175 — nearly at current price. Do not add here. Hold. If it pulls back to below £1,700 position value, consider adding £500 in Apr 2027.'},
 
-  {ticker:'PANW',name:'Palo Alto Networks',      costGbp:662,  currentGbp:662,
+  {ticker:'PANW',name:'Palo Alto Networks',      costGbp:662,  currentGbp:627,
    action:'watch', actionLabel:'HOLD — AT analyst target. Add only on -15% dip.',
    currency:'USD', yahooTicker:'PANW',  concentration:'normal',
    analystTargetUsd:217, analystCount:54,
    trimToGbp:null, addTriggerGbp:550, addAmountGbp:700,
    reviewDate:'2026-09-02', reviewNote:'PANW Q4 FY2026 earnings ~Sep 2026. $217 avg target vs current ~$213 = essentially AT consensus. Morningstar fair value is much lower (464% premium to FV). Hold starter position. Add £700 in Apr 2027 ONLY if stock pulls back 15%+ (below ~£550 position).'},
 
-  {ticker:'RR',  name:'Rolls-Royce Holdings',    costGbp:793,  currentGbp:783,
+  {ticker:'RR',  name:'Rolls-Royce Holdings',    costGbp:793,  currentGbp:771,
    action:'hold', actionLabel:'HOLD -1.3% — defence/engine cycle. Hold.',
    currency:'GBP', yahooTicker:'RR.L',  concentration:'normal',
    analystTargetUsd:700, analystCount:18,  // GBX target ~£7.00/share
    trimToGbp:null, addTriggerGbp:650, addAmountGbp:500,
    reviewDate:'2026-08-01', reviewNote:'RR H1 2026 results ~Aug 2026. GBX target 700p vs current ~590p (+19%). Defence/aerospace cycle. Hold. Add £500 in Apr 2027. Below £650 position = add signal.'},
 
-  {ticker:'TSLA',name:'Tesla',                   costGbp:622,  currentGbp:629,
+  {ticker:'TSLA',name:'Tesla',                   costGbp:622,  currentGbp:631,
    action:'hold', actionLabel:'HOLD -3.2% — AI/autonomy optionality.',
    currency:'USD', yahooTicker:'TSLA',  concentration:'normal',
    analystTargetUsd:310, analystCount:55,
    trimToGbp:null, addTriggerGbp:500, addAmountGbp:500,
    reviewDate:'2026-10-20', reviewNote:'TSLA Q3 2026 earnings ~Oct 2026. $310 target vs current ~$240 (+29%). MF Hidden Gems rec. Hold. Add £500 in Apr 2027. Below £500 position = add signal.'},
 
-  {ticker:'VWRL',name:'Vanguard FTSE Global All Cap', costGbp:9994, currentGbp:10599,
+  {ticker:'VWRL',name:'Vanguard FTSE Global All Cap', costGbp:9994, currentGbp:10613,
    action:'hold', actionLabel:'HOLD +6.1% — passive core. Do not change.',
    currency:'GBP', hlOnly:true, concentration:'core',
    analystTargetUsd:null, analystCount:null,
@@ -1116,7 +1116,7 @@ const HOLDINGS=[
    reviewDate:'2027-04-06', reviewNote:'Vanguard FTSE Global All Cap — passive core. No action required. Target ~25% of invested. Add £4,000–5,000 per year via new ISA contributions to maintain the 75/25 active/passive split.'},
 ];
 
-// Updated 02 Jun 2026 — reflects current positions, analyst targets, and entry signals
+// Updated 04 Jun 2026 — APP and CORT added from insider ownership / growth screen
 const DEPLOY=[
   // ── IN ISA — BOUGHT ──
   {rank:'✅',ticker:'DASH',name:'DoorDash',          yahoo:'DASH', entryUsd:167,targetUsd:258,gbp:466,  currency:'USD',status:'hold', statusLabel:'IN HL ISA — STARTER',
@@ -1131,50 +1131,64 @@ const DEPLOY=[
    note:'IN ISA. MF Hidden Gems rec. AI + energy + autonomy optionality. Hold.',
    refs:[{label:'Analyst consensus',url:'https://stockanalysis.com/stocks/tsla/forecast/'}]},
   {rank:'✅',ticker:'PANW',name:'Palo Alto Networks',  yahoo:'PANW', entryUsd:213,targetUsd:217,gbp:662,  currency:'USD',status:'hold', statusLabel:'IN HL ISA — AT TARGET',
-   note:'IN ISA. Buy consensus (54 analysts) but avg target ~$217 — stock already there. Platform consolidation (platformisation) thesis intact. RPO +23% YoY. Do not add until pullback or new target upgrades post Q4 FY26 earnings (reporting 2 Jun).',
+   note:'IN ISA. Buy consensus (54 analysts) but avg target ~$217 — stock already there. Platform consolidation thesis intact. RPO +23% YoY. Do not add until pullback. Hold starter.',
    refs:[{label:'Analyst consensus',url:'https://stockanalysis.com/stocks/panw/forecast/'},
          {label:'MarketBeat ratings',url:'https://www.marketbeat.com/stocks/NASDAQ/PANW/forecast/'}]},
   // ── FUTURE ADD — APR 2027 ──
-  {rank:'⏳',ticker:'MU',  name:'Micron Technology',   yahoo:'MU',   entryUsd:105,targetUsd:140,gbp:1500, currency:'USD',status:'hold', statusLabel:'IN ISA — OVERWEIGHT. TRIM THEN ADD',
-   note:'IN ISA (9.2% = overweight). TRIM ~£1,000-1,500 first, then consider re-adding post Q3 earnings (24 Jun 2026) if guidance is strong. 44 analysts Strong Buy, avg target ~$140 (+30%+). Susquehanna target $1,750 is an outlier. Raymond James just raised to $1,100 — but these may reflect pre-split pricing or reverse-split adjustments. Core HBM thesis intact. AI memory fully booked 2026.',
+  {rank:'⏳',ticker:'MU',  name:'Micron Technology',   yahoo:'MU',   entryUsd:105,targetUsd:140,gbp:1500, currency:'USD',status:'hold', statusLabel:'IN ISA — TRIMMED. WATCH EARNINGS 24 JUN',
+   note:'TRIMMED £1,300 on 03 Jun → now £2,414 (5.8%). Post Q3 earnings 24 Jun: if HBM guidance strong, consider re-adding £500 in Apr 2027. 44 analysts Strong Buy, avg target ~$140. AI memory fully booked 2026.',
    refs:[{label:'Analyst consensus',url:'https://stockanalysis.com/stocks/mu/forecast/'},
-         {label:'Raymond James upgrade',url:'https://stockanalysis.com/stocks/mu/'},
          {label:'Earnings 24 Jun 2026',url:'https://www.benzinga.com/quote/MU/analyst-ratings'}]},
-  {rank:'⏳',ticker:'SK-ADR',name:'SK Hynix ADR',      yahoo:null,   entryUsd:0,  targetUsd:0,  gbp:1000, currency:'USD',status:'watch',statusLabel:'JUN/JUL 2026 ADR LISTING',
-   note:'Hold 3 shares on IBKR @ ₩1,620,000 cost. Now ₩2,339,000 = +₩1,050K unrealised (~+£460). ADR listing trigger: sell KRX → buy ADR inside HL ISA using £1k reserved cash.',
-   refs:[{label:'SK Hynix KRX',url:'https://finance.yahoo.com/quote/000660.KS/'}]},
+  {rank:'⏳',ticker:'SK-ADR',name:'SK Hynix ADR',      yahoo:null,   entryUsd:0,  targetUsd:0,  gbp:1000, currency:'USD',status:'watch',statusLabel:'ADR LISTING — SELL 2, HOLD 1 KRX',
+   note:'Sell 2 KRX shares pending (Day order placed 04 Jun). Hold 1 share as ADR bridge. ADR listing Jun/Jul 2026. £1k HL cash reserved. On listing: sell KRX → buy ADR in HL ISA.',
+   refs:[{label:'SK Hynix KRX',url:'https://finance.yahoo.com/quote/000660.KS/'},
+         {label:'ADR filing update',url:'https://ca.finance.yahoo.com/news/sk-hynix-files-us-listing-150500525.html'}]},
   {rank:'⏳',ticker:'TTD', name:'The Trade Desk',       yahoo:'TTD',  entryUsd:21, targetUsd:30, gbp:2300, currency:'USD',status:'watch',statusLabel:'APR 2027 HL ISA',
-   note:'On eToro (2 lots, -£758 total). HL NASDAQ compliance cure target Sep 2026. 37 analysts Buy, avg target $25.81 (+14%), median $30 (+43%). FIFA World Cup H2 2026 ad spend catalyst. Harvest loss vs gains before Apr 2027, then rebuy in HL ISA.',
+   note:'On eToro (2 lots, -£807 total). HL NASDAQ compliance cure target Sep 2026. 37 analysts Buy, avg target $26 (+27%), median $30 (+43%). FIFA World Cup H2 2026 ad spend catalyst. Harvest CGT loss before Apr 2027, then rebuy in HL ISA.',
    refs:[{label:'Analyst consensus',url:'https://stockanalysis.com/stocks/ttd/forecast/'},
          {label:'Investing.com targets',url:'https://www.investing.com/equities/trade-desk-inc-consensus-estimates'}]},
-  // ── WATCHLIST — NOT YET BOUGHT ──
-  {rank:'👁',ticker:'RKLB',name:'Rocket Lab',           yahoo:'RKLB', entryUsd:90, targetUsd:104,gbp:1000, currency:'USD',status:'watch',statusLabel:'WAIT — ABOVE ALL ANALYST TARGETS',
-   note:'STILL NOT A SAFE ENTRY. Trading ~$122 vs analyst avg target $104 (18 analysts, S&P Global) — stock is ~17% ABOVE consensus. Neutron vehicle delayed to late 2026. SpaceX IPO hype is lifting the whole sector. No buy until either: (a) price pulls back to $80-90 zone, or (b) analyst targets are revised up materially post-Neutron launch. Space defence thesis intact but valuation is ahead of fundamentals.',
-   refs:[{label:'Analyst consensus',url:'https://stockanalysis.com/stocks/rklb/forecast/'},
-         {label:'S&P Global avg $103.91',url:'https://stockanalysis.com/stocks/rklb/forecast/'}]},
-  {rank:'👁',ticker:'SNDK',name:'Sandisk — TRIM TARGET',yahoo:'SNDK', entryUsd:0,  targetUsd:0,  gbp:0,    currency:'USD',status:'close',statusLabel:'IN ISA — TRIM TO ~5-6%',
-   note:'TRIM PRIORITY. Now 8.9% of invested (£3,823) after +164.7% run. The plan was to reduce exposure — this is overdue. Trim ~£1,300-1,500 inside ISA (no CGT). Proceeds: add to DASH, or hold for April 2027 redeployment. Storage is a different thesis from HBM/AI memory — SK Hynix covers the AI memory angle more purely.',
-   refs:[{label:'SanDisk Corp overview',url:'https://finance.yahoo.com/quote/SNDK/'}]},
+  // ── WATCHLIST — APRIL 2027 CANDIDATES ──
+  {rank:'⭐',ticker:'APP', name:'AppLovin Corporation', yahoo:'APP',  entryUsd:474,targetUsd:743,gbp:1500, currency:'USD',status:'watch',statusLabel:'APR 2027 — HIGH CONVICTION NEW ADD',
+   note:'AXON AI advertising platform global launch June 2026 — binary catalyst. Q1 2026 revenue $1.84B (+59% YoY). Adjusted EBITDA margin ~85% — best in class. 27.4% insider ownership. 26 analysts Buy, avg target $743 (+57% upside). e-commerce expansion is the next growth leg beyond mobile gaming. Not pure AI infra but AXON AI engine is genuinely differentiated. ISA-eligible on HL. Target £1,500 starter in Apr 2027. Watch AXON launch outcome in Jun 2026 before committing.',
+   refs:[{label:'Analyst consensus (+57%)',url:'https://stockanalysis.com/stocks/app/forecast/'},
+         {label:'Q1 2026 earnings analysis',url:'https://finance.yahoo.com/markets/stocks/articles/applovin-stock-buy-explosive-q1-180400193.html'},
+         {label:'AXON platform launch',url:'https://www.tradingkey.com/news/market-movers/261931462-market-movers-app-20260527'},
+         {label:'BofA Buy $705 target',url:'https://tickernerd.com/stock/app-forecast/'}]},
+  {rank:'⭐',ticker:'ZS',  name:'Zscaler',              yahoo:'ZS',   entryUsd:140,targetUsd:214,gbp:1200, currency:'USD',status:'watch',statusLabel:'APR 2027 — MORNINGSTAR TOP-4 CYBER',
+   note:'Morningstar #4 AI cyber name. Zero-trust leader. Q3 FY26 rev +26% YoY, ARR $3.36B. Dropped ~24% post-earnings on FY27 guidance of 16-17% vs consensus 19% — one-off miss, not structural. Guggenheim upgraded to Buy 1 Jun, $214 target (+53%). 47 analysts Buy, avg $194 (+36%). Best entry opportunity in cyber right now. Only Morningstar top-4 AI cyber name not yet in portfolio.',
+   refs:[{label:'Analyst consensus (+36%)',url:'https://stockanalysis.com/stocks/zs/forecast/'},
+         {label:'Guggenheim upgrade: Buy $214',url:'https://www.gurufocus.com/news/8894309/zscaler-zs-upgraded-to-buy-with-214-price-target-following-earnings-guidance'},
+         {label:'Morningstar AI cyber ranking',url:'https://www.morningstar.com/stocks/3-cybersecurity-stocks-invest-ai-reshapes-industries'}]},
+  {rank:'👁',ticker:'CORT',name:'Corcept Therapeutics', yahoo:'CORT', entryUsd:52, targetUsd:135,gbp:600,  currency:'USD',status:'watch',statusLabel:'APR 2027 — HEALTHCARE DIVERSIFIER',
+   note:'FDA approved Lifyorli (relacorilant) for ovarian cancer — key catalyst. 11.7% insider ownership. 48.9% earnings growth. 5 analysts all Buy, avg target $135 (+86%+ upside from ~$73). Only 5 analysts = thin coverage risk. Healthcare diversification — your portfolio has almost zero pharma beyond AZN. Small starter £600 in Apr 2027 if Lifyorli launch data holds up. Check HL ISA eligibility first. Class action lawsuit pending (Korlym pricing) — monitor.',
+   refs:[{label:'Analyst consensus ($135 avg)',url:'https://stockanalysis.com/stocks/cort/forecast/'},
+         {label:'MarketBeat: 5× Buy',url:'https://www.marketbeat.com/stocks/NASDAQ/CORT/forecast/'},
+         {label:'FDA Lifyorli approval',url:'https://tickernerd.com/stock/cort-forecast/'}]},
+  {rank:'👁',ticker:'RKLB',name:'Rocket Lab',           yahoo:'RKLB', entryUsd:90, targetUsd:104,gbp:1000, currency:'USD',status:'watch',statusLabel:'WAIT — STILL ABOVE ANALYST TARGETS',
+   note:'Trading ~$122 vs analyst avg $104 — stock is ~17% ABOVE consensus. Neutron delayed to late 2026. SpaceX IPO hype lifting sector. No buy until pullback to $80-90 OR analyst targets revised materially post-Neutron launch.',
+   refs:[{label:'Analyst consensus',url:'https://stockanalysis.com/stocks/rklb/forecast/'}]},
+  {rank:'👁',ticker:'SNDK',name:'Sandisk — TRIM TARGET',yahoo:'SNDK', entryUsd:0,  targetUsd:0,  gbp:0,    currency:'USD',status:'close',statusLabel:'IN ISA — TRIM TO ~5-6% STILL PENDING',
+   note:'TRIM STILL NEEDED. Now £4,099 = 9.9% of invested after further gains. Stock AT analyst consensus ($1,460 target vs ~$1,478). Trim £1,500-1,800 in HL ISA (no CGT). Proceeds to cash buffer for Apr 2027 deployment.',
+   refs:[{label:'SanDisk analyst targets',url:'https://stockanalysis.com/stocks/sndk/forecast/'}]},
   {rank:'👁',ticker:'KRYS',name:'Krystal Biotech',      yahoo:'KRYS', entryUsd:130,targetUsd:180,gbp:1200, currency:'USD',status:'watch',statusLabel:'MF EPIC 50 — WATCH',
-   note:'MF Epic 50 2.04%. Vyjuvek gene therapy +32% YoY to $116M. 95% gross margin, $1B cash. Strong Buy consensus. Healthcare diversification — non-AI cycle. Entry point ~$130 remains valid. Target Apr 2027 ISA.',
+   note:'MF Epic 50 2.04%. Vyjuvek gene therapy +32% YoY to $116M. 95% gross margin, $1B cash. Strong Buy consensus. Healthcare diversification. Apr 2027 ISA candidate.',
    refs:[{label:'Analyst consensus',url:'https://stockanalysis.com/stocks/krys/forecast/'}]},
   {rank:'👁',ticker:'STRL',name:'Sterling Infrastructure',yahoo:'STRL',entryUsd:0,  targetUsd:900,gbp:1500, currency:'USD',status:'watch',statusLabel:'WAIT PULLBACK',
-   note:'SA +207%. Data centre electrical infrastructure. Wait for pullback — entry around $120-140 range. Strong AI power build-out thesis.',
+   note:'Data centre electrical infrastructure. Wait for pullback to $120-140. Strong AI power build-out thesis.',
    refs:[{label:'Analyst consensus',url:'https://stockanalysis.com/stocks/strl/forecast/'}]},
   {rank:'👁',ticker:'ATZAF',name:'Aritzia',              yahoo:'ATZAF',entryUsd:48, targetUsd:65, gbp:1000, currency:'USD',status:'watch',statusLabel:'MF HIDDEN GEMS — CHECK HL',
-   note:'MF Hidden Gems Apr 2026. Canadian fashion retailer expanding into US. Consumer discretionary diversification. OTC ADR — check HL ISA availability before targeting.',
+   note:'MF Hidden Gems Apr 2026. Canadian fashion retailer expanding US. Consumer discretionary diversification. OTC ADR — check HL ISA availability before targeting.',
    refs:[{label:'Aritzia investor relations',url:'https://investor.aritzia.com/'}]},
 ];
 
 
-// eToro updated 02 Jun 2026 23:08 — Asset(5) confirmed. CLBT closed. SMCI now 2 lots. ORCL/TTD still 2 lots each.
-// Total eToro ~£4,528. Cash £522.28.
+// eToro updated 03 Jun 2026 23:46 — Asset(5). ORCL earnings 16 Jun — CLOSE BEFORE THEN.
 const ETORO_DATA=[
-  {ticker:'LULU', name:'Lululemon Athletica',       yahoo:'LULU', pl:-164,  value:282,  cost:446,  status:'watch', statusLabel:'WATCH — RECOVERY?',   lots:1, lotNote:'Single lot @ $126.67'},
-  {ticker:'TTD',  name:'The Trade Desk (2 lots)',   yahoo:'TTD',  pl:-758,  value:1399, cost:2157, status:'hold',  statusLabel:'HOLD — APR 2027 HL ISA', lots:2, lotNote:'2 × £699 — identical lots @ $21.11 | analyst avg $26 (+24%)'},
-  {ticker:'ORCL', name:'Oracle Corp (2 lots)',      yahoo:'ORCL', pl:-366,  value:1862, cost:2228, status:'hold',  statusLabel:'HOLD — REVIEW. Near consensus target', lots:2, lotNote:'2 × £931 @ $243.54 | analyst avg $247 — only +1% upside'},
-  {ticker:'SMCI', name:'Super Micro Computer (2 lots)',yahoo:'SMCI',pl:-68, value:229,  cost:297,  status:'watch', statusLabel:'WATCH — HOLD consensus. Governance risk', lots:2, lotNote:'2 × £114 @ $49.72 | analyst avg $35-50, consensus HOLD'},
-  {ticker:'GOLD', name:'GoldWorldWide (21 miners)', yahoo:null,   pl:-253,  value:1980, cost:2233, status:'hold',  statusLabel:'HOLD — GOLD MACRO PLAY',   lots:1, lotNote:'CopyPortfolio — 21 gold miners. Geopolitical hedge'},
+  {ticker:'LULU', name:'Lululemon Athletica',       yahoo:'LULU', pl:-167,  value:281,  cost:448,  status:'watch', statusLabel:'WATCH — RECOVERY?',   lots:1, lotNote:'Single lot @ $125.65'},
+  {ticker:'TTD',  name:'The Trade Desk (2 lots)',   yahoo:'TTD',  pl:-807,  value:1358, cost:2165, status:'hold',  statusLabel:'HOLD — APR 2027 HL ISA', lots:2, lotNote:'2 × £679 @ $20.42 | analyst avg $26 (+27%) | harvest -£807 vs gains'},
+  {ticker:'ORCL', name:'Oracle Corp (2 lots)',      yahoo:'ORCL', pl:-541,  value:1696, cost:2237, status:'close', statusLabel:'⚠ CLOSE BEFORE 16 JUN EARNINGS', lots:2, lotNote:'2 × £848 @ $220.90 | -£541 loss | ORCL earnings 16 Jun — close both lots NOW'},
+  {ticker:'SMCI', name:'Super Micro Computer (2 lots)',yahoo:'SMCI',pl:-88, value:210,  cost:298,  status:'watch', statusLabel:'WATCH — HOLD consensus. Governance risk', lots:2, lotNote:'2 × £105 @ $45.55 | analyst avg $33, consensus HOLD'},
+  {ticker:'GOLD', name:'GoldWorldWide (21 miners)', yahoo:null,   pl:-317,  value:1925, cost:2242, status:'hold',  statusLabel:'HOLD — GOLD MACRO PLAY',   lots:1, lotNote:'CopyPortfolio — 21 gold miners. Geopolitical hedge'},
 ];
 
 const EARNINGS=[
@@ -1190,7 +1204,7 @@ const EARNINGS=[
   {date:'4 Aug 2026',        ticker:'AMD',  company:'AMD Q2 2026',             eps:'$1.39 est',               action:'Hold HL £1,161 (+22.3%). Data centre +57% Q1. No action needed.',  urgent:false,isoDate:'2026-08-04'},
   {date:'H2 2026',           ticker:'SK-ADR',company:'SK Hynix ADR Listing',   eps:'LISTING EVENT',           action:'⭐ Trigger: sell IBKR KRX → buy ADR in HL ISA same day. £1,000 cash reserved at HL. Unrealised gain ~+£460 now.',urgent:true,isoDate:'2026-09-01'},
   {date:'21 Sep 2026',       ticker:'TTD',  company:'TTD NASDAQ Compliance Cure',eps:'COMPLIANCE DEADLINE',  action:'Check HL: if TTD re-enabled, it becomes available to buy inside ISA. Review eToro 2 lots for bed-and-ISA migration plan.',urgent:false,isoDate:'2026-09-21'},
-  {date:'6 Apr 2027',        ticker:'ISA',  company:'New ISA Allowance Opens',  eps:'£20,000',                action:'Priority buys: ZS (Zscaler — Morningstar top-4 cyber, +36% analyst upside), TTD (migrate from eToro), ASML add, DASH add. Review all eToro positions.',urgent:false,isoDate:'2027-04-06'},
+  {date:'6 Apr 2027',        ticker:'ISA',  company:'New ISA Allowance Opens',  eps:'£20,000',                action:'Deploy plan: 1) APP £1,500 2) ZS £1,200 3) TTD migrate £1,400 4) ASML £1,000 5) DASH £1,000 6) MELI £700 7) GOOGL £700 8) AMZN £700 9) CORT £600 10) MU re-add £500. Close SNDK trim + eToro wind-down.',urgent:false,isoDate:'2027-04-06'},
 ];
 
 const GCAL_EVENTS=[
@@ -1203,7 +1217,9 @@ const GCAL_EVENTS=[
   {title:'AMD Q2 2026 Earnings',date:'2026-08-04',notes:'AMD Q2 2026. Est EPS $1.39. Hold HL £1,161. If data centre +50%+ continues, target add £500 in Apr 2027 below £900 position.',alarm:-60},
   {title:'Super Micro (SMCI) FQ4 Earnings',date:'2026-08-03',notes:'SMCI eToro 2 lots (-£68). Hold consensus, governance concerns. Close if disappoints.',alarm:-60},
   {title:'SK Hynix ADR Listing Watch',date:'2026-09-01',notes:'Target: sell IBKR KRX → buy ADR in HL ISA same day. £1,000 cash reserved at HL.',alarm:-1440},
-  {title:'TTD NASDAQ Compliance Cure Check',date:'2026-09-21',notes:'If TTD compliance resolved, HL re-enables buying. Review eToro 2 lots (-£758) for bed-and-ISA migration. 30-day rule applies.',alarm:-1440},
+  {title:'AppLovin (APP) AXON Launch — Watch Catalyst',date:'2026-06-30',notes:'AppLovin global self-serve AXON platform launch scheduled Jun 2026. This is the binary catalyst for the stock. If launch impresses: consider bringing entry target forward. Target £1,500 starter Apr 2027. Current price ~$474, analyst avg $743 (+57%). 26 analysts Buy.',alarm:-1440},
+  {title:'AppLovin (APP) Q2 2026 Earnings — Pre-Buy Review',date:'2026-08-07',notes:'APP Q2 2026 earnings. Check: AXON launch traction, e-commerce advertiser onboarding, EBITDA margin vs 85% Q1 level. If metrics hold, confirm £1,500 Apr 2027 ISA allocation. Watch for any SEC data-practice ruling (overhang risk).',alarm:-1440},
+  {title:'Corcept (CORT) Lifyorli Launch Review',date:'2026-09-01',notes:'Review Corcept Lifyorli (relacorilant) commercial launch progress in ovarian cancer. 5 analysts all Buy, avg $135 (+86%). Check: sales force deployment, early uptake data, class action lawsuit progress. Confirm or defer £600 Apr 2027 ISA starter. Verify HL ISA eligibility before acting.',alarm:-1440},
   // ── POSITION REVIEW REMINDERS — auto-generated from HOLDINGS reviewDate ──
   // (These are added programmatically below via buildGcalFromHoldings)
 ];
@@ -1231,7 +1247,7 @@ function buildGcalFromHoldings(){
 
 // ── Final ISA allowance event ─────────────────────────────────────────────
 const GCAL_ISA={title:'New ISA Allowance Opens — Full Deploy Plan',date:'2027-04-06',
-  notes:'£20,000 new allowance. Priority: 1) ZS (Zscaler +36% upside) 2) TTD (migrate from eToro) 3) ASML +£1,000 4) DASH +£1,000 5) MELI +£700 6) GOOGL +£700 7) AMZN +£700. Close remaining eToro: TTD harvest -£758 loss, ORCL -£366 if still open. Review all trim positions.',
+  notes:'£20,000 new allowance. Priority: 1) APP AppLovin £1,500 (AXON AI, 85% EBITDA margins, +57% upside — highest conviction new add) 2) ZS Zscaler £1,200 (Morningstar top-4 cyber, +36%) 3) TTD £1,400 (migrate from eToro, harvest -£807 CGT loss) 4) ASML add £1,000 5) DASH add £1,000 6) MELI add £700 7) GOOGL add £700 8) AMZN add £700 9) CORT starter £600 (Lifyorli FDA approved, +86% analyst upside, healthcare diversifier) 10) MU re-add £500 if HBM guidance strong at Jun earnings. Close SNDK trim, close eToro SMCI/TTD. Review RKLB for entry if below $90.',
   alarm:-1440};
 
 // ══════════════════════════════════════════════════
