@@ -382,6 +382,19 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
     </div>
   </div>
 
+  <!-- CASH DEPLOYMENT PLAN — THIS TAX YEAR -->
+  <div id="cashDeploySection" style="margin-bottom:16px">
+    <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--accent2);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px">
+      💰 Cash Deployable Now — Inside ISA Wrapper
+    </div>
+    <div style="background:rgba(0,255,157,0.06);border:1px solid rgba(0,255,157,0.25);padding:14px 16px;margin-bottom:10px;font-size:12px;line-height:1.7;color:var(--text)">
+      <strong style="color:var(--accent2)">£7,441 cash in HL ISA</strong> — already inside the wrapper, no allowance needed to redeploy. ISA fully subscribed (£20k paid in, £0 remaining). Can open any new position freely.
+      <strong style="color:var(--amber)">£1,000 reserved</strong> for SK Hynix ADR listing. Freely deployable: <strong style="color:var(--green)">£6,441</strong>.
+      Plus SNDK trim (~£1,500) will add further once executed. New contributions locked until <strong>6 Apr 2027</strong>.
+    </div>
+    <div id="cashDeployGrid" style="display:grid;gap:8px"></div>
+  </div>
+
   <!-- DEPLOYMENT PLAN -->
   <div class="section" id="sec-deploy">
     <div class="section-header" onclick="toggleSection('sec-deploy')">
@@ -908,7 +921,7 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 // ══════════════════════════════════════════════════
 // DATA
 // ══════════════════════════════════════════════════
-// Last synced: 02 Jun 2026 23:07 — HL total £46,327.81 | invested £43,045.68 | cash £3,282.13
+// Last synced: 04 Jun 2026 23:03 — HL cash £7,441.60 | cost bases corrected from HL Details tab
 // Last synced: 02 Jun 2026. USD/GBP 1.3464 · EUR/GBP 1.1379 · 27 positions
 // analystTargetUsd: consensus 12-month target (USD, or GBX for UK-listed)
 // trimToGbp: sell down TO this £ value (null = no trim needed)
@@ -931,14 +944,14 @@ const HOLDINGS=[
    trimToGbp:null, addTriggerGbp:800, addAmountGbp:700,
    reviewDate:'2026-10-01', reviewNote:'GOOGL Q3 2026 earnings. 65 analysts, avg target $210 (+30%+ upside from current). If Gemini monetisation accelerates, add £700 in Apr 2027. Below £800 position = strong buy signal.'},
 
-  {ticker:'AMZN',name:'Amazon',                  costGbp:1000, currentGbp:932,
+  {ticker:'AMZN',name:'Amazon',                  costGbp:988, currentGbp:932,
    action:'hold', actionLabel:'HOLD — AWS AI cloud. Add on dips.',
    currency:'USD', yahooTicker:'AMZN',  concentration:'normal',
    analystTargetUsd:280, analystCount:68,
    trimToGbp:null, addTriggerGbp:850, addAmountGbp:700,
    reviewDate:'2026-10-01', reviewNote:'AMZN Q3 2026 earnings. 68 analysts, avg $280 (+35% upside). AWS AI cloud thesis. Add £700 in Apr 2027 if position still below £1,500. Below £850 position value = add immediately.'},
 
-  {ticker:'ASML',name:'ASML Holding NV',         costGbp:1175, currentGbp:1283,
+  {ticker:'ASML',name:'ASML Holding NV',         costGbp:1176, currentGbp:1283,
    action:'hold', actionLabel:'HOLD — EUV monopoly. High conviction add Apr 2027.',
    currency:'USD', yahooTicker:'ASML',  concentration:'normal',
    analystTargetUsd:960, analystCount:38,
@@ -959,14 +972,14 @@ const HOLDINGS=[
    trimToGbp:null, addTriggerGbp:600, addAmountGbp:500,
    reviewDate:'2026-11-01', reviewNote:'AZN H2 2026 pipeline readouts. 28 analysts, GBX target 14,500 (~£145/share). Add £500 in Apr 2027 ISA — healthcare diversification, non-AI cycle. Below £600 position = strong add.'},
 
-  {ticker:'AXON',name:'Axon Enterprise',         costGbp:1305, currentGbp:1435,
+  {ticker:'AXON',name:'Axon Enterprise',         costGbp:1306, currentGbp:1435,
    action:'hold', actionLabel:'HOLD +11.5% — public safety AI. Let run.',
    currency:'USD', yahooTicker:'AXON',  concentration:'normal',
    analystTargetUsd:750, analystCount:22,
    trimToGbp:null, addTriggerGbp:1200, addAmountGbp:500,
    reviewDate:'2026-11-01', reviewNote:'AXON Q3 2026 earnings. $750 analyst target vs current ~$555 = +35% upside. Hold and let compound. Below £1,200 position = consider adding £500 in Apr 2027.'},
 
-  {ticker:'BOX', name:'Box Inc',                 costGbp:685,  currentGbp:756,
+  {ticker:'BOX', name:'Box Inc',                 costGbp:697,  currentGbp:756,
    action:'hold', actionLabel:'HOLD +13.9% — enterprise AI content. Small.',
    currency:'USD', yahooTicker:'BOX',   concentration:'normal',
    analystTargetUsd:40, analystCount:18,
@@ -1008,7 +1021,7 @@ const HOLDINGS=[
    trimToGbp:null, addTriggerGbp:null, addAmountGbp:null,
    reviewDate:'2026-08-01', reviewNote:'FIX Q2 2026 earnings Aug 2026. $430 analyst target vs current ~$320 (+34%). Still -5.9% from cost. Hold alongside EME. Only 12 analysts — thin coverage. Do not add until one of FIX or EME is closed (dual infra redundancy). Reassess in Apr 2027.'},
 
-  {ticker:'GLW', name:'Corning Inc',             costGbp:580,  currentGbp:599,
+  {ticker:'GLW', name:'Corning Inc',             costGbp:581,  currentGbp:599,
    action:'hold', actionLabel:'HOLD +2.5% — fibre/AI infra. Small.',
    currency:'USD', yahooTicker:'GLW',   concentration:'normal',
    analystTargetUsd:58, analystCount:20,
@@ -1029,7 +1042,7 @@ const HOLDINGS=[
    trimToGbp:null, addTriggerGbp:null, addAmountGbp:null,
    reviewDate:'2026-07-28', reviewNote:'EME Q2 2026 earnings ~Jul 2026. $530 target vs current ~$410 (+29%). Back near cost basis. Hold alongside FIX — same thesis. Do not add to both. If you close FIX, add to EME in Apr 2027.'},
 
-  {ticker:'IBM', name:'IBM',                     costGbp:850,  currentGbp:1140,
+  {ticker:'IBM', name:'IBM',                     costGbp:845,  currentGbp:1140,
    action:'hold', actionLabel:'HOLD +43.9% — AI hybrid cloud compounding.',
    currency:'USD', yahooTicker:'IBM',   concentration:'normal',
    analystTargetUsd:290, analystCount:22,
@@ -1043,7 +1056,7 @@ const HOLDINGS=[
    trimToGbp:null, addTriggerGbp:1000, addAmountGbp:500,
    reviewDate:'2026-10-21', reviewNote:'MANH Q3 2026 earnings ~Oct 2026. $310 target vs current ~$236 (+31%). Supply chain software moat. Add £500 in Apr 2027. Below £1,000 position = add signal.'},
 
-  {ticker:'MRVL',name:'Marvell Technology',      costGbp:591,  currentGbp:898,
+  {ticker:'MRVL',name:'Marvell Technology',      costGbp:592,  currentGbp:898,
    action:'hold', actionLabel:'HOLD +46.2% — custom silicon/optical AI. Let run.',
    currency:'USD', yahooTicker:'MRVL',  concentration:'normal',
    analystTargetUsd:125, analystCount:34,
@@ -1058,14 +1071,14 @@ const HOLDINGS=[
    reviewDate:'2026-08-06', reviewNote:'MELI Q2 2026 earnings ~Aug 2026. $2,600 target vs current ~$1,885 (+38% upside). LatAm fintech/ecom. -10.1% from cost. Add £700 in Apr 2027. Below £1,100 position value = strong add — best EM exposure available in ISA.'},
 
   // ── TRIM REQUIRED ────────────────────────────────────────────────────────────────
-  {ticker:'MU',  name:'Micron Technology',       costGbp:2528, currentGbp:2414,
+  {ticker:'MU',  name:'Micron Technology',       costGbp:1517, currentGbp:2414,
    action:'close', actionLabel:'✅ TRIMMED £1,300 on 03 Jun → £2,414 (5.8%)',
    currency:'USD', yahooTicker:'MU',   concentration:'critical',
    analystTargetUsd:140, analystCount:44,
    trimToGbp:null, addTriggerGbp:2500, addAmountGbp:500,
    reviewDate:'2026-06-24', reviewNote:'MU Q3 FY2026 EARNINGS — ACTION REQUIRED. BEFORE EARNINGS: Sell £1,000–1,500 in HL ISA to reduce from 9.2% to ~6–7%. No CGT (inside ISA). AFTER EARNINGS: if HBM demand guidance is strong, hold £2,500 remainder. If guidance disappoints, trim further to £2,000. In Apr 2027, consider adding back £500 if still below $140 analyst target.'},
 
-  {ticker:'SNDK',name:'Sandisk Corporation',     costGbp:1444, currentGbp:4099,
+  {ticker:'SNDK',name:'Sandisk Corporation',     costGbp:843, currentGbp:4099,
    action:'close', actionLabel:'⚠ TRIM £1,300–1,500 NOW — AT analyst target',
    currency:'USD', yahooTicker:'SNDK',  concentration:'critical',
    analystTargetUsd:1460, analystCount:22,
@@ -1080,14 +1093,14 @@ const HOLDINGS=[
    trimToGbp:null, addTriggerGbp:1600, addAmountGbp:500,
    reviewDate:'2026-07-22', reviewNote:'MSCI Q2 2026 earnings 21 Jul 2026. $640 target vs current ~$490 (+31%). Good compounder. Hold. Add £500 in Apr 2027 if still below £1,700. Below £1,600 position = add signal.'},
 
-  {ticker:'NVDA',name:'Nvidia Corp',             costGbp:1899, currentGbp:1922,
+  {ticker:'NVDA',name:'Nvidia Corp',             costGbp:1900, currentGbp:1922,
    action:'hold', actionLabel:'HOLD +4.5% — AI bellwether. No add at this price.',
    currency:'USD', yahooTicker:'NVDA',  concentration:'watch',
    analystTargetUsd:175, analystCount:65,
    trimToGbp:null, addTriggerGbp:1700, addAmountGbp:500,
    reviewDate:'2026-08-27', reviewNote:'NVDA Q2 FY2027 earnings ~Aug 2026. 65 analysts, target $175 — nearly at current price. Do not add here. Hold. If it pulls back to below £1,700 position value, consider adding £500 in Apr 2027.'},
 
-  {ticker:'PANW',name:'Palo Alto Networks',      costGbp:662,  currentGbp:627,
+  {ticker:'PANW',name:'Palo Alto Networks',      costGbp:652,  currentGbp:627,
    action:'watch', actionLabel:'HOLD — AT analyst target. Add only on -15% dip.',
    currency:'USD', yahooTicker:'PANW',  concentration:'normal',
    analystTargetUsd:217, analystCount:54,
@@ -1101,7 +1114,7 @@ const HOLDINGS=[
    trimToGbp:null, addTriggerGbp:650, addAmountGbp:500,
    reviewDate:'2026-08-01', reviewNote:'RR H1 2026 results ~Aug 2026. GBX target 700p vs current ~590p (+19%). Defence/aerospace cycle. Hold. Add £500 in Apr 2027. Below £650 position = add signal.'},
 
-  {ticker:'TSLA',name:'Tesla',                   costGbp:622,  currentGbp:631,
+  {ticker:'TSLA',name:'Tesla',                   costGbp:650,  currentGbp:631,
    action:'hold', actionLabel:'HOLD -3.2% — AI/autonomy optionality.',
    currency:'USD', yahooTicker:'TSLA',  concentration:'normal',
    analystTargetUsd:310, analystCount:55,
@@ -2500,6 +2513,134 @@ function renderPriority2027() {
 }
 
 // ══════════════════════════════════════════════════
+// CASH DEPLOYMENT — THIS TAX YEAR
+// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════════════
+// CASH DEPLOYMENT — THIS TAX YEAR
+// Cash already inside ISA wrapper — no allowance needed.
+// Can open brand new positions freely. £4,820 total, £1k reserved ADR.
+// ══════════════════════════════════════════════════
+const CASH_DEPLOY = [
+  {
+    ticker:'SNDK', name:'SanDisk — TRIM FIRST', yahoo:'SNDK',
+    amount:-1600, priority:0,
+    rationale:'TRIM BEFORE ANYTHING ELSE. SNDK is 9.9% of invested (£4,099) and AT analyst consensus. Sell £1,500–1,800 first — brings deployable cash from £3,820 to ~£5,400 and resolves the overweight.',
+    trigger:'No trigger needed — execute now. Overweight at consensus.',
+    triggerActive:true, color:'var(--red)', isTrim:true
+  },
+  {
+    ticker:'ZS', name:'Zscaler — NEW POSITION', yahoo:'ZS',
+    amount:1200, priority:1,
+    rationale:'Morningstar #4 AI cyber name. 47 analysts Buy, avg $194 (+36% upside). Dropped 24% post-earnings on a guidance miss — one-off, not structural. Guggenheim upgraded to Buy with $214 target (+53%). Zero-trust leader, ARR $3.36B, rev +26% YoY. Only Morningstar top-4 AI cyber name not in portfolio. CAN open now — existing ISA cash, no new allowance needed.',
+    trigger:'Entry now at ~$140 is compelling. Analyst target $194–214. Open £1,200 starter.',
+    triggerActive:true, color:'var(--green)', isNew:true
+  },
+  {
+    ticker:'GOOGL', name:'Alphabet', yahoo:'GOOG',
+    amount:900, priority:2,
+    rationale:'Down -7.9% from cost. 65 analysts, avg target $210 (+30%+ upside). AI pivot — Gemini monetisation just starting. Adding at weakness into an underweight position.',
+    trigger:'Position below £850 — currently £804. Buy signal active.',
+    triggerActive:true, color:'var(--green)'
+  },
+  {
+    ticker:'MELI', name:'MercadoLibre', yahoo:'MELI',
+    amount:900, priority:3,
+    rationale:'Down -10.1% from cost. 28 analysts, avg $2,600 (+38% upside). Best EM fintech/ecom exposure in ISA. LatAm expansion accelerating. Largest loss position in ISA — add at weakness.',
+    trigger:'Position below £1,300 — currently £1,221. Buy signal active.',
+    triggerActive:true, color:'var(--green)'
+  },
+  {
+    ticker:'AMZN', name:'Amazon', yahoo:'AMZN',
+    amount:700, priority:4,
+    rationale:'Down -3.6% from cost. 68 analysts, avg $280 (+35% upside). AWS AI cloud. Currently underweight at £932.',
+    trigger:'Position below £1,000 — currently £932. Buy signal active.',
+    triggerActive:true, color:'var(--green)'
+  },
+  {
+    ticker:'DASH', name:'DoorDash', yahoo:'DASH',
+    amount:700, priority:5,
+    rationale:'Down -5.6% from cost. 44 analysts Buy, avg $246 (+51% upside). Starter position is too small at £461. Deliveroo margin inflection expected H2 2026.',
+    trigger:'Position below £500 — currently £461. Buy signal active.',
+    triggerActive:true, color:'var(--green)'
+  },
+  {
+    ticker:'APP', name:'AppLovin — NEW POSITION', yahoo:'APP',
+    amount:1000, priority:6,
+    rationale:'27.4% insider ownership, 85% EBITDA margins, 26 analysts Buy, avg $743 (+57% upside). AXON AI platform global launch June 2026 — binary catalyst. Watch the launch outcome first before committing. If AXON launch impresses, open £1,000–1,500 from SNDK trim proceeds.',
+    trigger:'WAIT for AXON launch data (June 2026). Open £1,000 if launch confirms e-commerce traction.',
+    triggerActive:false, color:'var(--amber)', isNew:true
+  },
+  {
+    ticker:'ASML', name:'ASML Holding', yahoo:'ASML',
+    amount:0, priority:7,
+    rationale:'Highest-conviction long-term add. 38 analysts, avg $960. EUV monopoly. Currently £1,259 — not at a dip. Hold for April 2027 top-up or deploy from SNDK trim proceeds if it pulls back.',
+    trigger:'Add if position falls below £1,100 — currently above. Hold.',
+    triggerActive:false, color:'var(--text-dim)'
+  },
+];
+
+function renderCashDeploy(){
+  const el = document.getElementById('cashDeployGrid');
+  if(!el) return;
+
+  const freeCash = 7441;
+  let allocated = 0;
+
+  const sorted = [...CASH_DEPLOY].sort((a,b) => a.priority - b.priority);
+
+  el.innerHTML = sorted.map(d => {
+    const isTrim    = d.isTrim;
+    const isNew     = d.isNew;
+    const isActive  = d.triggerActive;
+    const isWatch   = !isTrim && d.amount === 0;
+    const borderCol = isTrim ? 'var(--red)' : isActive ? d.color : 'var(--border)';
+    const bgCol     = isTrim ? 'rgba(255,71,87,0.06)'
+                     : isNew && isActive ? 'rgba(0,255,157,0.06)'
+                     : isActive ? 'rgba(0,255,157,0.03)'
+                     : 'rgba(30,58,95,0.15)';
+
+    if(!isTrim && isActive && d.amount > 0) allocated += d.amount;
+
+    const newBadge = isNew
+      ? `<span style="font-size:9px;background:rgba(0,212,255,0.15);color:var(--accent);border:1px solid rgba(0,212,255,0.3);padding:1px 6px;margin-left:6px;text-transform:uppercase">NEW POSITION</span>`
+      : '';
+
+    const amtDisplay = isTrim
+      ? `<span style="color:var(--red);font-weight:700;font-size:13px">TRIM<br>£${Math.abs(d.amount).toLocaleString()}</span>`
+      : isWatch
+      ? `<span style="color:var(--amber);font-weight:700;font-size:12px">WATCH</span>`
+      : isActive
+      ? `<span style="color:var(--green);font-weight:700;font-size:13px">DEPLOY<br>£${d.amount.toLocaleString()}</span>`
+      : `<span style="color:var(--text-dim);font-size:12px">HOLD</span>`;
+
+    return `<div style="background:${bgCol};border:1px solid ${borderCol};border-left:3px solid ${borderCol};padding:12px 14px;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:start">
+      <div style="min-width:56px">
+        <div style="font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--text-bright);display:flex;align-items:center;flex-wrap:wrap;gap:4px">
+          ${d.ticker}${newBadge}
+        </div>
+        <div style="font-size:10px;color:var(--text-dim);margin-top:1px">${d.name}</div>
+        <div style="margin-top:6px">${d.yahoo ? `<button class="chart-btn" style="padding:3px 8px;font-size:10px" onclick="openChart('${d.yahoo}','${d.ticker}')">📈</button>` : ''}</div>
+      </div>
+      <div>
+        <div style="font-size:11px;color:var(--text);line-height:1.6;margin-bottom:4px">${d.rationale}</div>
+        <div style="font-size:10px;color:${isActive ? d.color : 'var(--text-dim)'}">⚡ ${d.trigger}</div>
+      </div>
+      <div style="text-align:right;min-width:80px">
+        ${amtDisplay}
+      </div>
+    </div>`;
+  }).join('');
+
+  const remaining = freeCash - allocated;
+  el.innerHTML += `<div style="background:var(--surface2);border:1px solid var(--border);padding:10px 14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;font-size:11px;margin-top:4px">
+    <span style="color:var(--text-dim)">Free cash: <strong style="color:var(--text)">£${freeCash.toLocaleString()}</strong></span>
+    <span style="color:var(--text-dim)">Active buys: <strong style="color:var(--green)">£${allocated.toLocaleString()}</strong></span>
+    <span style="color:var(--text-dim)">Remaining: <strong style="color:${remaining>=0?'var(--accent2)':'var(--red)'}">£${remaining.toLocaleString()}</strong></span>
+    <span style="color:var(--amber);font-size:10px">+ SNDK trim ~£1,600 unlocks further deployment</span>
+  </div>`;
+}
+
+// ══════════════════════════════════════════════════
 // CONCENTRATION ANALYSIS
 // ══════════════════════════════════════════════════
 function renderConcentration(){
@@ -2815,6 +2956,7 @@ if(cel) cel.innerHTML='<span class="'+cls+'">'+sign+data.changePct.toFixed(2)+'%
 function init(){
   renderHoldings();
   renderDeploy();
+  renderCashDeploy();
   renderWatchlist();
   renderCyberCompare();
   renderUrgentBanner();
