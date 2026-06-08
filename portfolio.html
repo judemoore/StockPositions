@@ -388,9 +388,7 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
       💰 Cash Deployable Now — Inside ISA Wrapper
     </div>
     <div style="background:rgba(0,255,157,0.06);border:1px solid rgba(0,255,157,0.25);padding:14px 16px;margin-bottom:10px;font-size:12px;line-height:1.7;color:var(--text)">
-      <strong style="color:var(--accent2)">£7,441 cash in HL ISA</strong> — fully deployable. SK Hynix ADR reserve freed ✅. ISA fully subscribed (£20k paid in, £0 remaining). Can open any new position freely.
-      Freely deployable: <strong style="color:var(--green)">£7,441</strong>.
-      Plus SNDK trim (~£1,500) adds further. New contributions locked until <strong>6 Apr 2027</strong>.
+      <strong style="color:var(--accent2)">£3,998 cash in HL ISA</strong> — 4 positions deployed 08 Jun: ZS £1,463 · GOOGL +£825 · AMZN +£565 · DASH +£588. ISA fully subscribed. Freely deployable: <strong style="color:var(--green)">£3,998</strong>. Remaining: MELI (wait Q2 Aug) · AVGO (buy the dip thesis) · MRVL top-up.
     </div>
     <div id="cashDeployGrid" style="display:grid;gap:8px"></div>
   </div>
@@ -937,21 +935,21 @@ const HOLDINGS=[
    trimToGbp:null, addTriggerGbp:900, addAmountGbp:500,
    reviewDate:'2026-08-04', reviewNote:'AMD Q2 2026 earnings. Est EPS $1.39. If data centre rev continues +50%+ YoY, consider adding £500 in Apr 2027 ISA. Target add below £900 position value.'},
 
-  {ticker:'GOOGL',name:'Alphabet Inc',           costGbp:875,  currentGbp:829,
+  {ticker:'GOOGL',name:'Alphabet Inc',           costGbp:1702,  currentGbp:1657,
    action:'hold', actionLabel:'HOLD — AI pivot undervalued vs peers',
    currency:'USD', yahooTicker:'GOOG',  concentration:'normal',
    analystTargetUsd:210, analystCount:65,
    trimToGbp:null, addTriggerGbp:800, addAmountGbp:700,
    reviewDate:'2026-10-01', reviewNote:'GOOGL Q3 2026 earnings. 65 analysts, avg target $210 (+30%+ upside from current). If Gemini monetisation accelerates, add £700 in Apr 2027. Below £800 position = strong buy signal.'},
 
-  {ticker:'AMZN',name:'Amazon',                  costGbp:988, currentGbp:922,
+  {ticker:'AMZN',name:'Amazon',                  costGbp:1553, currentGbp:922,
    action:'hold', actionLabel:'HOLD — AWS AI cloud. Add on dips.',
    currency:'USD', yahooTicker:'AMZN',  concentration:'normal',
    analystTargetUsd:280, analystCount:68,
    trimToGbp:null, addTriggerGbp:850, addAmountGbp:700,
    reviewDate:'2026-10-01', reviewNote:'AMZN Q3 2026 earnings. 68 analysts, avg $280 (+35% upside). AWS AI cloud thesis. Add £700 in Apr 2027 if position still below £1,500. Below £850 position value = add immediately.'},
 
-  {ticker:'ASML',name:'ASML Holding NV',         costGbp:1176, currentGbp:1261,
+  {ticker:'ASML',name:'ASML Holding NV',         costGbp:1176, currentGbp:1295,
    action:'hold', actionLabel:'HOLD — EUV monopoly. High conviction add Apr 2027.',
    currency:'USD', yahooTicker:'ASML',  concentration:'normal',
    analystTargetUsd:960, analystCount:38,
@@ -965,7 +963,7 @@ const HOLDINGS=[
    trimToGbp:null, addTriggerGbp:null, addAmountGbp:null,
    reviewDate:'2026-11-01', reviewNote:'ALAB Q3 2026 earnings. Position up +64.9%. Only 16 analysts — small coverage. Hold; do not add until analyst coverage expands and upside is clearer. Analyst target $110 is below current — reassess.'},
 
-  {ticker:'AZN', name:'AstraZeneca',             costGbp:680,  currentGbp:692,
+  {ticker:'AZN', name:'AstraZeneca',             costGbp:680,  currentGbp:690,
    action:'hold', actionLabel:'HOLD — oncology pipeline. Add on weakness.',
    currency:'GBP', yahooTicker:'AZN.L', concentration:'normal',
    analystTargetUsd:14500, analystCount:28,  // GBX target ~£145
@@ -1000,7 +998,7 @@ const HOLDINGS=[
    trimToGbp:null, addTriggerGbp:500, addAmountGbp:500,
    reviewDate:'2026-10-01', reviewNote:'CDNS Q3 2026 earnings. $350 analyst target vs current ~$262 = +34% upside. Small position — add £500 in Apr 2027. Below £500 position = add immediately.'},
 
-  {ticker:'DASH',name:'DoorDash',                costGbp:494,  currentGbp:470,
+  {ticker:'DASH',name:'DoorDash',                costGbp:1082,  currentGbp:470,
    action:'watch', actionLabel:'NEW — add on dips. $246 target (+51%).',
    currency:'USD', yahooTicker:'DASH',  concentration:'normal',
    analystTargetUsd:246, analystCount:44,
@@ -1028,7 +1026,7 @@ const HOLDINGS=[
    trimToGbp:null, addTriggerGbp:null, addAmountGbp:null,
    reviewDate:'2026-07-29', reviewNote:'GLW Q2 2026 earnings ~Jul 2026. $58 target vs current ~$44 (+32%). Small position — hold. Fibre optic demand from AI data centres is the thesis. Do not add unless position shrinks below £500 AND thesis remains intact. Consider closing if conviction has dimmed.'},
 
-  {ticker:'CRWD',name:'CrowdStrike',             costGbp:1027, currentGbp:1509,
+  {ticker:'CRWD',name:'CrowdStrike',             costGbp:1027, currentGbp:1508,
    action:'hold', actionLabel:'HOLD +66.6% — cyber leader. Do not add (overvalued).',
    currency:'USD', yahooTicker:'CRWD',  concentration:'normal',
    analystTargetUsd:480, analystCount:44,
@@ -1066,17 +1064,17 @@ const HOLDINGS=[
   {ticker:'MELI',name:'MercadoLibre',            costGbp:1380, currentGbp:1204,
    action:'hold', actionLabel:'HOLD -10.1% — LatAm fintech/ecom. Add on dip.',
    currency:'USD', yahooTicker:'MELI',  concentration:'normal',
-   analystTargetUsd:2600, analystCount:28,
-   trimToGbp:null, addTriggerGbp:1100, addAmountGbp:700,
-   reviewDate:'2026-08-06', reviewNote:'MELI Q2 2026 earnings ~Aug 2026. $2,600 target vs current ~$1,885 (+38% upside). LatAm fintech/ecom. -10.1% from cost. Add £700 in Apr 2027. Below £1,100 position value = strong add — best EM exposure available in ISA.'},
+   analystTargetUsd:2255, analystCount:25,
+   trimToGbp:null, addTriggerGbp:1000, addAmountGbp:500,
+   reviewDate:'2026-08-06', reviewNote:'MELI Q2 2026 earnings ~Aug 2026. KEY WATCH. Q1 missed EPS ($8.23 vs $8.78 est) — margin compression from credit card loan-loss provisions and logistics spend. Multiple firms cut targets. MS still Overweight at $2,950. Avg now $2,255 (+32% upside). THESIS IS INTACT but this is deliberate investment-phase pain. Q2 must show: (1) Brazil take-rate holding, (2) credit loss provisions stabilising, (3) gross margin recovering toward 11.7%. If Q2 disappoints again = exit. If Q2 shows recovery = add £500 in Apr 2027.'},
 
   // ── TRIM REQUIRED ────────────────────────────────────────────────────────────────
-  {ticker:'MU',  name:'Micron Technology',       costGbp:1517, currentGbp:1943,
+  {ticker:'MU',  name:'Micron Technology',       costGbp:1517, currentGbp:1942,
    action:'close', actionLabel:'✅ TRIMMED £1,300 on 03 Jun → £2,414 (5.8%)',
    currency:'USD', yahooTicker:'MU',   concentration:'critical',
-   analystTargetUsd:140, analystCount:44,
+   analystTargetUsd:550, analystCount:44,
    trimToGbp:null, addTriggerGbp:2500, addAmountGbp:500,
-   reviewDate:'2026-06-24', reviewNote:'MU Q3 FY2026 EARNINGS — ACTION REQUIRED. BEFORE EARNINGS: Sell £1,000–1,500 in HL ISA to reduce from 9.2% to ~6–7%. No CGT (inside ISA). AFTER EARNINGS: if HBM demand guidance is strong, hold £2,500 remainder. If guidance disappoints, trim further to £2,000. In Apr 2027, consider adding back £500 if still below $140 analyst target.'},
+   reviewDate:'2026-06-24', reviewNote:'MU Q3 FY2026 EARNINGS 24 JUN. Consensus: EPS $19.82, Rev $34.8B. HBM sold out 2026. Micron joined $1T market cap club. NVIDIA CEO green-lit Micron for HBM4 chips. Analyst avg target now ~$550, MS $1,050. HOLD 3 shares. After earnings: if HBM revenue mix increasing and FY2026 guidance raised, consider adding £500 in Apr 2027. Watch: gross margin trend, HBM share of DRAM mix, and any guidance on HBM4 ramp.'},
 
   {ticker:'SNDK',name:'Sandisk Corporation',     costGbp:843, currentGbp:1167,
    action:'close', actionLabel:'⚠ TRIM £1,300–1,500 NOW — AT analyst target',
@@ -1086,14 +1084,14 @@ const HOLDINGS=[
    reviewDate:'2026-06-10', reviewNote:'SNDK TRIM — ACTION NOW. Sell £1,300–1,500 in HL ISA to reduce from 8.9% to ~5.5–6%. No CGT (inside ISA). Stock at $1,478 vs analyst avg $1,460 — essentially AT consensus target, no upside left in analyst models. Pure NAND storage thesis; AI memory is better expressed via SK Hynix (IBKR). Do not add back — let position drift down naturally.'},
 
   // ── WATCH — at or above target, no add ──────────────────────────────────────────
-  {ticker:'MSCI',name:'MSCI Inc',                costGbp:1750, currentGbp:1846,
+  {ticker:'MSCI',name:'MSCI Inc',                costGbp:1750, currentGbp:1845,
    action:'hold', actionLabel:'HOLD +7.0% — index monopoly. No add needed.',
    currency:'USD', yahooTicker:'MSCI',  concentration:'watch',
    analystTargetUsd:640, analystCount:20,
    trimToGbp:null, addTriggerGbp:1600, addAmountGbp:500,
    reviewDate:'2026-07-22', reviewNote:'MSCI Q2 2026 earnings 21 Jul 2026. $640 target vs current ~$490 (+31%). Good compounder. Hold. Add £500 in Apr 2027 if still below £1,700. Below £1,600 position = add signal.'},
 
-  {ticker:'NVDA',name:'Nvidia Corp',             costGbp:1900, currentGbp:1845,
+  {ticker:'NVDA',name:'Nvidia Corp',             costGbp:1900, currentGbp:1844,
    action:'hold', actionLabel:'HOLD +4.5% — AI bellwether. No add at this price.',
    currency:'USD', yahooTicker:'NVDA',  concentration:'watch',
    analystTargetUsd:175, analystCount:65,
@@ -1107,7 +1105,7 @@ const HOLDINGS=[
    trimToGbp:null, addTriggerGbp:550, addAmountGbp:700,
    reviewDate:'2026-09-02', reviewNote:'PANW Q4 FY2026 earnings ~Sep 2026. $217 avg target vs current ~$213 = essentially AT consensus. Morningstar fair value is much lower (464% premium to FV). Hold starter position. Add £700 in Apr 2027 ONLY if stock pulls back 15%+ (below ~£550 position).'},
 
-  {ticker:'RR',  name:'Rolls-Royce Holdings',    costGbp:793,  currentGbp:769,
+  {ticker:'RR',  name:'Rolls-Royce Holdings',    costGbp:793,  currentGbp:766,
    action:'hold', actionLabel:'HOLD -1.3% — defence/engine cycle. Hold.',
    currency:'GBP', yahooTicker:'RR.L',  concentration:'normal',
    analystTargetUsd:700, analystCount:18,  // GBX target ~£7.00/share
@@ -1121,6 +1119,12 @@ const HOLDINGS=[
    trimToGbp:null, addTriggerGbp:500, addAmountGbp:500,
    reviewDate:'2026-10-20', reviewNote:'TSLA Q3 2026 earnings ~Oct 2026. $310 target vs current ~$240 (+29%). MF Hidden Gems rec. Hold. Add £500 in Apr 2027. Below £500 position = add signal.'},
 
+  {ticker:'ZS',  name:'Zscaler',              costGbp:1463, currentGbp:1470,
+   action:'hold', actionLabel:'NEW 08 Jun — Morningstar #4 AI cyber. +36% analyst upside.',
+   currency:'USD', yahooTicker:'ZS', concentration:'normal',
+   analystTargetUsd:194, analystCount:47,
+   trimToGbp:null, addTriggerGbp:1200, addAmountGbp:700,
+   reviewDate:'2026-09-01', reviewNote:'ZS Q4 FY2026 earnings ~Sep 2026. Opened 08 Jun at £1,470. Guggenheim $214 target (+53%). 47 analysts Buy, avg $194 (+36%). Zero-trust leader, ARR $3.36B, rev +26% YoY. Dropped 24% post-earnings Mar 2026 on FY27 guidance miss — one-off. Add £700 in Apr 2027 if thesis intact. Watch: net new ARR growth, NRR >120%, platform consolidation wins.'},
   {ticker:'VWRL',name:'Vanguard FTSE Global All Cap', costGbp:9994, currentGbp:10402,
    action:'hold', actionLabel:'HOLD +6.1% — passive core. Do not change.',
    currency:'GBP', hlOnly:true, concentration:'core',
@@ -1148,8 +1152,8 @@ const DEPLOY=[
    refs:[{label:'Analyst consensus',url:'https://stockanalysis.com/stocks/panw/forecast/'},
          {label:'MarketBeat ratings',url:'https://www.marketbeat.com/stocks/NASDAQ/PANW/forecast/'}]},
   // ── FUTURE ADD — APR 2027 ──
-  {rank:'⏳',ticker:'MU',  name:'Micron Technology',   yahoo:'MU',   entryUsd:105,targetUsd:140,gbp:1500, currency:'USD',status:'hold', statusLabel:'IN ISA — TRIMMED. WATCH EARNINGS 24 JUN',
-   note:'TRIMMED £1,300 on 03 Jun → now £2,414 (5.8%). Post Q3 earnings 24 Jun: if HBM guidance strong, consider re-adding £500 in Apr 2027. 44 analysts Strong Buy, avg target ~$140. AI memory fully booked 2026.',
+  {rank:'⏳',ticker:'MU',  name:'Micron Technology',   yahoo:'MU',   entryUsd:640,targetUsd:550,gbp:1500, currency:'USD',status:'hold', statusLabel:'IN ISA — HOLD. Q3 EARNINGS 24 JUN',
+   note:'TRIMMED ✅ £1,300 on 03 Jun. Now 3 shares, £1,942. HBM sold out 2026. Joined $1T market cap club. NVIDIA CEO green-lit for HBM4 chips. 44 analysts Strong Buy, avg ~$550. Morgan Stanley $1,050, Susquehanna $1,750. Q3 earnings 24 Jun: EPS $19.82 est, Rev $34.8B. Consider adding £500 in Apr 2027 if HBM ramp accelerates.',
    refs:[{label:'Analyst consensus',url:'https://stockanalysis.com/stocks/mu/forecast/'},
          {label:'Earnings 24 Jun 2026',url:'https://www.benzinga.com/quote/MU/analyst-ratings'}]},
   {rank:'✅',ticker:'SK-ADR',name:'SK Hynix — CLOSED',  yahoo:null,   entryUsd:0,  targetUsd:0,  gbp:0,    currency:'USD',status:'hold',statusLabel:'IBKR CLOSED ✅ — 05 Jun 2026',
@@ -1166,7 +1170,7 @@ const DEPLOY=[
          {label:'Q1 2026 earnings analysis',url:'https://finance.yahoo.com/markets/stocks/articles/applovin-stock-buy-explosive-q1-180400193.html'},
          {label:'AXON platform launch',url:'https://www.tradingkey.com/news/market-movers/261931462-market-movers-app-20260527'},
          {label:'BofA Buy $705 target',url:'https://tickernerd.com/stock/app-forecast/'}]},
-  {rank:'⭐',ticker:'ZS',  name:'Zscaler',              yahoo:'ZS',   entryUsd:140,targetUsd:214,gbp:1200, currency:'USD',status:'watch',statusLabel:'APR 2027 — MORNINGSTAR TOP-4 CYBER',
+  {rank:'✅',ticker:'ZS',  name:'Zscaler',              yahoo:'ZS',   entryUsd:140,targetUsd:214,gbp:1470, currency:'USD',status:'hold', statusLabel:'IN HL ISA ✅ — OPENED 08 JUN 2026',
    note:'Morningstar #4 AI cyber name. Zero-trust leader. Q3 FY26 rev +26% YoY, ARR $3.36B. Dropped ~24% post-earnings on FY27 guidance of 16-17% vs consensus 19% — one-off miss, not structural. Guggenheim upgraded to Buy 1 Jun, $214 target (+53%). 47 analysts Buy, avg $194 (+36%). Best entry opportunity in cyber right now. Only Morningstar top-4 AI cyber name not yet in portfolio.',
    refs:[{label:'Analyst consensus (+36%)',url:'https://stockanalysis.com/stocks/zs/forecast/'},
          {label:'Guggenheim upgrade: Buy $214',url:'https://www.gurufocus.com/news/8894309/zscaler-zs-upgraded-to-buy-with-214-price-target-following-earnings-guidance'},
@@ -2532,36 +2536,36 @@ const CASH_DEPLOY = [
     ticker:'ZS', name:'Zscaler — NEW POSITION', yahoo:'ZS',
     amount:1200, priority:1,
     rationale:'Morningstar #4 AI cyber name. 47 analysts Buy, avg $194 (+36% upside). Dropped 24% post-earnings on a guidance miss — one-off, not structural. Guggenheim upgraded to Buy with $214 target (+53%). Zero-trust leader, ARR $3.36B, rev +26% YoY. Only Morningstar top-4 AI cyber name not in portfolio. CAN open now — existing ISA cash, no new allowance needed.',
-    trigger:'⚡ OPEN NOW. Entry ~$140 compelling. Guggenheim $214 (+53%). 47 analysts Buy. £1,500 starter recommended.',
-    triggerActive:true, color:'var(--green)', isNew:true
+    trigger:'✅ OPENED 08 Jun — £1,470 deployed. Add £700 in Apr 2027.',
+    triggerActive:false, color:'var(--text-dim)', isNew:false
   },
   {
     ticker:'GOOGL', name:'Alphabet', yahoo:'GOOG',
-    amount:900, priority:2,
+    amount:0, priority:2,
     rationale:'Down -7.9% from cost. 65 analysts, avg target $210 (+30%+ upside). AI pivot — Gemini monetisation just starting. Adding at weakness into an underweight position.',
-    trigger:'Position below £850 — currently £804. Buy signal active.',
-    triggerActive:true, color:'var(--green)'
+    trigger:'✅ DEPLOYED 08 Jun — topped up ~£825. Now £1,657.',
+    triggerActive:false, color:'var(--text-dim)'
   },
   {
     ticker:'MELI', name:'MercadoLibre', yahoo:'MELI',
-    amount:900, priority:3,
-    rationale:'Down -10.1% from cost. 28 analysts, avg $2,600 (+38% upside). Best EM fintech/ecom exposure in ISA. LatAm expansion accelerating. Largest loss position in ISA — add at weakness.',
-    trigger:'Position below £1,300 — currently £1,221. Buy signal active.',
-    triggerActive:true, color:'var(--green)'
+    amount:0, priority:3,
+    rationale:'HOLD — do not add yet. Q1 2026 missed EPS ($8.23 vs $8.78). Margins compressed by credit card provisions and logistics spend. Multiple firms cut targets (avg now $2,255 from $2,600). MS still Overweight $2,950. Revenue +49% YoY is strong. WAIT for Q2 earnings ~Aug 2026 before adding more.',
+    trigger:'WAIT for Q2 earnings. If Q2 shows margin recovery = add £500. If misses again = exit.',
+    triggerActive:false, color:'var(--amber)'
   },
   {
     ticker:'AMZN', name:'Amazon', yahoo:'AMZN',
-    amount:700, priority:4,
+    amount:0, priority:4,
     rationale:'Down -3.6% from cost. 68 analysts, avg $280 (+35% upside). AWS AI cloud. Currently underweight at £932.',
-    trigger:'Position below £1,000 — currently £932. Buy signal active.',
-    triggerActive:true, color:'var(--green)'
+    trigger:'✅ DEPLOYED 08 Jun — 3 shares added (now 8 total, cost £1,553).',
+    triggerActive:false, color:'var(--text-dim)'
   },
   {
     ticker:'DASH', name:'DoorDash', yahoo:'DASH',
-    amount:700, priority:5,
+    amount:0, priority:5,
     rationale:'Down -5.6% from cost. 44 analysts Buy, avg $246 (+51% upside). Starter position is too small at £461. Deliveroo margin inflection expected H2 2026.',
-    trigger:'Position below £500 — currently £461. Buy signal active.',
-    triggerActive:true, color:'var(--green)'
+    trigger:'✅ DEPLOYED 08 Jun — 8 shares added (now 9 total, cost £1,082).',
+    triggerActive:false, color:'var(--text-dim)'
   },
   {
     ticker:'APP', name:'AppLovin — NEW POSITION', yahoo:'APP',
@@ -2583,7 +2587,7 @@ function renderCashDeploy(){
   const el = document.getElementById('cashDeployGrid');
   if(!el) return;
 
-  const freeCash = 7441;
+  const freeCash = 3998; // Updated 08 Jun 15:00 — 4 deployed: ZS £1,463 + GOOGL £825 + AMZN £565 + DASH £588
   let allocated = 0;
 
   const sorted = [...CASH_DEPLOY].sort((a,b) => a.priority - b.priority);
@@ -2774,11 +2778,11 @@ const CYBER_DATA=[
   },
   {
     ticker:'ZS', name:'Zscaler', yahoo:'ZS',
-    held:false, hlValue:0,
+    held:true, hlValue:1470,
     analystRating:'Strong Buy', analystTarget:194, analystCount:47, analystUpside:36,
     morningstarFV:null, morningstarMoat:'Wide', morningstarAI:'#4',
-    verdict:'watch',
-    verdictLabel:'⭐ BEST ENTRY POINT — just had 24% post-earnings drop',
+    verdict:'hold',
+    verdictLabel:'IN ISA ✅ — opened 08 Jun 2026 at £1,470',
     posColor:'var(--accent2)',
     summary:'Morningstar #4 AI cyber name. Zero-trust leader. Q3 FY26 rev +26% YoY, ARR $3.36B. Stock dropped ~24% after guiding FY27 growth 16-17% vs consensus 19%. Guggenheim upgraded to Buy on 1 Jun with $214 target (+53%). 47 analysts Buy, avg $194 (+36%). This is the Morningstar top-4 name not yet in the portfolio — and it just had a meaningful pullback. ISA-eligible on HL. April 2027 priority candidate.',
     refs:[
