@@ -1028,11 +1028,11 @@ const HOLDINGS=[
    trimToGbp:null, addTriggerGbp:null, addAmountGbp:null,
    reviewDate:'2026-09-01', reviewNote:'BOX FY2027 Q2 earnings. Analyst target $40 vs current ~$31 (+29%). Small position — hold. Only add if enterprise AI storage thesis strengthens materially. Otherwise let it run or close and redeploy into higher-conviction name.'},
 
-  {ticker:'AVGO',name:'Broadcom Inc',            costGbp:1540, currentGbp:867,
-   action:'hold', actionLabel:'TOPPED UP ✅ 09 Jun £500. AI rev +143% YoY. Div 22 Jun. Q3 Sep.',
+  {ticker:'AVGO',name:'Broadcom Inc',            costGbp:1540, currentGbp:1445,
+   action:'hold', actionLabel:'HOLD — 5 shares ✅. AI rev +143% YoY. Div 22 Jun. Q3 Sep earnings.',
    currency:'USD', yahooTicker:'AVGO',  concentration:'normal',
    analystTargetUsd:310, analystCount:38,
-   trimToGbp:null, addTriggerGbp:900, addAmountGbp:500,
+   trimToGbp:null, addTriggerGbp:1200, addAmountGbp:500,
    reviewDate:'2026-09-03', reviewNote:'AVGO Q3 FY2026 earnings Sep 2026. $310 analyst target (+18% upside). AI rev +143% YoY in Q2. Topped up £500 on 09 Jun. Dividend record date 22 Jun ($0.65/share, tax-free in ISA). Hold. Below £900 position = add signal.'},
 
   {ticker:'CDNS',name:'Cadence Design Systems',  costGbp:527,  currentGbp:564,
@@ -3177,7 +3177,7 @@ document.getElementById('chartModal').addEventListener('click',function(e){if(e.
 <!-- ═══════════════ TAB: TESTS ═══════════════ -->
 <div class="tab-panel" id="tab-tests">
   <div style="background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.3);padding:12px 16px;margin-bottom:16px;font-size:12px;color:var(--text)">
-    <strong style="color:#a78bfa">🧪 Data Integrity Tests</strong> — Suite 1 (Pre-Release) runs first and <strong style="color:var(--red)">MUST pass before any release</strong>. Catches stale advice vs executed trades, IBKR closed state, concentration flags, and label/value mismatches. All 11 suites must pass.
+    <strong style="color:#a78bfa">🧪 Data Integrity Tests — 12 Suites</strong> — Suites 1+2 are <strong style="color:var(--red)">MANDATORY before every release</strong>. Suite 1 catches stale advice vs executed trades. Suite 2 catches stale currentGbp after top-ups (the AVGO £867 issue). All 12 suites must pass green before pushing to GitHub.
   </div>
   <div style="margin-bottom:12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
     <button class="btn" onclick="runAllTests()">▶ Run All Tests</button>
@@ -3200,6 +3200,7 @@ const VALID_ETORO_STATUS   = ['hold','watch','close'];
 function runAllTests() {
   const suites = [
     testPreRelease(),
+    testPositionValues(),
     testHoldings(),
     testEarnings(),
     testGcalVsEarnings(),
@@ -3957,11 +3958,89 @@ function testPreRelease() {
   return results;
 }
 
+// ══ SUITE 12 — Position Value Sanity Checks ══════════
+// Catches stale currentGbp after trades (the AVGO £867→£1,445 issue)
+function testPositionValues() {
+  const S = 'Position Value Sanity (currentGbp vs cost)';
+  const results = [];
+
+  HOLDINGS.forEach(h => {
+    if (!h.currentGbp || !h.costGbp || h.concentration === 'core') return;
+
+    // Rule: if addTriggerGbp is set and currentGbp < addTriggerGbp,
+    // but costGbp is significantly higher than currentGbp,
+    // this is likely a stale currentGbp from before a top-up
+    if (h.addTriggerGbp && h.currentGbp < h.addTriggerGbp && h.costGbp > h.currentGbp * 1.3) {
+      results.push(t(S,
+        `${h.ticker}: currentGbp (£${h.currentGbp}) < addTrigger (£${h.addTriggerGbp}) but cost (£${h.costGbp}) suggests position was topped up`,
+        false,
+        `Likely stale currentGbp. Cost £${h.costGbp} >> currentGbp £${h.currentGbp} — update currentGbp from latest HL screenshot before releasing.`,
+        true
+      ));
+    }
+
+    // Rule: currentGbp should not be more than 3× or less than 0.3× of costGbp
+    // (extreme divergence suggests wrong value)
+    const ratio = h.currentGbp / h.costGbp;
+    if (ratio > 4) {
+      results.push(t(S,
+        `${h.ticker}: currentGbp (£${h.currentGbp}) is >4× cost (£${h.costGbp}) — verify not stale`,
+        true, // warn not fail — could be a genuine 300%+ gainer
+        `Ratio ${ratio.toFixed(1)}× — confirm this is real and not a pre-top-up value left in place`,
+        true
+      ));
+    }
+    if (ratio < 0.2 && h.costGbp > 500) {
+      results.push(t(S,
+        `${h.ticker}: currentGbp (£${h.currentGbp}) is <20% of cost (£${h.costGbp}) — likely stale`,
+        false,
+        `Position value looks too low vs cost. Update from latest HL screenshot.`
+      ));
+    }
+
+    // Rule: if action is 'hold' and addTrigger is set,
+    // verify the trigger threshold makes sense for the current position size
+    // Specifically: trigger should not be less than 60% of costGbp
+    if (h.action === 'hold' && h.addTriggerGbp && h.addTriggerGbp < h.costGbp * 0.5) {
+      results.push(t(S,
+        `${h.ticker}: addTriggerGbp (£${h.addTriggerGbp}) may be stale vs current cost basis (£${h.costGbp})`,
+        true,
+        `Trigger £${h.addTriggerGbp} is <50% of cost £${h.costGbp} — was this set before a top-up? Review.`,
+        true
+      ));
+    }
+  });
+
+  // Specific known checks from past issues
+  const avgo = HOLDINGS.find(h => h.ticker === 'AVGO');
+  results.push(t(S, 'AVGO currentGbp reflects 5-share position (>£1,200)',
+    !avgo || avgo.currentGbp > 1200,
+    `AVGO currentGbp = £${avgo?.currentGbp} — should be >£1,200 for 5 shares. Was this updated after the 09 Jun top-up?`
+  ));
+
+  const mu = HOLDINGS.find(h => h.ticker === 'MU');
+  results.push(t(S, 'MU currentGbp reflects post-trim 3-share position (£1,400–2,500)',
+    !mu || (mu.currentGbp > 1400 && mu.currentGbp < 2500),
+    `MU currentGbp = £${mu?.currentGbp} — expected £1,400–2,500 for 3 shares post-trim`
+  ));
+
+  const sndk = HOLDINGS.find(h => h.ticker === 'SNDK');
+  if (sndk) {
+    results.push(t(S, "SNDK is marked as sold (action:'close') not active",
+      sndk.action === 'close',
+      `SNDK action = '${sndk?.action}' — should be 'close' (position sold 09 Jun)`
+    ));
+  }
+
+  return results;
+}
+
 // Auto-run on tab load (also called from showTab)
 function runAllTests() {
   // Call the real implementation above
   const suites = [
     testPreRelease(),
+    testPositionValues(),
     testHoldings(),
     testEarnings(),
     testGcalVsEarnings(),
