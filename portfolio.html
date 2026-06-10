@@ -307,7 +307,7 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 <div class="header">
   <div class="header-left">
     <h1>Jude's <span>ISA</span> Portfolio</h1>
-    <p>Hargreaves Lansdown · Stocks & Shares ISA · Updated 02 Jun 2026 — 23:07 | 3 Platforms Active</p>
+    <p>Hargreaves Lansdown · Stocks & Shares ISA · Updated 10 Jun 2026 — 15:27 | 2 Platforms Active (HL ISA + eToro)</p>
   </div>
   <div class="header-right">
     <span class="last-updated" id="lastUpdated">Not yet refreshed</span>
@@ -1028,7 +1028,7 @@ const HOLDINGS=[
    trimToGbp:null, addTriggerGbp:null, addAmountGbp:null,
    reviewDate:'2026-09-01', reviewNote:'BOX FY2027 Q2 earnings. Analyst target $40 vs current ~$31 (+29%). Small position — hold. Only add if enterprise AI storage thesis strengthens materially. Otherwise let it run or close and redeploy into higher-conviction name.'},
 
-  {ticker:'AVGO',name:'Broadcom Inc',            costGbp:1468, currentGbp:867,
+  {ticker:'AVGO',name:'Broadcom Inc',            costGbp:1540, currentGbp:867,
    action:'hold', actionLabel:'TOPPED UP ✅ 09 Jun £500. AI rev +143% YoY. Div 22 Jun. Q3 Sep.',
    currency:'USD', yahooTicker:'AVGO',  concentration:'normal',
    analystTargetUsd:310, analystCount:38,
@@ -1120,13 +1120,6 @@ const HOLDINGS=[
    trimToGbp:null, addTriggerGbp:2500, addAmountGbp:500,
    reviewDate:'2026-06-24', reviewNote:'MU Q3 FY2026 EARNINGS 24 JUN. Consensus: EPS $19.82, Rev $34.8B. HBM sold out 2026. Micron joined $1T market cap club. NVIDIA CEO green-lit Micron for HBM4 chips. Analyst avg target now ~$550, MS $1,050. HOLD 3 shares. After earnings: if HBM revenue mix increasing and FY2026 guidance raised, consider adding £500 in Apr 2027. Watch: gross margin trend, HBM share of DRAM mix, and any guidance on HBM4 ramp.'},
 
-  {ticker:'SNDK',name:'Sandisk Corporation',     costGbp:843, currentGbp:1167,
-   action:'close',  actionLabel:'SELL ORDER PLACED ✅ 09 Jun — ~$1,647. Proceeds pending.',
-   currency:'USD', yahooTicker:'SNDK',  concentration:'normal',
-   analystTargetUsd:1751, analystCount:22,
-   trimToGbp:null, addTriggerGbp:null, addAmountGbp:null,
-   reviewDate:'2026-06-10', reviewNote:'SNDK SELL ORDER PLACED 09 Jun. 1 share @ ~$1,647. Cost £843. Gain ~+95%. No CGT (ISA). Reason: +6% to consensus only, insider selling at Jun 3 ATH. Proceeds ~£1,650 to ISA cash. Redeploy: AVGO topped up ✅, consider ASML/FIX/RR.'},
-
   // ── WATCH — at or above target, no add ──────────────────────────────────────────
   {ticker:'MSCI',name:'MSCI Inc',                costGbp:1750, currentGbp:1845,
    action:'hold', actionLabel:'HOLD +7.0% — index monopoly. No add needed.',
@@ -1169,6 +1162,13 @@ const HOLDINGS=[
    analystTargetUsd:200, analystCount:47,
    trimToGbp:null, addTriggerGbp:1200, addAmountGbp:700,
    reviewDate:'2026-09-01', reviewNote:'ZS Q4 FY2026 earnings ~Sep 2026. Opened 08 Jun at £1,470. Guggenheim $214 target (+53%). 47 analysts Buy, avg $194 (+36%). Zero-trust leader, ARR $3.36B, rev +26% YoY. Dropped 24% post-earnings Mar 2026 on FY27 guidance miss — one-off. Add £700 in Apr 2027 if thesis intact. Watch: net new ARR growth, NRR >120%, platform consolidation wins.'},
+
+  {ticker:'META', name:'Meta Platforms',       costGbp:446,  currentGbp:595,
+   action:'hold', actionLabel:'NEW 10 Jun — Ad-AI compounder. $827 target (+39%).',
+   currency:'USD', yahooTicker:'META', concentration:'normal',
+   analystTargetUsd:827, analystCount:64,
+   trimToGbp:null, addTriggerGbp:400, addAmountGbp:500,
+   reviewDate:'2026-10-29', reviewNote:'META Q3 2026 earnings ~Oct 2026. 64 analysts Strong Buy, avg $827 (+39% upside). 0 Sell ratings. 2026 EPS est raised to $32.81. Revenue $253B. AI ad targeting thesis: Advantage+ AI ad platform driving margin expansion. Reality Labs drag ~$5B/quarter but ad biz overwhelms it. Add £500 in Apr 2027 if position below £400. Watch: AI Capex levels, EU regulatory fines, Zuckerberg governance risk.'},
   {ticker:'VWRL',name:'Vanguard FTSE Global All Cap', costGbp:9994, currentGbp:10402,
    action:'hold', actionLabel:'HOLD +6.1% — passive core. Do not change.',
    currency:'GBP', hlOnly:true, concentration:'core',
@@ -1266,6 +1266,7 @@ const EARNINGS=[
   {date:'05 Jun — DONE ✅',  ticker:'SK-ADR',company:'SK Hynix KRX — CLOSED',  eps:'Sold @ ₩1,968,000',       action:'✅ CLOSED 05 Jun 2026. 3 shares sold, realised gain +~£360. Proceeds ~£2,050 → HSBC Bonus Saver. £1k HL reserve freed → ZS.',urgent:false,isoDate:'2026-06-05'},
   {date:'21 Sep 2026',       ticker:'TTD',  company:'TTD NASDAQ Compliance Cure',eps:'COMPLIANCE DEADLINE',  action:'Check HL: if TTD re-enabled, it becomes available to buy inside ISA. Review eToro 2 lots for bed-and-ISA migration plan.',urgent:false,isoDate:'2026-09-21'},
   {date:'H2 2026',           ticker:'HXSCL',company:'SK Hynix ADR — Nasdaq Uplisting Watch', eps:'OTC now · Nasdaq TBC', action:'ADR ticker HXSCL confirmed. Currently OTC at ~$41.71. Watch for Nasdaq/NYSE uplisting announcement. On uplisting: check HL ISA eligibility → buy HXSCL inside ISA wrapper. ADR uses existing shares — no dilution. Set Google Alert: "SK Hynix HXSCL Nasdaq" + "SK Hynix ADR listing date".', urgent:false, isoDate:'2026-12-31'},
+  {date:'29 Oct 2026',       ticker:'META', company:'Meta Q3 2026 Earnings',         eps:'EPS $6.08 est',           action:'HOLD. 64 analysts Strong Buy, avg $827 (+39%). AI Advantage+ platform driving ad revenue. Watch: AI capex trajectory, EU regulatory fines, Reality Labs losses. If Q3 beats and guidance raised, add £500 in Apr 2027.',urgent:false,isoDate:'2026-10-29'},
   {date:'6 Apr 2027',        ticker:'ISA',  company:'New ISA Allowance Opens',  eps:'£20,000',                action:'Deploy plan: 1) APP £1,500 2) ZS add £700 3) TTD migrate £1,400 4) ASML £1,000 5) DASH add £500 6) MELI add £700 (if Q2 recovers) 7) GOOGL £500 8) AMZN £500 9) CORT £600 10) MU re-add £500. SNDK sold ✅. Close eToro TTD/SMCI. Review RKLB.',urgent:false,isoDate:'2027-04-06'},
 ];
 
@@ -1281,6 +1282,7 @@ const GCAL_EVENTS=[
   {title:'SK Hynix IBKR — CLOSED ✅ 05 Jun',date:'2026-06-05',notes:'All 3 KRX shares sold @ ₩1,968,000. Realised gain +~£360. Proceeds ~£2,050 → HSBC. ZS deployed with freed cash.',alarm:-60},
   {title:'⭐ SK Hynix HXSCL — Watch for Nasdaq Uplisting',date:'2026-09-30',notes:'SK Hynix ADR ticker: HXSCL. Currently trading OTC. Filed confidentially with SEC for NYSE/Nasdaq uplisting within 2026. ADR uses EXISTING shares (not new issue — no dilution). Monitor: (1) SEC review completion (2) HL adds HXSCL to platform (3) OTC price vs KRX parity. When uplisted to Nasdaq: buy HXSCL inside HL ISA. Watch Google Alerts for HXSCL + SK Hynix Nasdaq.',alarm:-10080},
   {title:'AppLovin (APP) AXON Launch — Watch Catalyst',date:'2026-06-30',notes:'AppLovin global self-serve AXON platform launch scheduled Jun 2026. This is the binary catalyst for the stock. If launch impresses: consider bringing entry target forward. Target £1,500 starter Apr 2027. Current price ~$474, analyst avg $743 (+57%). 26 analysts Buy.',alarm:-1440},
+  {title:'Meta Platforms (META) Q3 2026 Earnings',date:'2026-10-29',notes:'META Q3 2026 earnings. EPS est $6.08. 64 analysts Strong Buy, avg $827 (+39%). Watch: AI capex levels, Advantage+ AI ad traction, EU regulatory risk, Reality Labs losses. Opened 10 Jun at £446. Add £500 in Apr 2027 if thesis intact.',alarm:-1440},
   {title:'AppLovin (APP) Q2 2026 Earnings — Pre-Buy Review',date:'2026-08-07',notes:'APP Q2 2026 earnings. Check: AXON launch traction, e-commerce advertiser onboarding, EBITDA margin vs 85% Q1 level. If metrics hold, confirm £1,500 Apr 2027 ISA allocation. Watch for any SEC data-practice ruling (overhang risk).',alarm:-1440},
   {title:'Corcept (CORT) Lifyorli Launch Review',date:'2026-09-01',notes:'Review Corcept Lifyorli (relacorilant) commercial launch progress in ovarian cancer. 5 analysts all Buy, avg $135 (+86%). Check: sales force deployment, early uptake data, class action lawsuit progress. Confirm or defer £600 Apr 2027 ISA starter. Verify HL ISA eligibility before acting.',alarm:-1440},
   // ── POSITION REVIEW REMINDERS — auto-generated from HOLDINGS reviewDate ──
@@ -1310,7 +1312,7 @@ function buildGcalFromHoldings(){
 
 // ── Final ISA allowance event ─────────────────────────────────────────────
 const GCAL_ISA={title:'New ISA Allowance Opens — Full Deploy Plan',date:'2027-04-06',
-  notes:'£20,000 new allowance. Priority: 1) APP AppLovin £1,500 2) ZS add £700 3) TTD migrate £1,400 4) ASML add £1,000 5) DASH add £500 6) MELI add £700 (if Q2 recovers) 7) CORT starter £600 8) MU re-add £500 9) GOOGL add £500 10) AMZN add £500. SNDK SOLD ✅ 09 Jun. Close eToro SMCI/TTD. Review RKLB below $90. Consider adding RR. and FIX on any dip — both have 40-86% analyst upside.',
+  notes:'£20,000 new allowance. Priority: 1) APP AppLovin £1,500 2) ZS add £700 3) TTD migrate £1,400 4) ASML add £1,000 5) META add £500 (ad-AI compounder, +39% upside) 6) DASH add £500 7) MELI add £700 (if Q2 recovers) 8) CORT starter £600 9) MU re-add £500 10) AVGO add £500. SNDK SOLD ✅. Close eToro SMCI/TTD. Review RKLB below $90.',
   alarm:-1440};
 
 // ══════════════════════════════════════════════════
@@ -2633,7 +2635,7 @@ function renderCashDeploy(){
   const el = document.getElementById('cashDeployGrid');
   if(!el) return;
 
-  const freeCash = 5148; // Updated 09 Jun — AVGO +£500 deployed. ~£5,148 remaining.
+  const freeCash = 4167; // Updated 10 Jun — META £446 + AVGO £500 deployed. Cash £4,167.
   let allocated = 0;
 
   const sorted = [...CASH_DEPLOY].sort((a,b) => a.priority - b.priority);
