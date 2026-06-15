@@ -321,7 +321,7 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
   <div class="stat-card green"><div class="stat-label">ISA Total Value</div><div class="stat-value" id="totalValue">£46,328</div><div class="stat-sub" id="totalChangeSub">02 Jun 2026 23:07 · 27 positions</div></div>
   <div class="stat-card red"><div class="stat-label">ISA Allowance 25/26</div><div class="stat-value" style="font-size:16px">FULLY USED</div><div class="stat-sub">Next: 6 Apr 2027</div></div>
   <div class="stat-card amber"><div class="stat-label">Invested</div><div class="stat-value" id="investedValue">£43,046</div><div class="stat-sub" id="glSub">+£5,264 total (+13.9%)</div></div>
-  <div class="stat-card green"><div class="stat-label">⚡ Next: Redeploy</div><div class="stat-value" style="font-size:14px;color:var(--accent2)">SNDK sold ✅</div><div class="stat-sub">~£1,650 proceeds → cash · AVGO/RR/FIX candidates</div></div>
+  <div class="stat-card green"><div class="stat-label">⚡ Next Event</div><div class="stat-value" style="font-size:14px;color:var(--accent2)">MU earnings 24 Jun</div><div class="stat-sub">EPS $19.15 est · Rev $33.5B · CRWD split 2 Jul</div></div>
   <div class="stat-card green"><div class="stat-label">Cash Available</div><div class="stat-value" style="font-size:16px">£3,998</div><div class="stat-sub">No ADR reserve needed · HXSCL watch</div></div>
 </div>
 
@@ -736,7 +736,7 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
         <div class="chat-messages" id="chatMessages">
           <div class="msg assistant">
             <div class="msg-label">Claude</div>
-            Hi Jude! I have full context of your ISA portfolio (28 positions, £44,775), deployment plan, tax situation, and research. Ask me anything — MELI Q2 outlook, ZS entry thesis, MU earnings 24 Jun, HXSCL Nasdaq uplisting watch, or any new position analysis.
+            Hi Jude! I have full context of your ISA portfolio (27 positions, ~£45,085). Key events: MU Q3 earnings 24 Jun (EPS $19.15 est, Rev $33.5B), AVGO dividend record 22 Jun, CRWD 4-for-1 split 2 Jul. SNDK 1 share held — do not add (20% above analyst consensus). Ask me anything — MU earnings watch, FLXK SK Hynix exposure, HXSCL ADR uplisting, or Apr 2027 deploy plan.
           </div>
         </div>
         <div class="chat-input-area">
@@ -964,7 +964,7 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 // DATA
 // ══════════════════════════════════════════════════
 // Last synced: 05 Jun 2026 — IBKR closed ✅ | SK Hynix sold @ ₩1,968,000 | proceeds → HSBC
-// Last synced: 02 Jun 2026. USD/GBP 1.3464 · EUR/GBP 1.1379 · 27 positions
+// Last synced: 15 Jun 2026. USD/GBP 1.3464 · EUR/GBP 1.1379 · 27 positions
 // analystTargetUsd: consensus 12-month target (USD, or GBX for UK-listed)
 // trimToGbp: sell down TO this £ value (null = no trim needed)
 // addTriggerGbp: add MORE if position falls to this £ value or below (April 2027 ISA)
@@ -1071,11 +1071,11 @@ const HOLDINGS=[
    reviewDate:'2026-07-29', reviewNote:'GLW Q2 2026 earnings ~Jul 2026. $58 target vs current ~$44 (+32%). Small position — hold. Fibre optic demand from AI data centres is the thesis. Do not add unless position shrinks below £500 AND thesis remains intact. Consider closing if conviction has dimmed.'},
 
   {ticker:'CRWD',name:'CrowdStrike',             costGbp:1027, currentGbp:1508,
-   action:'hold', actionLabel:'HOLD +66.6% — cyber leader. Do not add (overvalued).',
+   action:'hold', actionLabel:'HOLD +66.6% — Q1 BEAT ✅. 4-for-1 split 2 Jul. Do not add (overvalued).',
    currency:'USD', yahooTicker:'CRWD',  concentration:'normal',
    analystTargetUsd:712, analystCount:44,
    trimToGbp:null, addTriggerGbp:null, addAmountGbp:null,
-   reviewDate:'2026-09-09', reviewNote:'CRWD Q2 FY2027 earnings ~Sep 2026. +66.6% gain. Morningstar FV $132 vs current ~$580 = 199% premium. DO NOT ADD more. Already well-positioned. Hold and let compound. Trim only if it reaches 8%+ of invested.'},
+   reviewDate:'2026-09-09', reviewNote:'CRWD Q2 FY2027 earnings ~Sep 2026. Q1 FY2027 BEAT: Rev $1.39B, Net New ARR $256M (+32%), FCF $468M. Raised FY27 guidance. 4-for-1 stock split: record date 25 Jun 2026, split-adjusted trading from 2 Jul 2026 (3 shares become 12). Morningstar FV $132 vs current ~$580 = 199% premium pre-split. DO NOT ADD. Hold and let compound. Trim only if position reaches 8%+ of invested.'},
 
   {ticker:'EME', name:'EMCOR Group',             costGbp:1390, currentGbp:1399,
    action:'hold', actionLabel:'HOLD +0.7% — data centre build. Back to cost.',
@@ -1118,7 +1118,7 @@ const HOLDINGS=[
    currency:'USD', yahooTicker:'MU',   concentration:'normal',
    analystTargetUsd:550, analystCount:44,
    trimToGbp:null, addTriggerGbp:2500, addAmountGbp:500,
-   reviewDate:'2026-06-24', reviewNote:'MU Q3 FY2026 EARNINGS 24 JUN. Consensus: EPS $19.82, Rev $34.8B. HBM sold out 2026. Micron joined $1T market cap club. NVIDIA CEO green-lit Micron for HBM4 chips. Analyst avg target now ~$550, MS $1,050. HOLD 3 shares. After earnings: if HBM revenue mix increasing and FY2026 guidance raised, consider adding £500 in Apr 2027. Watch: gross margin trend, HBM share of DRAM mix, and any guidance on HBM4 ramp.'},
+   reviewDate:'2026-06-24', reviewNote:'MU Q3 FY2026 EARNINGS 24 JUN. Company guidance: EPS $19.15 (±$0.40), Rev $33.5B (±$0.75B), gross margin ~81%. HBM4 36GB 12-Hi in volume production. 1γ DRAM majority of mix by mid-2026. $1T market cap. NVIDIA green-lit for HBM4 chips. Analyst avg target ~$550, MS $1,050, Susquehanna $1,750. HOLD 3 shares. After earnings: if HBM revenue mix increasing and FY2027 guidance raised, consider adding £500 in Apr 2027. Watch: gross margin vs 81% guide, HBM share of DRAM mix, FY27 guidance.'},
 
   // ── WATCH — at or above target, no add ──────────────────────────────────────────
   {ticker:'MSCI',name:'MSCI Inc',                costGbp:1750, currentGbp:1845,
@@ -1177,7 +1177,7 @@ const HOLDINGS=[
    reviewDate:'2027-04-06', reviewNote:'Vanguard FTSE Global All Cap — passive core. No action required. Target ~25% of invested. Add £4,000–5,000 per year via new ISA contributions to maintain the 75/25 active/passive split.'},
 ];
 
-// Updated 04 Jun 2026 — APP and CORT added from insider ownership / growth screen
+// Updated 15 Jun 2026 — MU estimates refreshed, SNDK updated to 1-share tracker, CRWD split added
 const DEPLOY=[
   // ── IN ISA — BOUGHT ──
   {rank:'✅',ticker:'DASH',name:'DoorDash',          yahoo:'DASH', entryUsd:167,targetUsd:258,gbp:1082,  currency:'USD',status:'hold', statusLabel:'IN HL ISA — STARTER',
@@ -1197,7 +1197,7 @@ const DEPLOY=[
          {label:'MarketBeat ratings',url:'https://www.marketbeat.com/stocks/NASDAQ/PANW/forecast/'}]},
   // ── FUTURE ADD — APR 2027 ──
   {rank:'⏳',ticker:'MU',  name:'Micron Technology',   yahoo:'MU',   entryUsd:640,targetUsd:550,gbp:1500, currency:'USD',status:'hold', statusLabel:'IN ISA — HOLD. Q3 EARNINGS 24 JUN',
-   note:'TRIMMED ✅ £1,300 on 03 Jun. Now 3 shares, £1,942. HBM sold out 2026. Joined $1T market cap club. NVIDIA CEO green-lit for HBM4 chips. 44 analysts Strong Buy, avg ~$550. Morgan Stanley $1,050, Susquehanna $1,750. Q3 earnings 24 Jun: EPS $19.82 est, Rev $34.8B. Consider adding £500 in Apr 2027 if HBM ramp accelerates.',
+   note:'TRIMMED ✅ £1,300 on 03 Jun. Now 3 shares. HBM sold out 2026. $1T market cap. NVIDIA green-lit for HBM4. HBM4 36GB 12-Hi in volume production. 44 analysts Strong Buy. Company Q3 guide: EPS $19.15 est, Rev $33.5B, gross margin ~81%. MS $1,050, Susquehanna $1,750. Add £500 in Apr 2027 if HBM ramp and FY27 guidance impress.',
    refs:[{label:'Analyst consensus',url:'https://stockanalysis.com/stocks/mu/forecast/'},
          {label:'Earnings 24 Jun 2026',url:'https://www.benzinga.com/quote/MU/analyst-ratings'}]},
   {rank:'✅',ticker:'SK-ADR',name:'SK Hynix — CLOSED',  yahoo:null,   entryUsd:0,  targetUsd:0,  gbp:0,    currency:'USD',status:'hold',statusLabel:'IBKR CLOSED ✅ — 05 Jun 2026',
@@ -1227,8 +1227,8 @@ const DEPLOY=[
   {rank:'👁',ticker:'RKLB',name:'Rocket Lab',           yahoo:'RKLB', entryUsd:90, targetUsd:104,gbp:1000, currency:'USD',status:'watch',statusLabel:'WAIT — STILL ABOVE ANALYST TARGETS',
    note:'Trading ~$122 vs analyst avg $104 — stock is ~17% ABOVE consensus. Neutron delayed to late 2026. SpaceX IPO hype lifting sector. No buy until pullback to $80-90 OR analyst targets revised materially post-Neutron launch.',
    refs:[{label:'Analyst consensus',url:'https://stockanalysis.com/stocks/rklb/forecast/'}]},
-  {rank:'✅',ticker:'SNDK',name:'Sandisk — SOLD',yahoo:'SNDK', entryUsd:843,  targetUsd:1647, gbp:1650, currency:'USD',status:'hold',statusLabel:'SOLD ✅ 09 Jun 2026',
-   note:'SOLD 09 Jun 2026. 1 share @ ~$1,647 (£~1,650). Cost £843. Gain ~+95%. No CGT (ISA wrapper). Reason: only +6% to analyst consensus, insider selling at ATH on Jun 3, BofA $2,100 was outlier. Proceeds back to ISA cash. Redeploy into: AVGO (AI thesis intact), RR. (+12.6% upside, 1,417p target — SMR + buyback catalyst), FIX (Q1 beat 55%).',
+  {rank:'✅',ticker:'SNDK',name:'Sandisk — 1 share (tracker)',yahoo:'SNDK', entryUsd:843, targetUsd:1575, gbp:697, currency:'USD',status:'hold',statusLabel:'1 SHARE — TRACKER ONLY. DO NOT ADD.',
+   note:'1 share held in HL ISA. Cost ~£843. Current ~$1,980 (~£1,560/share). +700% YTD. Trading 20.5% ABOVE analyst consensus target of $1,575 (15 analysts, 13 Buy). Simply Wall St intrinsic value $875. Bear case $1,027 (-48%). Insider selling Jun 3. Beta 5.04. Q4 FY2026 guide: Rev $7.75–8.25B. DO NOT ADD — no upside to consensus at current price. Hold as tracker; reassess below $1,575.',
    refs:[{label:'SanDisk analyst targets',url:'https://stockanalysis.com/stocks/sndk/forecast/'}]},
   {rank:'👁',ticker:'KRYS',name:'Krystal Biotech',      yahoo:'KRYS', entryUsd:130,targetUsd:180,gbp:1200, currency:'USD',status:'watch',statusLabel:'MF EPIC 50 — WATCH',
    note:'MF Epic 50 2.04%. Vyjuvek gene therapy +32% YoY to $116M. 95% gross margin, $1B cash. Strong Buy consensus. Healthcare diversification. Apr 2027 ISA candidate.',
@@ -1254,9 +1254,9 @@ const EARNINGS=[
   {date:'14 May — DONE ✅',  ticker:'CLBT', company:'Cellebrite Q1 2026',      eps:'$0.12 BEAT $0.09 (+33%)', action:'CLOSED on eToro — position gone. Guidance raised.',                urgent:false,isoDate:'2026-05-14'},
   {date:'28 May — DONE ✅',  ticker:'000660',company:'SK Hynix Ex-Dividend',   eps:'KRW750/share',            action:'Held through ex-div. Korean WHT 22% applied via IBKR.',         urgent:false,isoDate:'2026-05-28'},
   {date:'3 Jun — DONE ✅',   ticker:'AVGO', company:'Broadcom Q2 FY2026',      eps:'$2.32 est',               action:'Hold HL £1,073 (+10.9%). AI custom chip thesis intact.',           urgent:false,isoDate:'2026-06-03'},
-  {date:'9 Jun 2026',        ticker:'CRWD', company:'CrowdStrike Q1 FY2027',   eps:'$1.07 est',               action:'Hold HL £1,711 (+66.6%). Platform consolidation accelerating. No action needed.', urgent:false,isoDate:'2026-06-09'},
+  {date:'3 Jun — DONE ✅',   ticker:'CRWD', company:'CrowdStrike Q1 FY2027',   eps:'Rev $1.39B BEAT (+26% YoY). Net New ARR $256M +32%. FCF $468M (34% margin).', action:'STRONG BEAT. Raised FY27 guidance +520bps. Falcon Flex ARR >$1.9B. 4-for-1 stock split: record 25 Jun, trading split-adjusted 2 Jul 2026. HOLD. Next earnings Q2 FY2027 ~Sep 2026.', urgent:false,isoDate:'2026-06-03'},
   {date:'16 Jun — DONE ✅',  ticker:'ORCL', company:'Oracle Q4 FY2026',        eps:'CLOSED eToro pre-earnings', action:'✅ CLOSED both ORCL lots on eToro (04 Jun). CGT loss harvested. 30-day rule active — no ORCL rebuy until 4 Jul 2026.', urgent:false,isoDate:'2026-06-04'},
-  {date:'24 Jun 2026 ⚠',    ticker:'MU',   company:'Micron Q3 FY2026',        eps:'EPS $19.88 est · Rev $34.89B est', action:'TRIMMED ✅ 03 Jun. 3 shares @ cost £1,517. WATCH Q3 earnings 24 Jun: EPS $19.82 est, Rev $34.8B. HBM sold out 2026. Avg analyst target ~$550. Hold post-earnings.', urgent:false,isoDate:'2026-06-24'},
+  {date:'24 Jun 2026 ⚠',    ticker:'MU',   company:'Micron Q3 FY2026',        eps:'EPS $19.15 est · Rev $33.5B est (co. guide)', action:'TRIMMED ✅ 03 Jun. 3 shares @ cost £1,517. WATCH Q3 earnings 24 Jun: EPS $19.15 est (±$0.40), Rev $33.5B est (±$0.75B), gross margin ~81% guided. HBM sold out 2026. $1T market cap. NVIDIA green-lit for HBM4. HBM4 36GB 12-Hi in volume production. MS target $1,050. Hold post-earnings; add signal if HBM rev mix and FY27 guide impress.', urgent:true,isoDate:'2026-06-24'},
   {date:'22 Jun 2026',       ticker:'AVGO', company:'Broadcom Dividend Record Date',  eps:'$0.65/share',             action:'Hold through record date to receive $0.65 dividend inside ISA wrapper (tax-free). Payable 30 Jun 2026.',urgent:false,isoDate:'2026-06-22'},
   {date:'21 Jul 2026',       ticker:'MSCI', company:'MSCI Q2 2026',            eps:'$4.55+ est',              action:'Hold HL £1,872 (+7%). Index licensing monopoly. No action.',       urgent:false,isoDate:'2026-07-21'},
   {date:'29 Jul 2026',       ticker:'000660',company:'SK Hynix Q2 2026 (KRX)', eps:'KRW64,500 est',           action:'⭐ IBKR CLOSED ✅. Watch Q2 earnings for ADR listing update. HXSCL (OTC) to Nasdaq uplisting expected H2 2026. Buy HXSCL in HL ISA on uplisting.',urgent:false,isoDate:'2026-07-29'},
@@ -1272,7 +1272,8 @@ const EARNINGS=[
 
 const GCAL_EVENTS=[
   // ── EARNINGS & KEY EVENTS ─────────────────────────────────────────────────
-  {title:'CrowdStrike (CRWD) Earnings',date:'2026-06-09',notes:'CrowdStrike Q1 FY2027. Est EPS $1.07. Hold HL £1,711 (+66.6%). Platform consolidation. No action needed.',alarm:-60},
+  {title:'⭐ CRWD 4-for-1 Stock Split — Record Date',date:'2026-06-25',notes:'CrowdStrike 4-for-1 forward stock split. Record date 25 Jun 2026. Each share becomes 4 shares. Trading on split-adjusted basis from 2 Jul 2026. Cost basis per share adjusts automatically in HL ISA. No action required — just note that post-split your 3 shares become 12 shares at ~1/4 the price.',alarm:-1440},
+  {title:'CrowdStrike (CRWD) — Split-Adjusted Trading Begins',date:'2026-07-02',notes:'CRWD begins trading on split-adjusted basis today (4-for-1). 3 pre-split shares = 12 post-split shares. Q2 FY2027 earnings expected ~Sep 2026.',alarm:-60},
   {title:'ORCL eToro — CLOSED ✅ 04 Jun',date:'2026-06-04',notes:'Both ORCL lots closed on eToro before 16 Jun earnings. CGT loss crystallised. 30-day rule: no ORCL rebuy until 4 Jul 2026. Realised loss offsets gains in 2026/27 tax year.',alarm:-60},
   {title:'⚠ MICRON (MU) Earnings — TRIM DECISION',date:'2026-06-24',notes:'Micron Q3 FY2026. ACTION BEFORE EARNINGS: Sell £1,000-1,500 in HL ISA (no CGT). Reduce from 9.2% to ~6-7%. After: if HBM guidance strong, hold £2,500 remainder. If disappoints, trim further to £2,000.',alarm:-1440},
   {title:'MSCI Inc Earnings',date:'2026-07-21',notes:'MSCI Q2 2026. Hold HL £1,872 (+7%). Add £500 in Apr 2027 if below £1,600. No action now.',alarm:-60},
