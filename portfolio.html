@@ -347,7 +347,7 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
     </div>
   </div>
   <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,71,87,0.2);color:#e2e8f0">
-    <strong style="color:#00ff9d">eToro status:</strong> 4 positions remaining (TTD ×2 lots, SMCI ×1, LULU ×1, GOLD ×1). ORCL closed ✅ (CGT loss harvested). Target: wind down to ~4–5 positions. TTD (-£773) is the primary CGT harvest candidate before Apr 2027.
+    <strong style="color:#00ff9d">eToro status:</strong> 1 position remaining — GoldWorldWide Smart Portfolio (net £1,933, -£308). TTD ✅ and LULU ✅ closed 16 Jun — proceeds to HSBC Bonus Saver. CGT loss shield now <strong style="color:#00ff9d">~£3,046</strong>. GoldWorldWide: hold, gold macro thesis intact.
   </div>
 </div>
 <div class="nav-tabs">
@@ -524,9 +524,10 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
     </div>
     <div class="section-body">
       <div style="background:rgba(255,71,87,0.08);border-left:3px solid #ff4757;padding:10px 16px;font-size:11px;color:var(--text-dim);margin:12px 14px 0">
-        ⚠️ CGT-liable positions (no ISA wrapper). <strong style="color:var(--text)">4 assets, 5 open lots</strong> — TTD held as <strong style="color:var(--amber)">2 separate lots</strong>. ORCL closed ✅ (CGT loss harvested 04 Jun). CLBT closed ✅.
-        Total unrealised loss: <strong style="color:var(--green)">-£1,312</strong> available for CGT harvesting. Largest losses: TTD -£773 · LULU -£199.
-        <span style="color:var(--amber)">⚡ Closing both TTD lots = -£773 crystallised losses</span> — harvest before Apr 2027 then rebuy in HL ISA. CGT loss shield to date: ~£2,074.
+        ⚠️ CGT-liable positions (no ISA wrapper). <strong style="color:var(--text)">1 asset remaining — GoldWorldWide Smart Portfolio</strong>.
+        TTD ✅ closed 16 Jun (both lots, -£773 crystallised). LULU ✅ closed 16 Jun (-£199 crystallised). Proceeds → HSBC Bonus Saver.
+        Total CGT loss shield: <strong style="color:var(--green)">~£3,046</strong> (prior £2,074 + TTD £773 + LULU £199).
+        <span style="color:var(--amber)">GoldWorldWide: HOLD</span> — net value £1,933 (-£308). Gold thesis intact: Goldman $5,400, JPM $6,000 year-end targets. Pullback from Jan ATH ($5,589) is macro-driven not structural. No action until gold recovers toward $5,000+.
       </div>
       <table class="data-table" style="margin-top:8px">
         <thead><tr>
@@ -770,10 +771,9 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 
   <!-- ALERT -->
   <div style="background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.3);padding:14px 20px;margin-bottom:16px;font-size:12px;color:#e2e8f0;line-height:1.7;">
-    <strong style="color:#ffd700">How this works:</strong> You have <strong>~£1,312</strong> in unrealised losses across eToro (4 assets, 5 open lots).
-    TTD is held as <strong style="color:var(--amber)">2 separate lots</strong>. ORCL closed ✅ (04 Jun, -£366 harvested). CLBT closed ✅. CGT loss shield to date: ~£2,074.
-    The 30-day bed &amp; breakfast rule means you cannot rebuy the <em>same</em> asset within 30 days of selling at a loss — but you can sell TTD at a loss and rebuy inside HL ISA after 30 days. 
-    CGT annual exemption: <strong>£3,000</strong>. Higher-rate CGT: <strong>20%</strong>. <strong style="color:var(--red)">Priority:</strong> TTD (-£773) is the largest remaining harvest candidate — closing both lots = <strong style="color:var(--green)">-£773 crystallised losses</strong>, then rebuy TTD in HL ISA after 30 days.
+    <strong style="color:#ffd700">How this works:</strong> eToro is now wound down to <strong>1 position — GoldWorldWide Smart Portfolio</strong> (HOLD).
+    TTD closed ✅ 16 Jun (-£773 crystallised). LULU closed ✅ 16 Jun (-£199 crystallised). Total CGT loss shield: <strong style="color:var(--green)">~£3,046</strong>.
+    CGT annual exemption: <strong>£3,000</strong>. Higher-rate CGT: <strong>20%</strong>. Your shield of ~£3,046 now covers the full annual exemption and a small amount beyond. Any gains crystallised this tax year up to ~£3,046 are sheltered. No further harvesting needed unless GoldWorldWide recovers and is sold at a gain.
   </div>
 
   <!-- ETORO POSITIONS TABLE -->
@@ -987,11 +987,11 @@ const HOLDINGS=[
    reviewDate:'2026-10-01', reviewNote:'GOOGL Q3 2026 earnings ~Oct 2026. 65 analysts, avg target $220. Topped up 08 Jun (now 6 shares, cost £1,702). Gemini monetisation accelerating. Below £1,400 position = add signal in Apr 2027.'},
 
   {ticker:'AMZN',name:'Amazon',                  costGbp:1553, currentGbp:922,
-   action:'hold', actionLabel:'HOLD — AWS AI cloud. Add on dips.',
+   action:'hold', actionLabel:'HOLD — DOWN -40.6% ⚠ DO NOT AVERAGE DOWN. Apr 2027 conditional.',
    currency:'USD', yahooTicker:'AMZN',  concentration:'normal',
    analystTargetUsd:290, analystCount:68,
-   trimToGbp:null, addTriggerGbp:850, addAmountGbp:700,
-   reviewDate:'2026-10-01', reviewNote:'AMZN Q3 2026 earnings. 68 analysts, avg $280 (+35% upside). AWS AI cloud thesis. Add £700 in Apr 2027 if position still below £1,500. Below £850 position value = add immediately.'},
+   trimToGbp:null, addTriggerGbp:null, addAmountGbp:null,
+   reviewDate:'2026-10-01', reviewNote:'AMZN Q3 2026 earnings ~Oct 2026. Cost £1,553, current £922 (-40.6%). DO NOT AVERAGE DOWN without fresh thesis check at Q3 earnings. 68 analysts, avg $290 (+35% upside). AWS AI cloud thesis intact but position underwater. Apr 2027 add of £500 is CONDITIONAL on: (1) AWS revenue growth re-accelerating, (2) operating margin expanding, (3) position still below £1,200 by Apr 2027. Ranked 8th of 10 in Apr 2027 priority queue.'},
 
   {ticker:'ASML',name:'ASML Holding NV',         costGbp:1176, currentGbp:1295,
    action:'hold', actionLabel:'HOLD — EUV monopoly. High conviction add Apr 2027.',
@@ -1043,11 +1043,11 @@ const HOLDINGS=[
    reviewDate:'2026-10-01', reviewNote:'CDNS Q3 2026 earnings. $350 analyst target vs current ~$262 = +34% upside. Small position — add £500 in Apr 2027. Below £500 position = add immediately.'},
 
   {ticker:'DASH',name:'DoorDash',                costGbp:1082,  currentGbp:470,
-   action:'hold',  actionLabel:'HOLD — 9 shares (topped up 08 Jun). $250 target (+53%).',
+   action:'hold',  actionLabel:'HOLD — DOWN -56.6% ⚠ DO NOT AVERAGE DOWN. Thesis review Apr 2027.',
    currency:'USD', yahooTicker:'DASH',  concentration:'normal',
    analystTargetUsd:250, analystCount:44,
-   trimToGbp:null, addTriggerGbp:400, addAmountGbp:1000,
-   reviewDate:'2026-08-06', reviewNote:'DASH Q2 2026 earnings ~Aug 2026. Deliveroo margin inflection expected H2 2026. 44 analysts Buy, $246 target (+51% upside). Add £1,000 in Apr 2027 ISA if still below $165. Below £400 position = strong add signal.'},
+   trimToGbp:null, addTriggerGbp:null, addAmountGbp:null,
+   reviewDate:'2026-08-06', reviewNote:'DASH Q2 2026 earnings ~Aug 2026. Cost £1,082, current £470 (-56.6%). DO NOT AVERAGE DOWN until thesis confirmed at earnings. Deliveroo margin inflection expected H2 2026. 44 analysts Buy, $250 target (+53% from current). Apr 2027 add of £500 is CONDITIONAL on: (1) Deliveroo margins improving, (2) Q2 earnings beat, (3) position not recovered to above £900 by then.'},
 
   {ticker:'NET', name:'Cloudflare',              costGbp:544,  currentGbp:509,
    action:'hold', actionLabel:'HOLD — 20% layoffs May 7. Watch H2.',
@@ -1118,7 +1118,7 @@ const HOLDINGS=[
    currency:'USD', yahooTicker:'MU',   concentration:'normal',
    analystTargetUsd:550, analystCount:44,
    trimToGbp:null, addTriggerGbp:2500, addAmountGbp:500,
-   reviewDate:'2026-06-24', reviewNote:'MU Q3 FY2026 EARNINGS 24 JUN. Company guidance: EPS $19.15 (±$0.40), Rev $33.5B (±$0.75B), gross margin ~81%. HBM4 36GB 12-Hi in volume production. 1γ DRAM majority of mix by mid-2026. $1T market cap. NVIDIA green-lit for HBM4 chips. Analyst avg target ~$550, MS $1,050, Susquehanna $1,750. HOLD 3 shares. After earnings: if HBM revenue mix increasing and FY2027 guidance raised, consider adding £500 in Apr 2027. Watch: gross margin vs 81% guide, HBM share of DRAM mix, FY27 guidance.'},
+   reviewDate:'2026-06-24', reviewNote:'MU Q3 FY2026 EARNINGS 24 JUN. Company guidance: EPS $19.15 (±$0.40), Rev $33.5B (±$0.75B), gross margin ~81%. HBM4 36GB 12-Hi in volume production. 1γ DRAM majority of mix by mid-2026. $1T market cap. NVIDIA green-lit for HBM4 chips. Analyst avg target ~$550, MS $1,050, Susquehanna $1,750. HOLD 3 shares. Apr 2027 re-add of £500 is CONDITIONAL: only if (1) FY27 guidance raised at 24 Jun earnings, (2) HBM revenue mix visibly increasing, AND (3) remaining allowance after higher-priority positions (APP, ZS, TTD, ASML, DASH, MELI, GOOGL, AMZN, CORT = £7,400 total). MU is ranked 10th — it only executes if allowance allows. Watch 24 Jun: gross margin vs 81% guide, HBM share of DRAM mix, FY27 guidance tone.'},
 
   // ── WATCH — at or above target, no add ──────────────────────────────────────────
   {ticker:'MSCI',name:'MSCI Inc',                costGbp:1750, currentGbp:1845,
@@ -1203,8 +1203,8 @@ const DEPLOY=[
   {rank:'✅',ticker:'SK-ADR',name:'SK Hynix — CLOSED',  yahoo:null,   entryUsd:0,  targetUsd:0,  gbp:0,    currency:'USD',status:'hold',statusLabel:'IBKR CLOSED ✅ — 05 Jun 2026',
    note:'IBKR CLOSED 05 Jun 2026. 3 shares sold @ ₩1,968,000. Realised gain ~+£360 → HSBC. ADR UPDATE: ticker confirmed HXSCL, now trading OTC. IMPORTANT: ADR uses EXISTING shares (not new issue) — no dilution risk. Watch for NYSE/Nasdaq uplisting from OTC. Check HL if HXSCL becomes ISA-eligible on uplisting.',
    refs:[{label:'SK Hynix KRX',url:'https://finance.yahoo.com/quote/000660.KS/'}]},
-  {rank:'⏳',ticker:'TTD', name:'The Trade Desk',       yahoo:'TTD',  entryUsd:21, targetUsd:30, gbp:2300, currency:'USD',status:'watch',statusLabel:'APR 2027 HL ISA',
-   note:'On eToro (2 lots, -£807 total). HL NASDAQ compliance cure target Sep 2026. 37 analysts Buy, avg target $26 (+27%), median $30 (+43%). FIFA World Cup H2 2026 ad spend catalyst. Harvest CGT loss before Apr 2027, then rebuy in HL ISA.',
+  {rank:'⏳',ticker:'TTD', name:'The Trade Desk',       yahoo:'TTD',  entryUsd:21, targetUsd:30, gbp:1400, currency:'USD',status:'watch',statusLabel:'CLOSED eToro ✅ 16 Jun — REBUY IN HL ISA after 16 Jul (30-day rule)',
+   note:'TTD closed on eToro 16 Jun 2026 (both lots). -£773 CGT loss crystallised → HSBC. 30-day bed & breakfast rule applies: cannot rebuy before 16 Jul 2026. Plan: rebuy TTD in HL ISA as part of Apr 2027 deploy (ranked 3rd, £1,400). HL NASDAQ compliance cure target Sep 2026. 37 analysts Buy, avg target ~$26. FIFA World Cup H2 2026 ad spend catalyst. Structural headwinds (Publicis dispute, margin compression) remain — reassess thesis at Q2 2026 earnings before committing Apr 2027 capital.',
    refs:[{label:'Analyst consensus',url:'https://stockanalysis.com/stocks/ttd/forecast/'},
          {label:'Investing.com targets',url:'https://www.investing.com/equities/trade-desk-inc-consensus-estimates'}]},
   // ── WATCHLIST — APRIL 2027 CANDIDATES ──
@@ -1267,7 +1267,7 @@ const EARNINGS=[
   {date:'21 Sep 2026',       ticker:'TTD',  company:'TTD NASDAQ Compliance Cure',eps:'COMPLIANCE DEADLINE',  action:'Check HL: if TTD re-enabled, it becomes available to buy inside ISA. Review eToro 2 lots for bed-and-ISA migration plan.',urgent:false,isoDate:'2026-09-21'},
   {date:'H2 2026',           ticker:'HXSCL',company:'SK Hynix ADR — Nasdaq Uplisting Watch', eps:'OTC now · Nasdaq TBC', action:'ADR ticker HXSCL confirmed. Currently OTC at ~$41.71. Watch for Nasdaq/NYSE uplisting announcement. On uplisting: check HL ISA eligibility → buy HXSCL inside ISA wrapper. ADR uses existing shares — no dilution. Set Google Alert: "SK Hynix HXSCL Nasdaq" + "SK Hynix ADR listing date".', urgent:false, isoDate:'2026-12-31'},
   {date:'29 Oct 2026',       ticker:'META', company:'Meta Q3 2026 Earnings',         eps:'EPS $6.08 est',           action:'HOLD. 64 analysts Strong Buy, avg $827 (+39%). AI Advantage+ platform driving ad revenue. Watch: AI capex trajectory, EU regulatory fines, Reality Labs losses. If Q3 beats and guidance raised, add £500 in Apr 2027.',urgent:false,isoDate:'2026-10-29'},
-  {date:'6 Apr 2027',        ticker:'ISA',  company:'New ISA Allowance Opens',  eps:'£20,000',                action:'Deploy plan: 1) APP £1,500 2) ZS add £700 3) TTD migrate £1,400 4) ASML £1,000 5) DASH add £500 6) MELI add £700 (if Q2 recovers) 7) GOOGL £500 8) AMZN £500 9) CORT £600 10) MU re-add £500. SNDK sold ✅. Close eToro TTD/SMCI. Review RKLB.',urgent:false,isoDate:'2027-04-06'},
+  {date:'6 Apr 2027',        ticker:'ISA',  company:'New ISA Allowance Opens',  eps:'£20,000',                action:'Deploy plan: 1) APP £1,500 2) ZS add £700 3) TTD buy £1,400 (closed eToro ✅ 16 Jun, 30-day rule cleared) 4) ASML £1,000 5) DASH add £500 6) MELI add £700 (if Q2 recovers) 7) GOOGL £500 8) AMZN £500 9) CORT £600 10) MU re-add £500 (conditional). Total £7,400 before MU.',urgent:false,isoDate:'2027-04-06'},
 ];
 
 const GCAL_EVENTS=[
@@ -2134,6 +2134,7 @@ function addMsg(role,content){
 // REVIEW LOG
 // ══════════════════════════════════════════════════
 const DEFAULT_REVIEWS=[
+  {date:'16 Jun 2026',content:'<strong>eToro wind-down: TTD and LULU closed.</strong> TTD both lots closed 16 Jun — -£773 CGT loss crystallised. LULU closed 16 Jun — -£199 CGT loss crystallised. Proceeds from both to HSBC Bonus Saver. eToro now down to 1 position: GoldWorldWide Smart Portfolio (net GBP1,933, -GBP308). Total CGT shield now ~GBP3,046 (prior GBP2,074 + TTD GBP773 + LULU GBP199). eToro total value GBP2,001.37 (incl. GBP68 cash). GoldWorldWide: HOLD — gold macro thesis intact, Goldman $5,400/JPM $6,000 year-end targets. Pullback from Jan ATH $5,589 is macro/rate driven.'},
   {date:'15 Jun 2026',content:'<strong>Portfolio review 14:48.</strong> HL ISA GBP45,085 (+GBP586 day, +1.39%). Cash GBP2,450. 27 positions. Key updates: MU Q3 FY2026 earnings 24 Jun — co. guide EPS $19.15, Rev $33.5B, gross margin ~81%. Hold 3 shares, watch FY27 guide. CRWD Q1 FY2027 BEAT ✅ — Rev $1.39B (+26% YoY), Net New ARR $256M (+32%), FCF $468M. 4-for-1 stock split: record 25 Jun, split-adjusted trading 2 Jul (3 shares become 12). SNDK: confirmed 1 share held as tracker — do not add (GBP1,980 current vs GBP1,575 consensus target = 20.5% above). AVGO dividend record 22 Jun (GBP0.65/share). eToro: 4 assets, 5 lots — TTD GBP-773 (harvest candidate), SMCI GBP-42, LULU GBP-199, GOLD GBP-298. CGT shield GBP2,074. HXSCL still OTC — Nasdaq uplisting watch H2 2026.'},
   {date:'27 May 2026',content:'<strong>eToro cleanup complete.</strong> Closed IONQ, QBTS, RGTI (quantum trio) on $2B govt grant spike. Closed OKLO (pending settlement). Total CGT loss shield now ~GBP2,074 (prior GBP870 + quantum ~GBP731 + OKLO GBP473). eToro trimmed to 7 positions: TTD, ORCL, CLBT, SMCI, LULU, WKP, GoldWorldWide. GBP3,222 eToro cash withdrawing in full to HSBC Bonus Saver. PYPL closed too. eToro now in wind-down mode - next action Apr 2027 ISA migration.'},
   {date:'26 May 2026',content:'<strong>New positions: GLW and MRVL opened.</strong> HL ISA GBP42,392 | 27 positions | GBP2,643 cash. GLW GBP574 (Corning - AI optical infra, Nvidia partnership). MRVL GBP582 (custom AI silicon). Standouts: CRWD +43.6%, ALAB +42.1%, SNDK +127.5%, MU +16%, IBM +11%. Still pressured: AXON -12.4%, NET -11.6%, MELI -10.6%, EME -9.5%, FIX -8.9%. IBKR SK Hynix unrealised P&L +GBP642 - new high. eToro GBP7,687 - quantum trio calm: IONQ GBP1,025, QBTS GBP975, RGTI GBP921. Ex-div 28 May.'},
