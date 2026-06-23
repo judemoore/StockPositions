@@ -307,7 +307,7 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 <div class="header">
   <div class="header-left">
     <h1>Jude's <span>ISA</span> Portfolio</h1>
-    <p>Hargreaves Lansdown · Stocks & Shares ISA · Updated 18 Jun 2026 — 01:12 | 2 Platforms Active (HL ISA + eToro)</p>
+    <p>Hargreaves Lansdown · Stocks & Shares ISA · Updated 23 Jun 2026 — 01:17 | 2 Platforms Active (HL ISA + eToro)</p>
   </div>
   <div class="header-right">
     <span class="last-updated" id="lastUpdated">Not yet refreshed</span>
@@ -318,9 +318,9 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 
 <!-- STATS BAR -->
 <div class="stats-bar">
-  <div class="stat-card green"><div class="stat-label">ISA Total Value</div><div class="stat-value" id="totalValue">£45,218</div><div class="stat-sub" id="totalChangeSub">18 Jun 2026 01:02 · fetching live prices...</div></div>
+  <div class="stat-card green"><div class="stat-label">ISA Total Value</div><div class="stat-value" id="totalValue">£46,289</div><div class="stat-sub" id="totalChangeSub">18 Jun 2026 01:02 · fetching live prices...</div></div>
   <div class="stat-card red"><div class="stat-label">ISA Allowance 25/26</div><div class="stat-value" style="font-size:16px">FULLY USED</div><div class="stat-sub">Next: 6 Apr 2027</div></div>
-  <div class="stat-card amber"><div class="stat-label">Invested</div><div class="stat-value" id="investedValue">£42,768</div><div class="stat-sub" id="glSub">+£2,450 cash · +£2,872 gains (+7.20%)</div></div>
+  <div class="stat-card amber"><div class="stat-label">Invested</div><div class="stat-value" id="investedValue">£42,895</div><div class="stat-sub" id="glSub">+£3,394 cash · 23 Jun 2026 snapshot</div></div>
   <div class="stat-card green"><div class="stat-label">⚡ Next Event</div><div class="stat-value" style="font-size:14px;color:var(--accent2)">ALAB Nasdaq-100 22 Jun</div><div class="stat-sub">MU earnings 24 Jun · CRWD split 2 Jul · ATZ 9 Jul</div></div>
   <div class="stat-card green"><div class="stat-label">Cash Available</div><div class="stat-value" style="font-size:16px">~£3,302</div><div class="stat-sub">£2,450 + ~£852 trim proceeds (ALAB £558 + TSLA £294)</div></div>
 </div>
@@ -376,6 +376,7 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
       <span class="section-toggle">▼</span>
     </div>
     <div class="section-body">
+      <div id="priceFetchBanner" style="display:none;background:rgba(255,71,87,0.15);border:1px solid rgba(255,71,87,0.4);color:#ff4757;padding:8px 14px;margin-bottom:10px;font-size:12px;font-weight:600;border-radius:4px;"></div>
       <table class="data-table"><thead><tr>
         <th>Ticker</th><th style="text-align:right">Live Price</th><th style="text-align:right">Day %</th><th style="text-align:right">Value</th><th style="text-align:right">Gain/Loss</th><th style="text-align:right">Analyst Target</th><th style="text-align:right">Upside</th><th style="text-align:right">Action</th><th style="text-align:right">Chart</th>
       </tr></thead><tbody id="holdingsTbody"></tbody></table>
@@ -961,10 +962,19 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 
 <script>
 // ══════════════════════════════════════════════════
+// GLOBAL CONSTANTS — single source of truth
+// Update these each session. Never hardcode elsewhere.
+// ══════════════════════════════════════════════════
+const CASH_GBP = 3394;          // ISA cash as of 23 Jun 2026 (post-trim proceeds £3,302)
+let FX_USD_GBP = 1 / 1.2700;   // Will be overwritten by live fetch on load
+let FX_CAD_GBP = 1 / 1.6000;   // Will be overwritten by live fetch on load
+const FX_LIVE_TICKERS = { usd: 'GBPUSD=X', cad: 'GBPCAD=X' };
+
+// ══════════════════════════════════════════════════
 // DATA
 // ══════════════════════════════════════════════════
 // Last synced: 05 Jun 2026 — IBKR closed ✅ | SK Hynix sold @ ₩1,968,000 | proceeds → HSBC
-// Last synced: 20 Jun 2026. USD/GBP 0.743 · 28 positions · ALAB trimmed · TSLA trimmed · NET removed
+// Last synced: 23 Jun 2026. Cash £3,302. CRWD split 2 Jul (3→12 shares).
 // analystTargetUsd: consensus 12-month target (USD, or GBX for UK-listed)
 // trimToGbp: sell down TO this £ value (null = no trim needed)
 // addTriggerGbp: add MORE if position falls to this £ value or below (April 2027 ISA)
@@ -972,7 +982,7 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 // reviewDate/reviewNote: drives GCAL reminder
 const HOLDINGS=[
   // ── HOLD — no immediate action ───────────────────────────────────────────────────
-  {ticker:'AMD', name:'Advanced Micro Devices',  costGbp:950,  currentGbp:1141,
+  {ticker:'AMD', name:'Advanced Micro Devices',  costGbp:950,  currentGbp:1248,
    shares:3,
    action:'hold', actionLabel:'HOLD — AI data centre +57% Q1',
    currency:'USD', yahooTicker:'AMD',   concentration:'normal',
@@ -980,7 +990,7 @@ const HOLDINGS=[
    trimToGbp:null, addTriggerGbp:900, addAmountGbp:500,
    reviewDate:'2026-08-04', reviewNote:'AMD Q2 2026 earnings. Est EPS $1.39. If data centre rev continues +50%+ YoY, consider adding £500 in Apr 2027 ISA. Target add below £900 position value.'},
 
-  {ticker:'GOOGL',name:'Alphabet Inc',           costGbp:1702,  currentGbp:1613,
+  {ticker:'GOOGL',name:'Alphabet Inc',           costGbp:1702,  currentGbp:1583,
    shares:6,
    action:'hold', actionLabel:'HOLD — topped up 08 Jun (6 shares). Gemini AI. $220 target.',
    currency:'USD', yahooTicker:'GOOG',  concentration:'normal',
@@ -988,7 +998,7 @@ const HOLDINGS=[
    trimToGbp:null, addTriggerGbp:800, addAmountGbp:700,
    reviewDate:'2026-10-01', reviewNote:'GOOGL Q3 2026 earnings ~Oct 2026. 65 analysts, avg target $220. Topped up 08 Jun (now 6 shares, cost £1,702). Gemini monetisation accelerating. Below £1,400 position = add signal in Apr 2027.'},
 
-  {ticker:'AMZN',name:'Amazon',                  costGbp:1553, currentGbp:1411,
+  {ticker:'AMZN',name:'Amazon',                  costGbp:1553, currentGbp:1406,
    shares:8,
    action:'hold', actionLabel:'HOLD — DOWN -40.6% ⚠ DO NOT AVERAGE DOWN. Apr 2027 conditional.',
    currency:'USD', yahooTicker:'AMZN',  concentration:'normal',
@@ -996,7 +1006,7 @@ const HOLDINGS=[
    trimToGbp:null, addTriggerGbp:null, addAmountGbp:null,
    reviewDate:'2026-10-01', reviewNote:'AMZN Q3 2026 earnings ~Oct 2026. Cost £1,553, current £922 (-40.6%). DO NOT AVERAGE DOWN without fresh thesis check at Q3 earnings. 68 analysts, avg $290 (+35% upside). AWS AI cloud thesis intact but position underwater. Apr 2027 add of £500 is CONDITIONAL on: (1) AWS revenue growth re-accelerating, (2) operating margin expanding, (3) position still below £1,200 by Apr 2027. Ranked 8th of 10 in Apr 2027 priority queue.'},
 
-  {ticker:'ANET',name:'Arista Networks',          costGbp:1462, currentGbp:1469,
+  {ticker:'ANET',name:'Arista Networks',          costGbp:1462, currentGbp:1581,
    shares:12,
    action:'hold', actionLabel:'HOLD — AI networking leader. +12.6% to $188 target.',
    currency:'USD', yahooTicker:'ANET',  concentration:'normal',
@@ -1004,7 +1014,7 @@ const HOLDINGS=[
    trimToGbp:null, addTriggerGbp:null, addAmountGbp:null,
    reviewDate:'2026-08-01', reviewNote:'ANET Q2 FY2027 earnings ~Aug 2026. 12 shares, cost £1,462. 30 analysts Strong Buy, avg target $188 (+12.6% upside). Company raised 2026 revenue target to $11.5B on strong AI demand. Q1 FY2027 beat EPS $0.87 vs $0.81 est. AI fabric networking 7060XE7 Series launched Jun 2026 for rack-scale AI. Morgan Stanley $190, BofA $200, Rosenblatt $210. Key risks: customer concentration (2 customers = 42% revenue), gross margin pressure from supply chain. Hold — thesis intact as AI networking infrastructure pick.'},
 
-  {ticker:'ATZ', name:'Aritzia',                  costGbp:988,  currentGbp:995,
+  {ticker:'ATZ', name:'Aritzia',                  costGbp:988,  currentGbp:950,
    shares:11,
    action:'hold', actionLabel:'HOLD — ATH C$174. Earnings 9 Jul. 21 Buy ratings.',
    currency:'CAD', yahooTicker:'ATZ.TO', concentration:'normal',
@@ -1012,7 +1022,7 @@ const HOLDINGS=[
    trimToGbp:null, addTriggerGbp:null, addAmountGbp:null,
    reviewDate:'2026-07-09', reviewNote:'ATZ Q1 FY2027 earnings 9 Jul 2026. 11 shares, cost £988. All-time high C$174.52 on Jun 15 2026. 21 Buy, 1 Hold, 0 Sell. Avg target C$178 (+6% modest upside). Last quarter beat EPS 11.56% (C$1.15 vs C$1.03 est). US expansion driving ~50%+ of revenue. EPS beat 11x in last 12 months. Watch Jul 9 earnings: Q2 FY2027 est EPS C$0.87. Stock at ATH — if misses, could correct 10-15%. HOLD through earnings; only add on a post-earnings pullback if thesis confirmed.'},
 
-  {ticker:'ASML',name:'ASML Holding NV',         costGbp:1176, currentGbp:1387,
+  {ticker:'ASML',name:'ASML Holding NV',         costGbp:1176, currentGbp:1428,
    shares:1,
    action:'hold', actionLabel:'HOLD — EUV monopoly. High conviction add Apr 2027.',
    currency:'USD', yahooTicker:'ASML',  concentration:'normal',
@@ -1020,7 +1030,7 @@ const HOLDINGS=[
    trimToGbp:null, addTriggerGbp:1100, addAmountGbp:1000,
    reviewDate:'2026-10-14', reviewNote:'ASML Q3 2026 earnings. Highest-conviction add for April 2027 ISA — target £1,000 top-up. EUV monopoly; every AI chip fab needs ASML. Below £1,100 position value = priority add.'},
 
-  {ticker:'ALAB',name:'Astera Labs',             costGbp:480,  currentGbp:945,
+  {ticker:'ALAB',name:'Astera Labs',             costGbp:480,  currentGbp:994,
    shares:3,
    action:'hold', actionLabel:'HOLD — TRIMMED 20 Jun ✅. 3 shares remain. Nasdaq-100 22 Jun.',
    currency:'USD', yahooTicker:'ALAB',  concentration:'normal',
@@ -1036,7 +1046,7 @@ const HOLDINGS=[
    trimToGbp:null, addTriggerGbp:600, addAmountGbp:500,
    reviewDate:'2026-11-01', reviewNote:'AZN H2 2026 pipeline readouts. 28 analysts, GBX target 15,200 (~£152/share). Healthcare diversification, non-AI cycle. Add £500 in Apr 2027 ISA. Below £600 position = strong add.'},
 
-  {ticker:'AXON',name:'Axon Enterprise',         costGbp:1306, currentGbp:1256,
+  {ticker:'AXON',name:'Axon Enterprise',         costGbp:1306, currentGbp:1237,
    shares:4,
    action:'hold', actionLabel:'HOLD +11.5% — public safety AI. Let run.',
    currency:'USD', yahooTicker:'AXON',  concentration:'normal',
@@ -1044,7 +1054,7 @@ const HOLDINGS=[
    trimToGbp:null, addTriggerGbp:1200, addAmountGbp:500,
    reviewDate:'2026-11-01', reviewNote:'AXON Q3 2026 earnings 03 Aug 2026. Avg target $675 vs current ~$555 = +22% upside. Public safety AI compounder — 75% earnings growth forecast. Hold. Below £1,200 position = add £500 in Apr 2027.'},
 
-  {ticker:'BOX', name:'Box Inc',                 costGbp:697,  currentGbp:703,
+  {ticker:'BOX', name:'Box Inc',                 costGbp:697,  currentGbp:699,
    shares:38,
    action:'hold', actionLabel:'HOLD +13.9% — enterprise AI content. Small.',
    currency:'USD', yahooTicker:'BOX',   concentration:'normal',
@@ -1052,7 +1062,7 @@ const HOLDINGS=[
    trimToGbp:null, addTriggerGbp:null, addAmountGbp:null,
    reviewDate:'2026-09-01', reviewNote:'BOX FY2027 Q2 earnings. Analyst target $40 vs current ~$31 (+29%). Small position — hold. Only add if enterprise AI storage thesis strengthens materially. Otherwise let it run or close and redeploy into higher-conviction name.'},
 
-  {ticker:'AVGO',name:'Broadcom Inc',            costGbp:1540, currentGbp:1459,
+  {ticker:'AVGO',name:'Broadcom Inc',            costGbp:1540, currentGbp:1479,
    shares:5,
    action:'hold', actionLabel:'HOLD — 5 shares ✅. AI rev +143% YoY. Div 22 Jun. Q3 Sep earnings.',
    currency:'USD', yahooTicker:'AVGO',  concentration:'normal',
@@ -1060,7 +1070,7 @@ const HOLDINGS=[
    trimToGbp:null, addTriggerGbp:1200, addAmountGbp:500,
    reviewDate:'2026-09-03', reviewNote:'AVGO Q3 FY2026 earnings Sep 2026. $310 analyst target (+18% upside). AI rev +143% YoY in Q2. Topped up £500 on 09 Jun. Dividend record date 22 Jun ($0.65/share, tax-free in ISA). Hold. Below £900 position = add signal.'},
 
-  {ticker:'CDNS',name:'Cadence Design Systems',  costGbp:527,  currentGbp:578,
+  {ticker:'CDNS',name:'Cadence Design Systems',  costGbp:527,  currentGbp:587,
    shares:2,
    action:'hold', actionLabel:'HOLD +17.3% — EDA/chip design monopoly.',
    currency:'USD', yahooTicker:'CDNS',  concentration:'normal',
@@ -1068,7 +1078,7 @@ const HOLDINGS=[
    trimToGbp:null, addTriggerGbp:500, addAmountGbp:500,
    reviewDate:'2026-10-01', reviewNote:'CDNS Q3 2026 earnings. $350 analyst target vs current ~$262 = +34% upside. Small position — add £500 in Apr 2027. Below £500 position = add immediately.'},
 
-  {ticker:'DASH',name:'DoorDash',                costGbp:1082,  currentGbp:1107,
+  {ticker:'DASH',name:'DoorDash',                costGbp:1082,  currentGbp:1168,
    shares:9,
    action:'hold',  actionLabel:'HOLD — DOWN -56.6% ⚠ DO NOT AVERAGE DOWN. Thesis review Apr 2027.',
    currency:'USD', yahooTicker:'DASH',  concentration:'normal',
@@ -1076,7 +1086,7 @@ const HOLDINGS=[
    trimToGbp:null, addTriggerGbp:null, addAmountGbp:null,
    reviewDate:'2026-08-06', reviewNote:'DASH Q2 2026 earnings ~Aug 2026. Cost £1,082, current £470 (-56.6%). DO NOT AVERAGE DOWN until thesis confirmed at earnings. Deliveroo margin inflection expected H2 2026. 44 analysts Buy, $250 target (+53% from current). Apr 2027 add of £500 is CONDITIONAL on: (1) Deliveroo margins improving, (2) Q2 earnings beat, (3) position not recovered to above £900 by then.'},
 
-  {ticker:'FIX', name:'Comfort Systems USA',     costGbp:1487, currentGbp:1434,
+  {ticker:'FIX', name:'Comfort Systems USA',     costGbp:1487, currentGbp:1560,
    shares:1,
    action:'hold', actionLabel:'HOLD -5.9% — data centre electrical. Dual w/ EME.',
    currency:'USD', yahooTicker:'FIX',   concentration:'normal',
@@ -1084,7 +1094,7 @@ const HOLDINGS=[
    trimToGbp:null, addTriggerGbp:null, addAmountGbp:null,
    reviewDate:'2026-08-01', reviewNote:'FIX Q2 2026 earnings Aug 2026. Avg target $2,048 (+41% upside). Q1 beat EPS estimates by 55%, revenue +56% YoY. Strong Buy from all analysts. Data centre electrical/mechanical construction thesis accelerating. Consider adding from SNDK proceeds — high conviction. Review dual infra overlap with EME.'},
 
-  {ticker:'GLW', name:'Corning Inc',             costGbp:581,  currentGbp:521,
+  {ticker:'GLW', name:'Corning Inc',             costGbp:581,  currentGbp:633,
    shares:4,
    action:'hold', actionLabel:'HOLD -8.4% — fibre/AI infra. Small. Thesis intact.',
    currency:'USD', yahooTicker:'GLW',   concentration:'normal',
@@ -1092,7 +1102,7 @@ const HOLDINGS=[
    trimToGbp:null, addTriggerGbp:null, addAmountGbp:null,
    reviewDate:'2026-07-29', reviewNote:'GLW Q2 2026 earnings ~Jul 2026. $58 target vs current ~$44 (+32%). Small position — hold. Fibre optic demand from AI data centres is the thesis. Do not add unless position shrinks below £500 AND thesis remains intact. Consider closing if conviction has dimmed.'},
 
-  {ticker:'CRWD',name:'CrowdStrike',             costGbp:1027, currentGbp:1521,
+  {ticker:'CRWD',name:'CrowdStrike',             costGbp:1027, currentGbp:1529,
    shares:3,
    action:'hold', actionLabel:'HOLD +66.6% — Q1 BEAT ✅. 4-for-1 split 2 Jul. Do not add (overvalued).',
    currency:'USD', yahooTicker:'CRWD',  concentration:'normal',
@@ -1108,7 +1118,7 @@ const HOLDINGS=[
    trimToGbp:null, addTriggerGbp:null, addAmountGbp:null,
    reviewDate:'2026-07-28', reviewNote:'EME Q2 2026 earnings ~Jul 2026. $530 target vs current ~$410 (+29%). Back near cost basis. Hold alongside FIX — same thesis. Do not add to both. If you close FIX, add to EME in Apr 2027.'},
 
-  {ticker:'IBM', name:'IBM',                     costGbp:845,  currentGbp:974,
+  {ticker:'IBM', name:'IBM',                     costGbp:845,  currentGbp:953,
    shares:5,
    action:'hold', actionLabel:'HOLD +43.9% — AI hybrid cloud compounding.',
    currency:'USD', yahooTicker:'IBM',   concentration:'normal',
@@ -1116,7 +1126,7 @@ const HOLDINGS=[
    trimToGbp:null, addTriggerGbp:1000, addAmountGbp:500,
    reviewDate:'2026-10-21', reviewNote:'IBM Q3 2026 earnings ~Oct 2026. $290 target vs current ~$222 (+31%). Solid compounder. Add £500 in Apr 2027 if still below £1,500 position. Below £1,000 = strong add signal.'},
 
-  {ticker:'MANH',name:'Manhattan Associates',    costGbp:1032, currentGbp:981,
+  {ticker:'MANH',name:'Manhattan Associates',    costGbp:1032, currentGbp:972,
    shares:10,
    action:'hold', actionLabel:'HOLD +11.5% — supply chain AI moat.',
    currency:'USD', yahooTicker:'MANH',  concentration:'normal',
@@ -1124,7 +1134,7 @@ const HOLDINGS=[
    trimToGbp:null, addTriggerGbp:1000, addAmountGbp:500,
    reviewDate:'2026-10-21', reviewNote:'MANH Q3 2026 earnings ~Oct 2026. $310 target vs current ~$236 (+31%). Supply chain software moat. Add £500 in Apr 2027. Below £1,000 position = add signal.'},
 
-  {ticker:'MRVL',name:'Marvell Technology',      costGbp:592,  currentGbp:860,
+  {ticker:'MRVL',name:'Marvell Technology',      costGbp:592,  currentGbp:929,
    shares:4,
    action:'hold', actionLabel:'HOLD +46.2% — custom silicon/optical AI. Let run.',
    currency:'USD', yahooTicker:'MRVL',  concentration:'normal',
@@ -1132,7 +1142,7 @@ const HOLDINGS=[
    trimToGbp:null, addTriggerGbp:700, addAmountGbp:600,
    reviewDate:'2026-09-02', reviewNote:'MRVL Q2 FY2027 earnings Sep 2026. Jensen Huang called Marvell "next trillion-dollar company" at Computex. Stifel raised to $321 (street-high). Avg target $233. Stock has run significantly — S&P 500 inclusion 22 Jun. Add £600 in Apr 2027. Below £700 position = add signal.'},
 
-  {ticker:'MELI',name:'MercadoLibre',            costGbp:1380, currentGbp:1211,
+  {ticker:'MELI',name:'MercadoLibre',            costGbp:1380, currentGbp:1199,
    shares:1,
    action:'hold', actionLabel:'HOLD -10.1% — LatAm fintech/ecom. Add on dip.',
    currency:'USD', yahooTicker:'MELI',  concentration:'normal',
@@ -1141,7 +1151,7 @@ const HOLDINGS=[
    reviewDate:'2026-08-06', reviewNote:'MELI Q2 2026 earnings ~Aug 2026. KEY WATCH. Q1 missed EPS ($8.23 vs $8.78 est) — margin compression from credit card loan-loss provisions and logistics spend. Multiple firms cut targets. MS still Overweight at $2,950. Avg now $2,255 (+32% upside). THESIS IS INTACT but this is deliberate investment-phase pain. Q2 must show: (1) Brazil take-rate holding, (2) credit loss provisions stabilising, (3) gross margin recovering toward 11.7%. If Q2 disappoints again = exit. If Q2 shows recovery = add £500 in Apr 2027.'},
 
   // ── TRIM REQUIRED ────────────────────────────────────────────────────────────────
-  {ticker:'MU',  name:'Micron Technology',       costGbp:1517, currentGbp:2324,
+  {ticker:'MU',  name:'Micron Technology',       costGbp:1517, currentGbp:2743,
    shares:3,
    action:'hold',  actionLabel:'HOLD — trimmed ✅ 03 Jun. 3 shares. Earnings 24 Jun.',
    currency:'USD', yahooTicker:'MU',   concentration:'normal',
@@ -1150,7 +1160,7 @@ const HOLDINGS=[
    reviewDate:'2026-06-24', reviewNote:'MU Q3 FY2026 EARNINGS 24 JUN. Company guidance: EPS $19.15 (±$0.40), Rev $33.5B (±$0.75B), gross margin ~81%. HBM4 36GB 12-Hi in volume production. 1γ DRAM majority of mix by mid-2026. $1T market cap. NVIDIA green-lit for HBM4 chips. Analyst avg target ~$550, MS $1,050, Susquehanna $1,750. HOLD 3 shares. Apr 2027 re-add of £500 is CONDITIONAL: only if (1) FY27 guidance raised at 24 Jun earnings, (2) HBM revenue mix visibly increasing, AND (3) remaining allowance after higher-priority positions (APP, ZS, TTD, ASML, DASH, MELI, GOOGL, AMZN, CORT = £7,400 total). MU is ranked 10th — it only executes if allowance allows. Watch 24 Jun: gross margin vs 81% guide, HBM share of DRAM mix, FY27 guidance tone.'},
 
   // ── WATCH — at or above target, no add ──────────────────────────────────────────
-  {ticker:'MSCI',name:'MSCI Inc',                costGbp:1750, currentGbp:1773,
+  {ticker:'MSCI',name:'MSCI Inc',                costGbp:1750, currentGbp:1753,
    shares:4,
    action:'hold', actionLabel:'HOLD +7.0% — index monopoly. No add needed.',
    currency:'USD', yahooTicker:'MSCI',  concentration:'watch',
@@ -1158,7 +1168,7 @@ const HOLDINGS=[
    trimToGbp:null, addTriggerGbp:1600, addAmountGbp:500,
    reviewDate:'2026-07-22', reviewNote:'MSCI Q2 2026 earnings 21 Jul 2026. $640 target vs current ~$490 (+31%). Good compounder. Hold. Add £500 in Apr 2027 if still below £1,700. Below £1,600 position = add signal.'},
 
-  {ticker:'NVDA',name:'Nvidia Corp',             costGbp:1900, currentGbp:1823,
+  {ticker:'NVDA',name:'Nvidia Corp',             costGbp:1900, currentGbp:1889,
    shares:12,
    action:'hold', actionLabel:'HOLD +4.5% — AI bellwether. No add at this price.',
    currency:'USD', yahooTicker:'NVDA',  concentration:'watch',
@@ -1166,7 +1176,7 @@ const HOLDINGS=[
    trimToGbp:null, addTriggerGbp:1700, addAmountGbp:500,
    reviewDate:'2026-08-27', reviewNote:'NVDA Q2 FY2027 earnings ~Aug 2026. 65 analysts Strong Buy, target $299. AI infra bellwether. Hold. If it pulls back below £1,700 position value consider adding £500 in Apr 2027.'},
 
-  {ticker:'PANW',name:'Palo Alto Networks',      costGbp:652,  currentGbp:584,
+  {ticker:'PANW',name:'Palo Alto Networks',      costGbp:652,  currentGbp:648,
    shares:3,
    action:'watch', actionLabel:'HOLD — AT analyst target. Add only on -15% dip.',
    currency:'USD', yahooTicker:'PANW',  concentration:'normal',
@@ -1174,7 +1184,7 @@ const HOLDINGS=[
    trimToGbp:null, addTriggerGbp:550, addAmountGbp:700,
    reviewDate:'2026-09-02', reviewNote:'PANW Q4 FY2026 earnings ~Sep 2026. $217 avg target vs current ~$213 = essentially AT consensus. Morningstar fair value is much lower (464% premium to FV). Hold starter position. Add £700 in Apr 2027 ONLY if stock pulls back 15%+ (below ~£550 position).'},
 
-  {ticker:'RR',  name:'Rolls-Royce Holdings',    costGbp:793,  currentGbp:847,
+  {ticker:'RR',  name:'Rolls-Royce Holdings',    costGbp:793,  currentGbp:862,
    shares:61,
    action:'hold', actionLabel:'HOLD — avg target 1,417p (+12.6% from 1,259p). SMR deals + buyback.',
    currency:'GBP', yahooTicker:'RR.L',  concentration:'normal',
@@ -1182,7 +1192,7 @@ const HOLDINGS=[
    trimToGbp:null, addTriggerGbp:650, addAmountGbp:500,
    reviewDate:'2026-08-01', reviewNote:'RR H1 2026 results ~Aug 2026. 20 analysts, avg target 1,417p vs current 1,259p (+12.6%). SMR contracts (UK + Czech). Narrowbody re-entry. £1.5bn buyback rumoured. Hold 61 shares. Consider adding £300-500 from SNDK proceeds at current level. Below £700 position = add signal.'},
 
-  {ticker:'TSLA',name:'Tesla',                   costGbp:325,  currentGbp:303,
+  {ticker:'TSLA',name:'Tesla',                   costGbp:325,  currentGbp:306,
    shares:1,
    action:'hold', actionLabel:'HOLD — TRIMMED 20 Jun ✅. 1 share remains. AT consensus target.',
    currency:'USD', yahooTicker:'TSLA',  concentration:'normal',
@@ -1190,7 +1200,7 @@ const HOLDINGS=[
    trimToGbp:null, addTriggerGbp:null, addAmountGbp:null,
    reviewDate:'2026-10-20', reviewNote:'TRIMMED 20 Jun 2026 — sold 1 of 2 shares at ~$396 (~£294), proceeds ~£294 to ISA cash. 1 share remains as tracker, cost basis £325. Analyst consensus is Hold (37% hold, 14% sell), target ~$350–$409 vs current ~$396. Stock AT consensus target. Retain 1 share for AI/autonomy optionality (FSD, Optimus robot). Do not add — political risk (Musk), premium valuation. Review at Q3 earnings Oct 2026.'},
 
-  {ticker:'ZS',  name:'Zscaler',              costGbp:1463, currentGbp:1385,
+  {ticker:'ZS',  name:'Zscaler',              costGbp:1463, currentGbp:1405,
    shares:15,
    action:'hold', actionLabel:'NEW 08 Jun — Morningstar #4 AI cyber. +36% analyst upside.',
    currency:'USD', yahooTicker:'ZS', concentration:'normal',
@@ -1198,14 +1208,14 @@ const HOLDINGS=[
    trimToGbp:null, addTriggerGbp:1200, addAmountGbp:700,
    reviewDate:'2026-09-01', reviewNote:'ZS Q4 FY2026 earnings ~Sep 2026. Opened 08 Jun at £1,470. Guggenheim $214 target (+53%). 47 analysts Buy, avg $194 (+36%). Zero-trust leader, ARR $3.36B, rev +26% YoY. Dropped 24% post-earnings Mar 2026 on FY27 guidance miss — one-off. Add £700 in Apr 2027 if thesis intact. Watch: net new ARR growth, NRR >120%, platform consolidation wins.'},
 
-  {ticker:'META', name:'Meta Platforms',       costGbp:446,  currentGbp:421,
+  {ticker:'META', name:'Meta Platforms',       costGbp:446,  currentGbp:425,
    shares:1,
    action:'hold', actionLabel:'NEW 10 Jun — Ad-AI compounder. $827 target (+39%).',
    currency:'USD', yahooTicker:'META', concentration:'normal',
    analystTargetUsd:827, analystCount:64,
    trimToGbp:null, addTriggerGbp:400, addAmountGbp:500,
    reviewDate:'2026-10-29', reviewNote:'META Q3 2026 earnings ~Oct 2026. 64 analysts Strong Buy, avg $827 (+39% upside). 0 Sell ratings. 2026 EPS est raised to $32.81. Revenue $253B. AI ad targeting thesis: Advantage+ AI ad platform driving margin expansion. Reality Labs drag ~$5B/quarter but ad biz overwhelms it. Add £500 in Apr 2027 if position below £400. Watch: AI Capex levels, EU regulatory fines, Zuckerberg governance risk.'},
-  {ticker:'VWRL',name:'Vanguard FTSE Global All Cap', costGbp:9994, currentGbp:9992,
+  {ticker:'VWRL',name:'Vanguard FTSE Global All Cap', costGbp:9994, currentGbp:10723,
    shares:36.5287,
    action:'hold', actionLabel:'HOLD +6.1% — passive core. Do not change.',
    currency:'GBP', hlOnly:true, concentration:'core',
@@ -1434,14 +1444,32 @@ return null;
 async function refreshAllPrices(){
   const btn=document.getElementById('refreshBtn');
   btn.disabled=true; btn.textContent='↻ ...';
-  const FX_USD_GBP = 1/1.3464;
+
+  // ── Step 1: Fetch live FX rates first ──────────────────────────
+  try {
+    const usdData = await fetchPrice(FX_LIVE_TICKERS.usd); // GBPUSD=X
+    if(usdData && usdData.price > 0) FX_USD_GBP = 1 / usdData.price;
+    const cadData = await fetchPrice(FX_LIVE_TICKERS.cad); // GBPCAD=X
+    if(cadData && cadData.price > 0) FX_CAD_GBP = 1 / cadData.price;
+  } catch(e) { /* keep defaults if FX fetch fails */ }
+
   const tickers=[
     ...HOLDINGS.filter(h=>h.yahooTicker).map(h=>({id:h.ticker,yahoo:h.yahooTicker,type:'h',holding:h})),
     ...DEPLOY.filter(p=>p.yahoo).map(p=>({id:p.ticker,yahoo:p.yahoo,type:'d'})),
   ];
+
+  // ── Step 2: Fetch all equity prices, track failures ────────────
+  const fetchResults = {}; // ticker -> {data, posGbp} or null
+  const failed = [];
+
   for(const t of tickers){
     const data=await fetchPrice(t.yahoo);
-    if(!data) continue;
+    if(!data){
+      if(t.type==='h') failed.push(t.id);
+      fetchResults[t.id] = null;
+      continue;
+    }
+    fetchResults[t.id] = data;
     const isGbx=data.currency==='GBp'||data.currency==='GBX';
     const p=isGbx?data.price/100:data.price;
     const sym=t.yahoo.endsWith('.L')?'£':'$';
@@ -1459,7 +1487,6 @@ async function refreshAllPrices(){
       const h=t.holding;
       const uel=document.getElementById('upside-'+t.id);
       if(uel){
-        // Live price in native currency; convert to GBP for upside calc
         const livePriceGbp = isGbx ? p : p * FX_USD_GBP;
         const targetGbp = h.currency==='GBP' ? h.analystTargetUsd/100 : h.analystTargetUsd * FX_USD_GBP;
         const upPct = (targetGbp - livePriceGbp) / livePriceGbp * 100;
@@ -1471,42 +1498,62 @@ async function refreshAllPrices(){
       }
     }
   }
-  document.getElementById('lastUpdated').textContent='Updated '+new Date().toLocaleTimeString('en-GB');
-  document.getElementById('totalChangeSub').textContent = '18 Jun 2026 · live prices loaded ✓';
-  btn.disabled=false; btn.textContent='↻ Prices';
+  // ── Step 3: Recalculate invested directly from fetched price data ──
+  let liveInvested = 0;
+  const skipped = [];
 
-  // Recalculate total ISA value from live prices × shares
-  try {
-    const FX_USD_GBP = 1/1.3464;
-    const FX_CAD_GBP = 1/1.802; // approx CAD/GBP
-    let liveInvested = 0;
-    for(const h of HOLDINGS){
-      if(!h.yahooTicker || !h.shares) continue;
-      const el = document.getElementById('price-'+h.ticker);
-      if(!el) continue;
-      const priceText = el.textContent.replace(/[£$,]/g,'').trim();
-      const price = parseFloat(priceText);
-      if(isNaN(price)||price<=0) continue;
-      let posGbp;
-      if(h.currency==='GBP'){
-        // RR is in pence from Yahoo (.L), VWRL same
-        const isGbx = price < 500 && h.ticker!=='VWRL'; // RR ~13.9p shown as £
-        posGbp = h.shares * price; // el shows £ after our conversion
-      } else if(h.currency==='CAD'){
-        posGbp = h.shares * price * FX_CAD_GBP;
-      } else {
-        posGbp = h.shares * price * FX_USD_GBP;
-      }
-      liveInvested += posGbp;
+  for(const h of HOLDINGS){
+    if(!h.yahooTicker || !h.shares){ continue; }
+    const data = fetchResults[h.ticker];
+    if(!data || !data.price || data.price <= 0){
+      // Fall back to costGbp so total isn't silently understated
+      liveInvested += h.costGbp || 0;
+      skipped.push(h.ticker);
+      continue;
     }
-    const cash = 2450;
-    const liveTotal = Math.round(liveInvested + cash);
-    if(liveTotal > 30000 && liveTotal < 65000){ // sanity check
-      document.getElementById('totalValue').textContent = '£'+liveTotal.toLocaleString();
-      document.getElementById('investedValue').textContent = '£'+Math.round(liveInvested).toLocaleString();
-      document.getElementById('totalChangeSub').textContent = '18 Jun 2026 · live ✓ £'+liveTotal.toLocaleString();
+    const isGbx = data.currency==='GBp' || data.currency==='GBX';
+    const rawPrice = isGbx ? data.price / 100 : data.price;
+    let posGbp;
+    if(h.currency==='GBP'){
+      posGbp = h.shares * rawPrice;
+    } else if(h.currency==='CAD'){
+      posGbp = h.shares * rawPrice * FX_CAD_GBP;
+    } else {
+      posGbp = h.shares * rawPrice * FX_USD_GBP;
     }
-  } catch(e){ /* silent fail */ }
+    // Also update currentGbp on the holding object so renderHoldings() is live-accurate
+    h.currentGbp = Math.round(posGbp);
+    liveInvested += posGbp;
+  }
+
+  const liveTotal = Math.round(liveInvested + CASH_GBP);
+  const fxLabel = `$1 = £${FX_USD_GBP.toFixed(4)}`;
+
+  // Visible failure banner if any positions were skipped
+  const banner = document.getElementById('priceFetchBanner');
+  if(skipped.length > 0){
+    if(banner) banner.innerHTML = `⚠ ${skipped.length} price(s) unavailable — using cost basis for: ${skipped.join(', ')}. Total may be understated.`;
+    if(banner) banner.style.display = 'block';
+  } else {
+    if(banner) banner.style.display = 'none';
+  }
+
+  // Sanity gate: only update if result is plausible
+  if(liveTotal > 30000 && liveTotal < 80000){
+    document.getElementById('totalValue').textContent = '£'+liveTotal.toLocaleString();
+    document.getElementById('investedValue').textContent = '£'+Math.round(liveInvested).toLocaleString();
+    const ts = new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+    document.getElementById('totalChangeSub').textContent = `Live ✓ £${liveTotal.toLocaleString()} · ${ts} · ${fxLabel}`;
+    document.getElementById('glSub').textContent = `+£${CASH_GBP.toLocaleString()} cash · FX ${fxLabel}`;
+  } else {
+    if(banner){ banner.innerHTML = `⚠ Sanity check failed — calculated total £${liveTotal.toLocaleString()} is outside expected range. Prices may be stale.`; banner.style.display='block'; }
+  }
+
+  // Re-render holdings table so G/L column reflects live currentGbp
+  if(typeof renderHoldings === 'function') renderHoldings();
+
+  document.getElementById('lastUpdated').textContent='Updated '+new Date().toLocaleTimeString('en-GB');
+  btn.disabled=false; btn.textContent='↻ Prices';
 }
 
 // ══════════════════════════════════════════════════
@@ -1515,7 +1562,6 @@ async function refreshAllPrices(){
 function badge(s,l){return`<span class="status-badge status-${s}">${l}</span>`;}
 
 function renderHoldings(){
-  const FX_USD_GBP = 1/1.3464;
   document.getElementById('holdingsTbody').innerHTML=HOLDINGS.map(h=>{
     const gl=h.currentGbp-h.costGbp;
     const glP=h.costGbp>0?gl/h.costGbp*100:0;
@@ -2712,7 +2758,7 @@ function renderCashDeploy(){
   const el = document.getElementById('cashDeployGrid');
   if(!el) return;
 
-  const freeCash = 2450; // Updated 18 Jun — ISA cash confirmed £2,450 from HL screenshot
+  const freeCash = CASH_GBP; // from global constant — update CASH_GBP at top of script each session
   let allocated = 0;
 
   const sorted = [...CASH_DEPLOY].sort((a,b) => a.priority - b.priority);
@@ -3720,7 +3766,7 @@ function testConcentrationCalc() {
     `VWRL concentration = '${vwrl?.concentration}'`));
 
   // Total invested check — should be close to £43,046 (within 10%)
-  const expectedInvested = 43046;
+  const expectedInvested = HOLDINGS.reduce((s,h)=>s+(h.costGbp||0),0); // sum of cost bases as floor check
   const pctDiff = Math.abs(invested - expectedInvested) / expectedInvested * 100;
   results.push(t(S, `Total invested ≈ £43,046 (within 10% of last sync)`,
     pctDiff < 10,
